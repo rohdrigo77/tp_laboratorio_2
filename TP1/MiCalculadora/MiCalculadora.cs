@@ -12,26 +12,42 @@ using Entidades;
 
 namespace MiCalculadora
 {
+/// <summary>
+/// 
+/// </summary>
     public partial class FormCalculadora : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public FormCalculadora()
         {
             InitializeComponent();
             CargarOperadoresEnComboBox();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FormCalculadora_Load(object sender, EventArgs e)
         {
             Limpiar();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCerrar_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("¿Está segur@ que quiere cerrar la calculadora?","Atención",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
-            {
-                this.Close();
-            }
-      
+            this.Close();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConvertirABinario_Click(object sender, EventArgs e)
         {
             if (!(string.IsNullOrEmpty(lblResultado.Text)))
@@ -42,7 +58,11 @@ namespace MiCalculadora
             }
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnOperar_Click(object sender, EventArgs e)
         {
             if (double.TryParse(txtNumero1.Text, out double num1) && double.TryParse(txtNumero2.Text, out double num2))
@@ -61,12 +81,21 @@ namespace MiCalculadora
      
            
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             Limpiar();
            
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConvertirADecimal_Click(object sender, EventArgs e)
         {
             string temp;
@@ -78,6 +107,9 @@ namespace MiCalculadora
                 CargarConversion(temp);
             }      
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public void Limpiar()
         {
             this.lstOperaciones.Items.Clear();
@@ -87,12 +119,20 @@ namespace MiCalculadora
             this.lblResultado.Text = ""; 
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="numero1"></param>
+        /// <param name="numero2"></param>
+        /// <param name="operador"></param>
+        /// <returns></returns>
         static double Operar(string numero1, string numero2, string operador)
         {
            return Calculadora.Operar(new Operando(numero1), new Operando(numero2), operador[0]);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         private void CargarOperadoresEnComboBox()
         {
             List<object> operadores = new List <object>()
@@ -111,19 +151,31 @@ namespace MiCalculadora
 
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void CargarResultado()
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(txtNumero1.Text);
-            sb.AppendLine(cmbOperador.Text);
+            if (cmbOperador.Text == " ")
+            {
+                sb.AppendLine("+");
+            }
+            else
+            {
+                sb.AppendLine(cmbOperador.Text);
+            }
             sb.AppendLine(txtNumero2.Text);
             sb.Append('=');
             sb.AppendLine(lblResultado.Text);
 
             lstOperaciones.Items.Add(sb);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="temp"></param>
         public void CargarConversion(string temp)
         {
             StringBuilder sb = new StringBuilder();
@@ -132,9 +184,17 @@ namespace MiCalculadora
             sb.AppendLine(lblResultado.Text);
             lstOperaciones.Items.Add(sb);
         }
-
-        private void lblResultado_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FormCalculadora_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (MessageBox.Show("¿Está segur@ que quiere cerrar la calculadora?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
 
         }
     }

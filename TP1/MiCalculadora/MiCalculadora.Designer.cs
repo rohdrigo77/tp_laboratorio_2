@@ -143,7 +143,6 @@ namespace MiCalculadora
             this.lblResultado.TabIndex = 3;
             this.lblResultado.Text = "0";
             this.lblResultado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblResultado.Click += new System.EventHandler(this.lblResultado_Click);
             // 
             // FormCalculadora
             // 
@@ -164,7 +163,9 @@ namespace MiCalculadora
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormCalculadora";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Calculadora de Jorge Rodrigo Bogado del curso 2°C";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormCalculadora_FormClosing);
             this.Load += new System.EventHandler(this.FormCalculadora_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
