@@ -16,16 +16,16 @@ namespace Entidades
             switch (ValidarOperador(operador))
             {
                 case '*':
-                    resultado = Convert.ToDouble(num1.Numero) * Convert.ToDouble(num2.Numero);
+                    resultado = double.Parse(num1.Numero) * double.Parse(num2.Numero);
                     break;
                 case '/':
-                    resultado = Convert.ToDouble(num1.Numero) / Convert.ToDouble(num2.Numero);
+                    resultado = double.Parse(num1.Numero) / double.Parse(num2.Numero);
                     break;
                 case '-':
-                    resultado = Convert.ToDouble(num1.Numero) - Convert.ToDouble(num2.Numero);
+                    resultado = double.Parse(num1.Numero) - double.Parse(num2.Numero);
                     break;
                 default:
-                    resultado = Convert.ToDouble(num1.Numero) + Convert.ToDouble(num2.Numero);
+                    resultado = double.Parse(num1.Numero) + double.Parse(num2.Numero);
                     break;
             }
 

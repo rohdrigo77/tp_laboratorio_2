@@ -9,3 +9,4 @@ C:\Users\btz_p\source\repos\Entidades\obj\Debug\net5.0\Entidades.csproj.CoreComp
 C:\Users\btz_p\source\repos\Entidades\obj\Debug\net5.0\Entidades.dll
 C:\Users\btz_p\source\repos\Entidades\obj\Debug\net5.0\ref\Entidades.dll
 C:\Users\btz_p\source\repos\Entidades\obj\Debug\net5.0\Entidades.pdb
+C:\Users\btz_p\source\repos\Entidades\obj\Debug\net5.0\Entidades.csproj.AssemblyReference.cache

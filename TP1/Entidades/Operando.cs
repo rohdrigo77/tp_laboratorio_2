@@ -16,14 +16,14 @@ namespace Entidades
             
             get 
             {
-                return Convert.ToString(this.numero);
+                return (this.numero).ToString();
             }
                       
             set
             {
                 if (ValidarOperando(value) > 0)
                 {
-                    this.numero = Convert.ToDouble(value);
+                    this.numero = double.Parse(value);
                 }            
             }
         }
@@ -34,8 +34,8 @@ namespace Entidades
         }
 
         public Operando()
-        {
-            this.numero = 0;
+        : this(0)
+        {  
         }
         public Operando (double numero)
         { 
@@ -43,21 +43,21 @@ namespace Entidades
         }
         public Operando(string strNumero)
         {
-            this.numero = Convert.ToDouble(strNumero);
+            this.Numero = strNumero;
         }
         public static double operator - (Operando n1, Operando n2)
         {
-            return n1 - n2;
+            return n1.numero - n2.numero;
         }
         public static double operator * (Operando n1, Operando n2)
         {
-            return n1 * n2;
+            return n1.numero * n2.numero;
         }
         public static double operator / (Operando n1, Operando n2)
         {
             if (n2.numero != 0)
             {
-                return n1 / n2;
+                return n1.numero / n2.numero;
             }
             else
             {
@@ -96,31 +96,30 @@ namespace Entidades
             return estado;
         }
         public string BinarioDecimal (string numero)
-        {
-            string estado;
-     
-            if (EsBinario(numero))
-            {
-                
+        {     
+            double numDecimal = 0;
 
-                estado = Convert.ToInt64(numero, 2).ToString();
+                if (EsBinario(numero))
+                {
 
-                
-
-            }
-            else
-            {
-                estado = "Número inválido";
-            }
-
-            return estado;
+                    for (int i = 0; i <= numero.Length - 1; i++)
+                    {
+                        numDecimal += numero[i] * Math.Pow(2, numero.Length - i - 1);
+                    }
+                }
+                else
+                {
+                    return "Valor invalido";
+                }
+            
+            return numDecimal.ToString();
 
         }
 
         public string DecimalBinario(double numero)
         {
             string numBin = string.Empty;
-            int numInt =(int) numero;
+            int numInt = (int) numero; 
 
             if (numInt == 0)
             {
@@ -157,7 +156,11 @@ namespace Entidades
 
             if (estado > 0)
             {
-                bin = DecimalBinario(Convert.ToDouble(numero));
+                if ( int.Parse(numero) > 0)
+                {
+                    bin = DecimalBinario(double.Parse(numero));
+                }
+                
             }
 
             return bin;
