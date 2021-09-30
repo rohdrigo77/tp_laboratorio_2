@@ -14,6 +14,13 @@ namespace Entidades
             DLT19,
         }
 
+        public enum ETrooper
+        {
+            Explorador,
+            Arena,
+            Asalto,
+        }
+
         public Trooper(Blaster armamento)
         :this(armamento,false)
         {        

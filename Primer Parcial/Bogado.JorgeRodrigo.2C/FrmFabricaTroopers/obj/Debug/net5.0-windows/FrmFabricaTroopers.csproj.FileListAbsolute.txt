@@ -19,3 +19,4 @@ C:\Users\btz_p\source\repos\parcialposta\Bogado.JorgeRodrigo.2C\FrmFabricaTroope
 C:\Users\btz_p\source\repos\parcialposta\Bogado.JorgeRodrigo.2C\FrmFabricaTroopers\obj\Debug\net5.0-windows\ref\FrmFabricaTroopers.dll
 C:\Users\btz_p\source\repos\parcialposta\Bogado.JorgeRodrigo.2C\FrmFabricaTroopers\obj\Debug\net5.0-windows\FrmFabricaTroopers.pdb
 C:\Users\btz_p\source\repos\parcialposta\Bogado.JorgeRodrigo.2C\FrmFabricaTroopers\obj\Debug\net5.0-windows\FrmFabricaTroopers.genruntimeconfig.cache
+C:\Users\btz_p\source\repos\parcialposta\Bogado.JorgeRodrigo.2C\FrmFabricaTroopers\obj\Debug\net5.0-windows\FrmFabricaTroopers.Properties.Resources.resources

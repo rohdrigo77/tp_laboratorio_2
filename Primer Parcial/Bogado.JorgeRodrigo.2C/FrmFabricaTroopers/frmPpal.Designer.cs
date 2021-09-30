@@ -29,13 +29,14 @@ namespace FrmFabricaTroopers
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPpal));
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnQuitar = new System.Windows.Forms.Button();
             this.lstEjercito = new System.Windows.Forms.ListBox();
             this.lblTipo = new System.Windows.Forms.Label();
             this.cmbTipo = new System.Windows.Forms.ComboBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.picStormtrooperHelmet = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picStormtrooperHelmet)).BeginInit();
             this.SuspendLayout();
             // 
             // btnAgregar
@@ -86,20 +87,23 @@ namespace FrmFabricaTroopers
             this.cmbTipo.TabIndex = 4;
             this.cmbTipo.SelectedIndexChanged += new System.EventHandler(this.cmbTipo_SelectedIndexChanged);
             // 
-            // pictureBox1
+            // picStormtrooperHelmet
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(12, 78);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(249, 220);
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
+            this.picStormtrooperHelmet.Image = global::FrmFabricaTroopers.Properties.Resources.stormtrooper;
+            this.picStormtrooperHelmet.InitialImage = ((System.Drawing.Image)(resources.GetObject("picStormtrooperHelmet.InitialImage")));
+            this.picStormtrooperHelmet.Location = new System.Drawing.Point(12, 59);
+            this.picStormtrooperHelmet.Name = "picStormtrooperHelmet";
+            this.picStormtrooperHelmet.Size = new System.Drawing.Size(249, 239);
+            this.picStormtrooperHelmet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picStormtrooperHelmet.TabIndex = 5;
+            this.picStormtrooperHelmet.TabStop = false;
             // 
             // frmPpal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.picStormtrooperHelmet);
             this.Controls.Add(this.cmbTipo);
             this.Controls.Add(this.lblTipo);
             this.Controls.Add(this.lstEjercito);
@@ -109,7 +113,8 @@ namespace FrmFabricaTroopers
             this.Name = "frmPpal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bienvenidos a la Fábrica de Troopers de Jorge Rodrigo Bogado";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.Load += new System.EventHandler(this.frmPpal_Load_1);
+            ((System.ComponentModel.ISupportInitialize)(this.picStormtrooperHelmet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,7 +127,7 @@ namespace FrmFabricaTroopers
         private System.Windows.Forms.ListBox lstEjercito;
         private System.Windows.Forms.Label lblTipo;
         private System.Windows.Forms.ComboBox cmbTipo;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox picStormtrooperHelmet;
     }
 }
 
