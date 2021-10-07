@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Entidades
 {
-    class EjercitoImperial
+    public class EjercitoImperial
     {
         private int capacidad;
         private List<Trooper> troopers;

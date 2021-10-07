@@ -85,7 +85,6 @@ namespace FrmFabricaTroopers
             this.cmbTipo.Name = "cmbTipo";
             this.cmbTipo.Size = new System.Drawing.Size(249, 23);
             this.cmbTipo.TabIndex = 4;
-            this.cmbTipo.SelectedIndexChanged += new System.EventHandler(this.cmbTipo_SelectedIndexChanged);
             // 
             // picStormtrooperHelmet
             // 
@@ -113,7 +112,7 @@ namespace FrmFabricaTroopers
             this.Name = "frmPpal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bienvenidos a la Fábrica de Troopers de Jorge Rodrigo Bogado";
-            this.Load += new System.EventHandler(this.frmPpal_Load_1);
+            this.Load += new System.EventHandler(this.frmPpal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picStormtrooperHelmet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\btz_p\\source\\repos\\Entidades\\Entidades.csproj": {}
+    "C:\\Users\\btz_p\\Documents\\tp_laboratorio_2\\TP1\\Entidades\\Entidades.csproj": {}
   },
   "projects": {
-    "C:\\Users\\btz_p\\source\\repos\\Entidades\\Entidades.csproj": {
+    "C:\\Users\\btz_p\\Documents\\tp_laboratorio_2\\TP1\\Entidades\\Entidades.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\btz_p\\source\\repos\\Entidades\\Entidades.csproj",
+        "projectUniqueName": "C:\\Users\\btz_p\\Documents\\tp_laboratorio_2\\TP1\\Entidades\\Entidades.csproj",
         "projectName": "Entidades",
-        "projectPath": "C:\\Users\\btz_p\\source\\repos\\Entidades\\Entidades.csproj",
+        "projectPath": "C:\\Users\\btz_p\\Documents\\tp_laboratorio_2\\TP1\\Entidades\\Entidades.csproj",
         "packagesPath": "C:\\Users\\btz_p\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\btz_p\\source\\repos\\Entidades\\obj\\",
+        "outputPath": "C:\\Users\\btz_p\\Documents\\tp_laboratorio_2\\TP1\\Entidades\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\btz_p\\AppData\\Roaming\\NuGet\\NuGet.Config",
