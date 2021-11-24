@@ -12,7 +12,6 @@ using Excepciones;
 
 namespace FrmClub
 {
-    public delegate void AgregarSocixAClub(Socix socix);
     public partial class FrmClub : Form
     {        
         private FrmCargarSocix cargarSocix;

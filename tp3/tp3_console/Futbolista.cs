@@ -7,7 +7,6 @@ using Excepciones;
 
 namespace Entidades
 {
-    public delegate string PrintearFutbolista(Futbolista futbolista);
     public class Futbolista : Socix
     {
 
@@ -55,7 +54,7 @@ namespace Entidades
             }
 
             this.posicion = posicion;
-            printearSocix = MostrarFutbolista;
+            
         }
 
         public override int PartidosJugados
@@ -99,10 +98,7 @@ namespace Entidades
             return this.Mostrar();
         }
 
-        public string MostrarFutbolista(Futbolista futbolista)
-        {
-            return futbolista.Mostrar();
-        }
+
 
     }
 }

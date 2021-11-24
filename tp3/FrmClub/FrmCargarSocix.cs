@@ -13,22 +13,19 @@ namespace FrmClub
 {
     public partial class FrmCargarSocix : Form
     {
-        public event AgregarSocixAClub AgregarSocix;
-        public event PrintearNadador PrintearNadadorx;
-        public event PrintearFutbolista PrintearFutbolista;
-        public event PrintearBoxeo PrintearPugilista;
+        public event Printear PrintearSocix;
         EGenero generoSeleccionado;
         EPileta piletaSeleccionada;
         ETipoSocix tipoSocixSeleccionado;
         EEstilos estiloNadoSeleccionado;
         EPeso pesoSeleccionado;
-        bool booleano;
+        Socix socix;
+        List<Socix> listaSocix;
 
-
-
-        public FrmCargarSocix()
+        public FrmCargarSocix(List<Socix> lista)
         {
             InitializeComponent();
+            listaSocix = lista;
         
         }
 
@@ -50,15 +47,7 @@ namespace FrmClub
                         {
                             cuota = ECuota.AdultxsFutbol;
                         }
-                        Futbolista futbolista = new Futbolista(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, tipoSocixSeleccionado, 0, 0, int.Parse(txtPosicion.Text), DateTime.Today.ToString(), DateTime.Today.ToString());                       
-                        PrintearFutbolista += futbolista.MostrarFutbolista;
-                        booleano = FrmMostrarDatosSocix(futbolista);
-                        if (booleano)
-                        {
-                            new GestorBaseDeDatos().Guardar(futbolista);
-                            AgregarSocix.Invoke(futbolista);
-                        }
-                       
+                        socix = new Futbolista(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, tipoSocixSeleccionado, 0, 0, int.Parse(txtPosicion.Text), DateTime.Today.ToString(), DateTime.Today.ToString());
                         break;
                        
                     case 2:
@@ -70,14 +59,7 @@ namespace FrmClub
                         {
                             cuota = ECuota.AdultxsBoxeo;
                         }
-                        Pugilista pugilista = new Pugilista(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, 0, pesoSeleccionado, tipoSocixSeleccionado, 0, DateTime.Today.ToString(), DateTime.Today.ToString());
-                        PrintearPugilista += pugilista.MostrarPugilista;
-                        booleano = FrmMostrarDatosSocix(pugilista);
-                        if (booleano)
-                        {
-                            new GestorBaseDeDatos().Guardar(pugilista);
-                            AgregarSocix.Invoke(pugilista);
-                        }
+                        socix = new Pugilista(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, 0, pesoSeleccionado, tipoSocixSeleccionado, 0, DateTime.Today.ToString(), DateTime.Today.ToString());
                         break;
 
                     default:
@@ -89,33 +71,30 @@ namespace FrmClub
                         {
                             cuota = ECuota.AdultxsNatacion;
                         }
-                        Nadador nadador = new Nadador(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, tipoSocixSeleccionado, 0, piletaSeleccionada, estiloNadoSeleccionado, DateTime.Today.ToString(), DateTime.Today.ToString());
-                        PrintearNadadorx += nadador.MostrarNadadorx;                       
-                        booleano = FrmMostrarDatosSocix(nadador);
-                        if (booleano)
-                        {
-                            new GestorBaseDeDatos().Guardar(nadador);
-                            AgregarSocix.Invoke(nadador);     
-                        }
+                        socix = new Nadador(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, tipoSocixSeleccionado, 0, piletaSeleccionada, estiloNadoSeleccionado, DateTime.Today.ToString(), DateTime.Today.ToString());
                         break;
                         
                 }
 
-                booleano = false;
+                if ((MessageBox.Show($"¿Desea guardar el socio ingresado? \n \n {socix.ToString()}", "Nuevx Socix", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                {
+                    new GestorBaseDeDatos().Guardar(socix);
+                    listaSocix.Add(socix);              
+                }
+                else
+                {
+                    if (MessageBox.Show("Desea Agregar otrx socix?", "Nuevx Socix", MessageBoxButtons.YesNo) == DialogResult.No)
+                    {
+                        this.Dispose();
+                    }
+                }
+         
 
             }
             catch (Exception)
             {
                 throw;
             }  
-
-            if (booleano == false)
-            {
-                if (MessageBox.Show("Desea Agregar otrx socix?", "Nuevx Socix", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    this.Dispose();
-                }         
-            }
         }
 
         private void lblCancelar_Click(object sender, EventArgs e)
@@ -281,24 +260,5 @@ namespace FrmClub
             }
         }
 
-        private bool FrmMostrarDatosSocix (Socix socix)
-        {
-            bool retorno = false;
-
-            if (socix is Futbolista)
-            {
-                retorno = (MessageBox.Show(PrintearFutbolista.Invoke((Futbolista)socix), "Nuevx Socix", MessageBoxButtons.YesNo) == DialogResult.Yes);
-            }
-            else if(socix is Pugilista)
-            {
-                retorno = (MessageBox.Show(PrintearPugilista.Invoke((Pugilista)socix), "Nuevx Socix", MessageBoxButtons.YesNo) == DialogResult.Yes);
-            }
-            else
-            {
-                retorno = (MessageBox.Show(PrintearNadadorx.Invoke((Nadador)socix), "Nuevx Socix", MessageBoxButtons.YesNo) == DialogResult.Yes);
-            }
-
-            return retorno;
-        }
     }
 }
