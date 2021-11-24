@@ -1,0 +1,21 @@
+USE MASTER
+GO
+CREATE DATABASE [TP3-CLUB]
+GO
+USE [TP3-CLUB]
+GO
+CREATE TABLE [dbo].[Socixs](
+	[idSocio] [int] IDENTITY(1,1) NOT NULL,
+	[dni] [int] NOT NULL,
+	[nombre] [varchar](50) NOT NULL,
+	[apellido] [varchar](50) NOT NULL,
+	[genero] [varchar](50) NOT NULL,
+	[edad] [int] NOT NULL,
+	[valorCuota] [float] NOT NULL,
+	[medallas] [int] NOT NULL,
+	[turno] [varchar](50) NOT NULL,
+	[fechaDeAsociacion] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Socixs] PRIMARY KEY CLUSTERED 
+(
+	[idSocio] ASC
+))
