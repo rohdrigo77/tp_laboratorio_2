@@ -26,7 +26,7 @@ namespace FrmClub
         {
             InitializeComponent();
             miClub = new Club("Club del Peluca");
-            
+            listaSocixs = new List<Socix>();
 
         }
 
@@ -38,10 +38,18 @@ namespace FrmClub
             }
         }
 
+        public List<Socix> ListaSocixs
+        {
+            get
+            {
+                return this.listaSocixs;
+            }
+        }
+
         private void cargarSocixBtn_Click(object sender, EventArgs e)
         {
             
-            this.cargarSocix = new FrmCargarSocix();
+            this.cargarSocix = new FrmCargarSocix(this.listaSocixs);
             cargarSocix.ShowDialog();
         }  
 
@@ -75,17 +83,13 @@ namespace FrmClub
                 if (gda.ExisteArchivo($"{this.miClub.RazonSocial}.json"))
                 {
                     (new GestorDeArchivos<List<Socix>>()).Leer($"{this.miClub.RazonSocial}.json", out this.listaSocixs);
-                    
-           
+
                 }
             }
-            catch (Exception)
+            catch (ErrorArchivosException)
             {
-                throw new ErrorArchivosException("Archivo no encontrado o inválido.");
+                MessageBox.Show("Archivo no encontrado o inválido.", "Error al intentar abrir el archivo", MessageBoxButtons.OK);
             }
-
-           
-
         }
 
         private void AgregarSocix(Socix socio)

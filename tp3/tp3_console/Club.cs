@@ -146,7 +146,7 @@ namespace Entidades
             }
             catch (Exception ex)
             {
-                throw new DniExistenteException("El dni ingresado es inválido o existente", ex);
+                throw new DniInvalidoException("El dni ingresado es inválido o existente", ex);
             }
           
             

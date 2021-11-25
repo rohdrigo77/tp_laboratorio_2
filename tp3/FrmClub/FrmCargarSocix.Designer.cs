@@ -44,8 +44,8 @@ namespace FrmClub
             this.txtPosicion = new System.Windows.Forms.TextBox();
             this.lblTipoPileta = new System.Windows.Forms.Label();
             this.lblCategoriaPeso = new System.Windows.Forms.Label();
-            this.lblGuardarSocix = new System.Windows.Forms.Button();
-            this.lblCancelar = new System.Windows.Forms.Button();
+            this.btnGuardarSocix = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.lblEstiloNado = new System.Windows.Forms.Label();
             this.cmbPeso = new System.Windows.Forms.ComboBox();
             this.cmbEstiloNado = new System.Windows.Forms.ComboBox();
@@ -190,25 +190,25 @@ namespace FrmClub
             this.lblCategoriaPeso.TabIndex = 24;
             this.lblCategoriaPeso.Text = "Peso:";
             // 
-            // lblGuardarSocix
+            // btnGuardarSocix
             // 
-            this.lblGuardarSocix.Location = new System.Drawing.Point(12, 409);
-            this.lblGuardarSocix.Name = "lblGuardarSocix";
-            this.lblGuardarSocix.Size = new System.Drawing.Size(221, 47);
-            this.lblGuardarSocix.TabIndex = 27;
-            this.lblGuardarSocix.Text = "Guardar";
-            this.lblGuardarSocix.UseVisualStyleBackColor = true;
-            this.lblGuardarSocix.Click += new System.EventHandler(this.lblGuardarSocix_Click);
+            this.btnGuardarSocix.Location = new System.Drawing.Point(12, 409);
+            this.btnGuardarSocix.Name = "btnGuardarSocix";
+            this.btnGuardarSocix.Size = new System.Drawing.Size(221, 47);
+            this.btnGuardarSocix.TabIndex = 27;
+            this.btnGuardarSocix.Text = "Guardar";
+            this.btnGuardarSocix.UseVisualStyleBackColor = true;
+            this.btnGuardarSocix.Click += new System.EventHandler(this.btnGuardarSocix_Click);
             // 
-            // lblCancelar
+            // btnCancelar
             // 
-            this.lblCancelar.Location = new System.Drawing.Point(12, 462);
-            this.lblCancelar.Name = "lblCancelar";
-            this.lblCancelar.Size = new System.Drawing.Size(221, 47);
-            this.lblCancelar.TabIndex = 28;
-            this.lblCancelar.Text = "Cancelar";
-            this.lblCancelar.UseVisualStyleBackColor = true;
-            this.lblCancelar.Click += new System.EventHandler(this.lblCancelar_Click);
+            this.btnCancelar.Location = new System.Drawing.Point(12, 462);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(221, 47);
+            this.btnCancelar.TabIndex = 28;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // lblEstiloNado
             // 
@@ -287,8 +287,8 @@ namespace FrmClub
             this.Controls.Add(this.cmbEstiloNado);
             this.Controls.Add(this.cmbPeso);
             this.Controls.Add(this.lblEstiloNado);
-            this.Controls.Add(this.lblCancelar);
-            this.Controls.Add(this.lblGuardarSocix);
+            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnGuardarSocix);
             this.Controls.Add(this.lblCategoriaPeso);
             this.Controls.Add(this.lblTipoPileta);
             this.Controls.Add(this.txtPosicion);
@@ -330,8 +330,8 @@ namespace FrmClub
         private System.Windows.Forms.TextBox txtPosicion;
         private System.Windows.Forms.Label lblTipoPileta;
         private System.Windows.Forms.Label lblCategoriaPeso;
-        private System.Windows.Forms.Button lblGuardarSocix;
-        private System.Windows.Forms.Button lblCancelar;
+        private System.Windows.Forms.Button btnGuardarSocix;
+        private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label lblEstiloNado;
         private System.Windows.Forms.ComboBox cmbPeso;
         private System.Windows.Forms.ComboBox cmbEstiloNado;

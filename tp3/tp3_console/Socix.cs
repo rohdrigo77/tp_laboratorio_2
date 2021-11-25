@@ -15,11 +15,15 @@ namespace Entidades
         private string apellido;
         private EGenero genero;
         private int edad;
-        private ECuota valorCuota;
+        protected ECuota valorCuota;
         private ETipoSocix tipoSocix;
         private int cantidadMedallas;
         private string fechaDeAsociacion;
-        private string fechaUltimaAptaFisica;
+        private string fechaAptaFisica;
+
+        public Socix()
+        {
+        }
         public Socix(int dni, string nombre, string apellido, EGenero genero, int edad, ECuota valorCuota, ETipoSocix tipoSocix, int cantidadMedallas, string fechaAptaFisica, string fechaAsociacion)
         {
             this.dni = dni;
@@ -30,7 +34,7 @@ namespace Entidades
             this.valorCuota = valorCuota;
             this.tipoSocix = tipoSocix;
             this.cantidadMedallas = cantidadMedallas;
-            this.fechaUltimaAptaFisica = fechaAptaFisica;
+            this.fechaAptaFisica = fechaAptaFisica;
             this.fechaDeAsociacion = fechaAsociacion;   
             
         }
@@ -39,13 +43,13 @@ namespace Entidades
         {
             set
             {
-                if (!(new GestorBaseDeDatos().DniExistente(value)))
+                if (!(new GestorBaseDeDatos().DniExistente(value)) && value <= 99999999)
                 {
                     this.dni = value;
                 }
                 else
                 {
-                    throw new DniExistenteException("El DNI ingresado ya existe. Ingrese otro diferente.");
+                    throw new DniInvalidoException("El DNI ingresado ya existe o es invalido. Ingrese otro diferente.");
                 }
 
             }
@@ -57,6 +61,17 @@ namespace Entidades
         }
         public string Nombre
         {
+            set
+            {
+                if(int.TryParse(value,out _) || value.Length > 50)
+                {
+                    throw new NombreApellidoInvalidoException("El nombre ingresado es inválido. Ingrese otro diferente.");
+                }
+                else
+                {
+                    this.nombre = value;
+                }
+            }
             get
             {
                 return this.nombre;
@@ -64,6 +79,17 @@ namespace Entidades
         }
         public string Apellido
         {
+            set
+            {
+                if (int.TryParse(value, out _) || value.Length > 50)
+                {
+                    throw new NombreApellidoInvalidoException("El Apellido ingresado es inválido. Ingrese otro diferente.");
+                }
+                else
+                {
+                    this.apellido = value;
+                }
+            }
             get
             {
                 return this.apellido;
@@ -72,6 +98,10 @@ namespace Entidades
 
         public EGenero Genero
         {
+            set
+            {
+                this.genero = value;
+            }
             get
             {
                 return this.genero;
@@ -100,36 +130,27 @@ namespace Entidades
 
         }
 
-        public ECuota ValorCuota 
-        { 
-            set
-            {
-                if(value >= 0)
-                {
-                    this.valorCuota = value;
-                }
-                else
-                {
-                    throw new MenorQueCeroException("El valor ingresado no es válido. Ingrese un número mayor o igual a 0");
-                }
-            }
-            get
-            {
-                return this.valorCuota;
-            }
-        }
+        public virtual ECuota ValorCuota {set; get;}
 
         public int CantidadMedallas
         {
             set
             {
-                if (value >= 0)
+                if (this.tipoSocix == ETipoSocix.Competitivo && value >= 0)
                 {
                     this.cantidadMedallas = value;
                 }
                 else
                 {
-                    throw new MenorQueCeroException("El valor ingresado no es válido. Ingrese un número mayor o igual a 0");
+                    if (value == 0)
+                    {
+                        this.cantidadMedallas = value;
+                    }
+                    else
+                    {
+                        throw new MenorQueCeroException("El valor ingresado no es válido o socix no compite. Ingrese un número mayor o igual a 0, o haga competir al socix.");
+                    }
+                        
                 }
             }
             get
@@ -138,18 +159,20 @@ namespace Entidades
             }
         }
 
-        public virtual int Posicion { get; }
-
-        public virtual int PartidosJugados { get; }
-
-        public virtual ECategoria Categoria { get; }
-        public virtual EPileta TipoPileta { get; }
-        public virtual EEstilos EstiloPreferido { get; }
-        public virtual EPeso CategoriaPeso { get; }
-        public virtual int CantidadPeleas { get; }
+        public virtual int Posicion { set; get; }
+        public virtual int PartidosJugados { set;  get; }
+        public virtual ECategoria Categoria { set; get; }
+        public virtual EPileta TipoPileta { set; get; }
+        public virtual EEstilos EstiloPreferido { set; get; }
+        public virtual EPeso CategoriaPeso { set;  get; }
+        public virtual int CantidadPeleas { set;  get; }
 
         public ETipoSocix TipoSocix
         {
+            set
+            {
+                this.TipoSocix = value;
+            }
             get
             {
                 return this.tipoSocix;
@@ -159,17 +182,25 @@ namespace Entidades
 
         public string FechaDeAsociacion
         {
+            set
+            {
+                this.fechaDeAsociacion = value;
+            }
             get
             {
                 return this.fechaDeAsociacion;
             }
         }
 
-        public string FechaDeAptaFisica
+        public string FechaAptaFisica
         {
+            set
+            {
+                this.fechaAptaFisica = value;
+            }
             get
             {
-                return this.fechaUltimaAptaFisica;
+                return this.fechaAptaFisica;
             }
         }
 
@@ -177,7 +208,7 @@ namespace Entidades
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine($"--- Datos soci@ ---");
+            sb.AppendLine($"--- Datos socix ---");
             sb.AppendLine($"DNI: {this.DNI}");
             sb.AppendLine($"Nombre: {this.Nombre}");
             sb.AppendLine($"Apellido: {this.Apellido}");
@@ -186,7 +217,7 @@ namespace Entidades
             sb.AppendLine($"Valor cuota: {this.ValorCuota}");
             sb.AppendLine($"Cantidad de medallas: {this.CantidadMedallas}");
             sb.AppendLine($"Tipo de socix: {this.TipoSocix}");
-            sb.AppendLine($"Fecha de última apta física presentada: {this.FechaDeAptaFisica}");
+            sb.AppendLine($"Fecha de última apta física presentada: {this.FechaAptaFisica}");
             sb.AppendLine($"Socix desde: {this.FechaDeAsociacion}");
 
 

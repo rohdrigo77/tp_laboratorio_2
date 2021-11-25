@@ -10,8 +10,11 @@ namespace Entidades
     {
         private EPileta tipoPileta;
         private EEstilos estiloPreferido;
-        
 
+        public Nadador()
+        : base()
+        {
+        }
         public Nadador(int dni, string nombre, string apellido, EGenero genero, int edad,ECuota valorCuota, ETipoSocix tipoSocix, int cantMedallas, EPileta pileta, EEstilos estiloPreferido, string fechaAptaFisica, string fechaAsociacion)
         : base(dni, nombre, apellido, genero, edad, valorCuota, tipoSocix, cantMedallas, fechaAptaFisica, fechaAsociacion)
         {
@@ -22,11 +25,11 @@ namespace Entidades
 
         protected override string Mostrar()
         {
-            StringBuilder sb = new StringBuilder(276438, Int32.MaxValue);
+            StringBuilder sb = new StringBuilder();
 
             try
             {
-                base.ToString();
+                base.Mostrar();
                 sb.AppendLine($"Pileta en la que nada: {this.Pileta}");
                 sb.AppendLine($"Estilo preferido de nado: {this.EstiloPreferido}");
             }
@@ -40,6 +43,10 @@ namespace Entidades
 
         public EPileta Pileta
         {
+            set
+            {
+                this.tipoPileta = value;
+            }
             get
             {
                 return this.tipoPileta;
@@ -54,11 +61,30 @@ namespace Entidades
             }
         }
 
-        public override string ToString()
+        public override ECuota ValorCuota
         {
-            return Mostrar();
+            set
+            {
+                if(this.Edad <= 12)
+                {         
+                    if (value == ECuota.NinixsNatacion)
+                    {
+                        this.valorCuota = value;
+                    }
+                }
+                else
+                {
+                    if (value == ECuota.AdultxsNatacion)
+                    {
+                        this.valorCuota = value;
+                    }
+                }
+            }
+            get
+            {
+                return this.valorCuota;
+            }
+
         }
-
-
     }
 }

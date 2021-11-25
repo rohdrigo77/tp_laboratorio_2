@@ -13,52 +13,25 @@ namespace Entidades
         private int partidosJugados;
         private ECategoria categoria;
         private int posicion;
-        private PrintearFutbolista printearSocix;
 
+        public Futbolista()
+        : base()
+        {
+        }
         public Futbolista(int dni, string nombre, string apellido, EGenero genero, int edad, ECuota cuota, ETipoSocix tipoSocix, int medallas, int partidosJugados, int posicion,string fechaAsociacion, string fechaAptaFisica)
         :base(dni,nombre,apellido,genero,edad,cuota,tipoSocix,medallas, fechaAsociacion, fechaAptaFisica)
         {           
             this.partidosJugados = partidosJugados;
-
-            if (edad >= 16 && edad <=18)
-            {
-                this.categoria = ECategoria.Juvenil; 
-            }
-            else if (edad == 14 || edad == 15)
-            {
-                this.categoria = ECategoria.Cadete;
-            }
-            else if (edad == 12 || edad == 13)
-            {
-                this.categoria = ECategoria.Infantil;
-            }
-            else if (edad == 10 || edad == 11)
-            {
-                this.categoria = ECategoria.Alevin;
-            }
-            else if (edad == 8 || edad == 9)
-            {
-                this.categoria = ECategoria.Benjamin;
-            }
-            else if (edad >= 5 && edad <= 7)
-            {
-                this.categoria = ECategoria.PreBenjamin;
-            }
-            else if (this.TipoSocix == ETipoSocix.Competitivo && (edad < 5 || edad > 18))
-            {
-                throw new EdadNoAdmitidaException("La edad mínima para jugar en competitivo es de 5 años y la máxima 18.");
-            }
-            else
-            {
-                this.categoria = ECategoria.Amateur;
-            }
-
             this.posicion = posicion;
             
         }
 
         public override int PartidosJugados
         {
+            set
+            {
+                this.partidosJugados = value;
+            }
             get
             {
                 return this.partidosJugados;
@@ -67,6 +40,10 @@ namespace Entidades
 
         public override ECategoria Categoria
         {
+            set
+            {
+                this.categoria = value;
+            }
             get
             {
                 return this.categoria;
@@ -75,17 +52,58 @@ namespace Entidades
 
         public override int Posicion
         {
+            set
+            {
+                if (value == 0)
+                {
+                    if (this is Futbolista)
+                    {
+                        throw new PosicionException("Posición inválida. Elija una del 1 al 11."); 
+                    }
+                    else
+                    {
+                        this.posicion = value;
+                    }
+                }
+                if (value >= 1 && value <=11)
+                {
+                    this.posicion = value;
+                }
+            }
             get
             {
                 return this.posicion;
             }
         }
 
+        public override ECuota ValorCuota
+        {
+            set
+            {
+                if (this.Edad <= 12)
+                {
+                    if (value == ECuota.NinixsFutbol)
+                    {
+                        this.valorCuota = value;
+                    }
+                }
+                else
+                {
+                    this.valorCuota = ECuota.AdultxsFutbol;
+                }
+            }
+            get
+            {
+                return this.valorCuota;
+            }
+
+        }
+
         protected override string Mostrar()
         {
             StringBuilder sb = new StringBuilder();
 
-            base.ToString();
+            base.Mostrar();
             sb.AppendLine($"Categoría: {this.Categoria}");
             sb.AppendLine($"Posición de juego: {this.Posicion}");
             sb.AppendLine($"Cantidad de partidos jugados: {this.PartidosJugados}");
@@ -93,10 +111,7 @@ namespace Entidades
             return sb.ToString();
         }
 
-        public override string ToString()
-        {
-            return this.Mostrar();
-        }
+
 
 
 

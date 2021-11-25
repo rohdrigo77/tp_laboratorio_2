@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Entidades;
+using Excepciones;
 
 namespace FrmClub
 {
     public partial class FrmCargarSocix : Form
     {
-        public event Printear PrintearSocix;
         EGenero generoSeleccionado;
         EPileta piletaSeleccionada;
         ETipoSocix tipoSocixSeleccionado;
@@ -29,75 +29,188 @@ namespace FrmClub
         
         }
 
-        private void lblGuardarSocix_Click(object sender, EventArgs e)
+        private void btnGuardarSocix_Click(object sender, EventArgs e)
         {
             try
             {
-                ECuota cuota;
-               
-                switch (cmbDeportes.SelectedIndex)
+                List<TextBox> listaTextBox = new List<TextBox>();
+                listaTextBox.Add(txtApellido);
+                listaTextBox.Add(txtNombre);
+                listaTextBox.Add(txtDNI);
+                listaTextBox.Add(txtEdad);
+                bool camposLlenos = true;
+                if (cmbDeportes.SelectedIndex == 1)
                 {
-                    case 1:
-                        
-                        if (int.Parse(txtEdad.Text) <= 12)
-                        {
-                            cuota = ECuota.NinixsFutbol;
-                        }
-                        else
-                        {
-                            cuota = ECuota.AdultxsFutbol;
-                        }
-                        socix = new Futbolista(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, tipoSocixSeleccionado, 0, 0, int.Parse(txtPosicion.Text), DateTime.Today.ToString(), DateTime.Today.ToString());
-                        break;
-                       
-                    case 2:
-                        if (int.Parse(txtEdad.Text) <= 12)
-                        {
-                            cuota = ECuota.NinixsBoxeo;
-                        }
-                        else
-                        {
-                            cuota = ECuota.AdultxsBoxeo;
-                        }
-                        socix = new Pugilista(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, 0, pesoSeleccionado, tipoSocixSeleccionado, 0, DateTime.Today.ToString(), DateTime.Today.ToString());
-                        break;
-
-                    default:
-                        if (int.Parse(txtEdad.Text) <= 12)
-                        {
-                            cuota = ECuota.NinixsNatacion;
-                        }
-                        else
-                        {
-                            cuota = ECuota.AdultxsNatacion;
-                        }
-                        socix = new Nadador(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, tipoSocixSeleccionado, 0, piletaSeleccionada, estiloNadoSeleccionado, DateTime.Today.ToString(), DateTime.Today.ToString());
-                        break;
-                        
+                    listaTextBox.Add(txtPosicion);
                 }
 
-                if ((MessageBox.Show($"¿Desea guardar el socio ingresado? \n \n {socix.ToString()}", "Nuevx Socix", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                foreach (TextBox textBox in listaTextBox)
                 {
-                    new GestorBaseDeDatos().Guardar(socix);
-                    listaSocix.Add(socix);              
-                }
-                else
-                {
-                    if (MessageBox.Show("Desea Agregar otrx socix?", "Nuevx Socix", MessageBoxButtons.YesNo) == DialogResult.No)
+                    if (textBox.Text.Length <= 0)
                     {
-                        this.Dispose();
+                        MessageBox.Show("Complete todos los datos antes de guardar.", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        camposLlenos = false;
+                        break;
+                    }
+                    
+                }
+                
+               if (camposLlenos)
+                {
+                    switch (cmbDeportes.SelectedIndex)
+                    {
+                        case 1:
+                            socix = new Futbolista();
+                            socix.DNI = int.Parse(txtDNI.Text);
+                            socix.Nombre = txtNombre.Text;
+                            socix.Apellido = txtApellido.Text;
+                            socix.Genero = generoSeleccionado;
+                            socix.Edad = int.Parse(txtEdad.Text);
+                            socix.TipoSocix = tipoSocixSeleccionado;
+                            socix.CantidadMedallas = 0;
+                            socix.Posicion = int.Parse(txtPosicion.Text);
+                            socix.FechaAptaFisica = DateTime.Today.ToString();
+                            socix.FechaDeAsociacion = socix.FechaAptaFisica;
+                            socix.PartidosJugados = 0;
+
+                            if (socix.Edad <= 12)
+                            {
+                                socix.ValorCuota = ECuota.NinixsFutbol;
+                            }
+                            else
+                            {
+                                socix.ValorCuota = ECuota.AdultxsFutbol;
+                            }
+
+                            if (socix.Edad >= 16 && socix.Edad <= 18)
+                            {
+                                socix.Categoria = ECategoria.Juvenil;
+                            }
+                            else if (socix.Edad == 14 || socix.Edad == 15)
+                            {
+                                socix.Categoria = ECategoria.Cadete;
+                            }
+                            else if (socix.Edad == 12 || socix.Edad == 13)
+                            {
+                                socix.Categoria = ECategoria.Infantil;
+                            }
+                            else if (socix.Edad == 10 || socix.Edad == 11)
+                            {
+                                socix.Categoria = ECategoria.Alevin;
+                            }
+                            else if (socix.Edad == 8 || socix.Edad == 9)
+                            {
+                                socix.Categoria = ECategoria.Benjamin;
+                            }
+                            else if (socix.Edad >= 5 && socix.Edad <= 7)
+                            {
+                                socix.Categoria = ECategoria.PreBenjamin;
+                            }
+                            else if (socix.TipoSocix == ETipoSocix.Competitivo && (socix.Edad < 5 || socix.Edad > 18))
+                            {
+                                throw new EdadNoAdmitidaException("La edad mínima para jugar en competitivo es de 5 años y la máxima 18.");
+                            }
+                            else
+                            {
+                                socix.Categoria = ECategoria.Amateur;
+                            }
+                            //socix = new Futbolista(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, tipoSocixSeleccionado, 0, 0, int.Parse(txtPosicion.Text), DateTime.Today.ToString(), DateTime.Today.ToString());
+                            break;
+
+                        case 2:
+
+                            socix = new Pugilista();
+                            socix.DNI = int.Parse(txtDNI.Text);
+                            socix.Nombre = txtNombre.Text;
+                            socix.Apellido = txtApellido.Text;
+                            socix.Genero = generoSeleccionado;
+                            socix.Edad = int.Parse(txtEdad.Text);
+                            socix.TipoSocix = tipoSocixSeleccionado;
+                            socix.CantidadMedallas = 0;
+                            socix.FechaAptaFisica = DateTime.Today.ToString();
+                            socix.FechaDeAsociacion = socix.FechaAptaFisica;
+
+                            if (socix.Edad <= 12)
+                            {
+                                socix.ValorCuota = ECuota.NinixsBoxeo;
+                            }
+                            else
+                            {
+                                socix.ValorCuota = ECuota.AdultxsBoxeo;
+                            }
+
+                            socix.CategoriaPeso = pesoSeleccionado;
+                            socix.CantidadPeleas = 0;
+
+
+                            //socix = new Pugilista(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, 0, pesoSeleccionado, tipoSocixSeleccionado, 0, DateTime.Today.ToString(), DateTime.Today.ToString());
+                            break;
+
+                        default:
+                            socix = new Nadador();
+                            socix.DNI = int.Parse(txtDNI.Text);
+                            socix.Nombre = txtNombre.Text;
+                            socix.Apellido = txtApellido.Text;
+                            socix.Genero = generoSeleccionado;
+                            socix.Edad = int.Parse(txtEdad.Text);
+                            socix.TipoSocix = tipoSocixSeleccionado;
+                            socix.CantidadMedallas = 0;
+                            socix.FechaAptaFisica = DateTime.Today.ToString();
+                            socix.FechaDeAsociacion = socix.FechaAptaFisica;
+                            socix.TipoPileta = piletaSeleccionada;
+                            socix.EstiloPreferido = estiloNadoSeleccionado;
+
+                            if (socix.Edad <= 12)
+                            {
+                                socix.ValorCuota = ECuota.NinixsNatacion;
+                            }
+                            else
+                            {
+                                socix.ValorCuota = ECuota.AdultxsNatacion;
+                            }
+                            // socix = new Nadador(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, tipoSocixSeleccionado, 0, piletaSeleccionada, estiloNadoSeleccionado, DateTime.Today.ToString(), DateTime.Today.ToString());
+                            break;
+
+                    }
+
+                    if ((MessageBox.Show($"¿Desea guardar el socio ingresado? \n \n {socix}", "Nuevx Socix", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                    {
+                        new GestorBaseDeDatos().Guardar(socix);
+                        listaSocix.Add(socix);
                     }
                 }
-         
+               
+                
+                       
 
             }
-            catch (Exception)
+            catch (MenorQueCeroException ex)
             {
-                throw;
-            }  
+                MessageBox.Show($"{ex.Message}", "Edad no admitida", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (EdadNoAdmitidaException ex)
+            {
+                MessageBox.Show($"{ex.Message}", "Edad no admitida", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (NombreApellidoInvalidoException ex)
+            {
+                MessageBox.Show($"{ex.Message}","Nombre o Apellido inválido",MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } 
+            catch (PosicionException ex)
+            {
+                MessageBox.Show($"{ex.Message}", "Posición Inválido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (DniInvalidoException ex)
+            {
+                MessageBox.Show($"{ex.Message}", "DNI Existente", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}", "Error General", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void lblCancelar_Click(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Dispose();
         }
@@ -152,6 +265,7 @@ namespace FrmClub
             this.cmbEstiloNado.DataSource = Enum.GetValues(typeof(EEstilos));
             this.cmbPeso.DataSource = Enum.GetValues(typeof(EPeso));
             this.cmbTipoSocix.DataSource = Enum.GetValues(typeof(ETipoSocix));
+            
         }
 
         private void cmbGenero_SelectedIndexChanged(object sender, EventArgs e)

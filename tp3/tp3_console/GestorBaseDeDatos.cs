@@ -20,8 +20,6 @@ namespace Entidades
     {
 
         private string sqlConexion;
-        public event Refrescador ActualizarDB;
-        public event Notificador NotificarDB;
         private string sqlComando;
 
         public GestorBaseDeDatos()
@@ -84,29 +82,32 @@ namespace Entidades
             {
                 try
                 {
-                    string consulta = "INSERT INTO CLUB (dni,nombre,apellido,genero,edad,valorCuota,tipoSocix,medallas,categoria,posicion,partidosJugados,tipoPileta,estiloPreferido,categoriaPeso,cantidadPeleas,fechaDeAsociacion) VALUES (@dni,@nombre,@apellido,@genero,@edad,@valorCuota,@tipoSocix,@medallas,@categoria,@posicion,@partidosJugados,@tipoPileta,@estiloPreferido,@categoriaPeso,@cantidadPeleas,@fechaDeAsociacion)";
+                    string consulta = "INSERT INTO Socixs (dni,nombre,apellido,genero,edad,valorCuota,tipoSocix,medallas,categoria,posicion,partidosJugados,tipoPileta,estiloPreferido,categoriaPeso,cantidadPeleas,fechaAptaFisica,fechaDeAsociacion) VALUES (@dni,@nombre,@apellido,@genero,@edad,@valorCuota,@tipoSocix,@medallas,@categoria,@posicion,@partidosJugados,@tipoPileta,@estiloPreferido,@categoriaPeso,@cantidadPeleas,@fechaAptaFisica,@fechaDeAsociacion)";
 
                     SqlCommand sqlCommand = new SqlCommand(consulta, sqlConnection);
 
                     sqlCommand.Parameters.AddWithValue("dni", socio.DNI);
                     sqlCommand.Parameters.AddWithValue("nombre", socio.Nombre);
                     sqlCommand.Parameters.AddWithValue("apellido", socio.Apellido);
-                    sqlCommand.Parameters.AddWithValue("genero", socio.Genero);
+                    sqlCommand.Parameters.AddWithValue("genero", socio.Genero.ToString());
                     sqlCommand.Parameters.AddWithValue("edad", socio.Edad);
-                    sqlCommand.Parameters.AddWithValue("valorCuota", socio.ValorCuota);
+                    sqlCommand.Parameters.AddWithValue("valorCuota", socio.ValorCuota.ToString());
+                    sqlCommand.Parameters.AddWithValue("tipoSocix", socio.TipoSocix.ToString());
                     sqlCommand.Parameters.AddWithValue("medallas", socio.CantidadMedallas);
+                    sqlCommand.Parameters.AddWithValue("fechaAptaFisica", socio.FechaAptaFisica);
                     sqlCommand.Parameters.AddWithValue("fechaDeAsociacion", socio.FechaDeAsociacion);
+
 
                     if (socio is Futbolista)
                     {
 
-                        sqlCommand.Parameters.AddWithValue("categoria", socio.Categoria);
+                        sqlCommand.Parameters.AddWithValue("categoria", socio.Categoria.ToString());
                         sqlCommand.Parameters.AddWithValue("posicion", socio.Posicion);
                         sqlCommand.Parameters.AddWithValue("partidosJugados", socio.PartidosJugados);
                         sqlCommand.Parameters.AddWithValue("tipoPileta", "No corresponde");
                         sqlCommand.Parameters.AddWithValue("estiloPreferido", "No corresponde");
                         sqlCommand.Parameters.AddWithValue("categoriaPeso", "No corresponde");
-                        sqlCommand.Parameters.AddWithValue("cantidadPeleas", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("cantidadPeleas", 0);
 
 
                     }
@@ -117,7 +118,7 @@ namespace Entidades
                         sqlCommand.Parameters.AddWithValue("partidosJugados", 0);
                         sqlCommand.Parameters.AddWithValue("tipoPileta", "No corresponde");
                         sqlCommand.Parameters.AddWithValue("estiloPreferido", "No corresponde");
-                        sqlCommand.Parameters.AddWithValue("categoriaPeso", socio.CategoriaPeso);
+                        sqlCommand.Parameters.AddWithValue("categoriaPeso", socio.CategoriaPeso.ToString());
                         sqlCommand.Parameters.AddWithValue("cantidadPeleas", socio.CantidadPeleas);
                     }
                     else
@@ -125,10 +126,10 @@ namespace Entidades
                         sqlCommand.Parameters.AddWithValue("categoria", 0);
                         sqlCommand.Parameters.AddWithValue("posicion", 0);
                         sqlCommand.Parameters.AddWithValue("partidosJugados", 0);
-                        sqlCommand.Parameters.AddWithValue("tipoPileta", socio.TipoPileta);
-                        sqlCommand.Parameters.AddWithValue("estiloPreferido", socio.EstiloPreferido);
+                        sqlCommand.Parameters.AddWithValue("tipoPileta", socio.TipoPileta.ToString());
+                        sqlCommand.Parameters.AddWithValue("estiloPreferido", socio.EstiloPreferido.ToString());
                         sqlCommand.Parameters.AddWithValue("categoriaPeso", "No corresponde");
-                        sqlCommand.Parameters.AddWithValue("cantidadPeleas", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("cantidadPeleas", 0);
                     }
 
 
@@ -141,9 +142,9 @@ namespace Entidades
                     sqlCommand.ExecuteNonQuery();
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    throw new Exception("Excepcion Capturada en GuardarSocix",ex);
                 }
 
             }

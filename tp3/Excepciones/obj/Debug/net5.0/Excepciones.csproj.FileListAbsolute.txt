@@ -2,7 +2,6 @@ C:\Users\btz_p\source\repos\tp3\Excepciones\bin\Debug\net5.0\Excepciones.deps.js
 C:\Users\btz_p\source\repos\tp3\Excepciones\bin\Debug\net5.0\Excepciones.dll
 C:\Users\btz_p\source\repos\tp3\Excepciones\bin\Debug\net5.0\ref\Excepciones.dll
 C:\Users\btz_p\source\repos\tp3\Excepciones\bin\Debug\net5.0\Excepciones.pdb
-C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\Excepciones.csproj.AssemblyReference.cache
 C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\Excepciones.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\Excepciones.AssemblyInfoInputs.cache
 C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\Excepciones.AssemblyInfo.cs
@@ -10,3 +9,4 @@ C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\Excepciones.csproj.
 C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\Excepciones.dll
 C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\ref\Excepciones.dll
 C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\Excepciones.pdb
+C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\Excepciones.csproj.AssemblyReference.cache
