@@ -68,7 +68,7 @@ namespace FrmClub
 
         private void listNadadoresBtn_Click(object sender, EventArgs e)
         {
-            gestor = new GestorBaseDeDatos("Select * from Socixs where valorCuota = *Natacion");
+            gestor = new GestorBaseDeDatos("Select * from Socixs where valorCuota LIKE '%Natacion'");
         
             try
             {
@@ -84,7 +84,7 @@ namespace FrmClub
 
         private void lstFutbolistasBtn_Click(object sender, EventArgs e)
         {
-            gestor = new GestorBaseDeDatos("Select * from Socixs where valorCuota = *Futbol");
+            gestor = new GestorBaseDeDatos("Select * from Socixs where valorCuota LIKE '%Futbol'");
         
             try
             {
@@ -100,7 +100,7 @@ namespace FrmClub
 
         private void btnPugilistas_Click(object sender, EventArgs e)
         {
-            gestor = new GestorBaseDeDatos("Select * from Socixs where valorCuota = *Boxeo");
+            gestor = new GestorBaseDeDatos("Select * from Socixs where valorCuota LIKE '%Boxeo'");
 
             try
             {

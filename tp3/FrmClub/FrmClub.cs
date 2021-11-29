@@ -84,6 +84,10 @@ namespace FrmClub
                {
                     gda.Leer($"{miClub.RazonSocial}.json", out listaSocixs);
                }
+               else
+                {
+
+                }
             }
             catch (ErrorArchivosException ex)
             {

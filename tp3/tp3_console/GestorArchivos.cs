@@ -63,7 +63,7 @@ namespace Entidades
             }
             catch (Exception ex)
             {
-                throw new ErrorArchivosException("Error al leer el archivo.", ex);
+                throw new ErrorArchivosException($"Error al leer el archivo : {ex.Message}", ex);
             }
 
         }

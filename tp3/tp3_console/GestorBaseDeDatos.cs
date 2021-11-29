@@ -312,7 +312,7 @@ namespace Entidades
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Excepcion Capturada en ObtenerSocix", ex);
+                    throw new Exception($"Excepcion Capturada en ObtenerSocix: {ex.Message}");
                 }
 
             }

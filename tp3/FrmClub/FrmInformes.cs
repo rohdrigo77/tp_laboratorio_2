@@ -20,12 +20,13 @@ namespace FrmClub
             listaSocixs = lista;
         }
 
-        private void btnGeneroMasMedallas_Click(object sender, EventArgs e)
+        private void btnMedallasSegunGenero_Click(object sender, EventArgs e)
         {
-            StringBuilder generoMasMedallas = new StringBuilder();
-            int medallasMasculino = 0;
-            int medallasFemenino = 0;
-            int medallasNB = 0;
+            StringBuilder generoMedallas = new StringBuilder();
+            float medallasMasculino = 0;
+            float medallasFemenino = 0;
+            float medallasNB = 0;
+            float totalMedallas = 0;
 
             foreach (Socix socix in this.listaSocixs)
             {
@@ -46,33 +47,30 @@ namespace FrmClub
                 }                                  
             }
 
-            if (medallasMasculino >= medallasFemenino && medallasMasculino >= medallasNB)
-            {
-                generoMasMedallas.AppendLine($"El género con más medallas es el masculino, con {medallasMasculino} medallas.");
-            }
-            else if(medallasFemenino >= medallasMasculino && medallasFemenino >= medallasNB)
-            {
-                generoMasMedallas.AppendLine($"El género con más medallas es el femenino, con {medallasFemenino} medallas.");
-            }
-            else if (medallasNB >= medallasMasculino && medallasNB >= medallasFemenino)
-            {
-                generoMasMedallas.AppendLine($"El género con más medallas es el no binario, con {medallasNB} medallas.");
-            }
-            else 
-            {
-                generoMasMedallas.AppendLine("No hay socixs competitivos o nadie tiene medallas.");
-            }
+            totalMedallas = medallasFemenino + medallasMasculino + medallasNB;
 
-            MessageBox.Show(generoMasMedallas.ToString(), "Género con más medallas", MessageBoxButtons.OK);
+            medallasMasculino = medallasMasculino * totalMedallas / 100;
+            medallasFemenino = medallasFemenino * totalMedallas / 100;
+            medallasNB = medallasNB * totalMedallas / 100;
+
+
+            generoMedallas.AppendLine($"El género masculino posee el %{medallasMasculino} de medallas.");
+
+            generoMedallas.AppendLine($"El género femenino posee el  %{medallasFemenino} de medallas.");
+
+            generoMedallas.AppendLine($"El género no binario posee el %{medallasNB} de medallas.");                                    
+
+            MessageBox.Show(generoMedallas.ToString(), "Porcentaje de medallas según género", MessageBoxButtons.OK);
                 
         }
 
         private void btnSocixsCompetitivos_Click(object sender, EventArgs e)
         {
             StringBuilder deporteMasCompetitivo = new StringBuilder();
-            int competidorxsNadadorxs = 0;
-            int competidorxsFutbolistas = 0;
-            int competidoresBox = 0;
+            float competidorxsNadadorxs = 0;
+            float competidorxsFutbolistas = 0;
+            float competidoresBox = 0;
+            float totalCompetidores;
 
             foreach (Socix socix in this.listaSocixs)
             {
@@ -94,32 +92,29 @@ namespace FrmClub
                 }
             }
 
-            if (competidorxsNadadorxs >= competidorxsFutbolistas && competidorxsNadadorxs >= competidoresBox)
-            {
-                deporteMasCompetitivo.AppendLine($"El deporte con más socixs competitivos es Natación, con {competidorxsNadadorxs} socixs.");
-            }
-            else if (competidorxsFutbolistas >= competidorxsNadadorxs && competidorxsFutbolistas >= competidoresBox)
-            {
-                deporteMasCompetitivo.AppendLine($"El deporte con más socixs competitivos es el Futbol, con {competidorxsFutbolistas} socixs.");
-            }
-            else if (competidoresBox >= competidorxsFutbolistas && competidoresBox >= competidorxsNadadorxs)
-            {
-                deporteMasCompetitivo.AppendLine($"El deporte con más socixs competitivos es el Boxeo, con {competidoresBox} socixs.");
-            }
-            else
-            {
-                deporteMasCompetitivo.AppendLine("No hay socixs competitivos.");
-            }
+            totalCompetidores = competidoresBox + competidorxsFutbolistas + competidorxsNadadorxs;
 
-            MessageBox.Show(deporteMasCompetitivo.ToString(), "Deporte con más socixs competitivos", MessageBoxButtons.OK);
+            competidoresBox = competidoresBox * totalCompetidores / 100;
+            competidorxsNadadorxs = competidorxsNadadorxs * totalCompetidores / 100;
+            competidorxsFutbolistas = competidorxsFutbolistas * totalCompetidores / 100;
+
+
+            deporteMasCompetitivo.AppendLine($"El porcentaje de socixs competitivos de Natación es de %{competidorxsNadadorxs}.");
+        
+            deporteMasCompetitivo.AppendLine($"El porcentaje de socixs competitivos de Futbol es de %{competidorxsFutbolistas}.");
+      
+            deporteMasCompetitivo.AppendLine($"El porcentaje de socixs competitivos de Boxeo es de % {competidoresBox}.");       
+
+            MessageBox.Show(deporteMasCompetitivo.ToString(), "Socixs competitivos por deporte", MessageBoxButtons.OK);
         }
 
         private void btnDeporteNinixs_Click(object sender, EventArgs e)
         {
             StringBuilder deporteConMasNinixs = new StringBuilder();
-            int ninixsNadadorxs = 0;
-            int ninixsFutbolistas = 0;
-            int ninixsBox = 0;
+            float ninixsNadadorxs = 0;
+            float ninixsFutbolistas = 0;
+            float ninixsBox = 0;
+            float totalNinixs;
 
             foreach (Socix socix in this.listaSocixs)
             {
@@ -141,24 +136,17 @@ namespace FrmClub
                 }
             }
 
-            if (ninixsNadadorxs >= ninixsFutbolistas && ninixsNadadorxs >= ninixsBox)
-            {
-                deporteConMasNinixs.AppendLine($"El deporte con más socixs niñxs es Natación, con {ninixsNadadorxs} socixs.");
-            }
-            else if (ninixsFutbolistas >= ninixsNadadorxs && ninixsFutbolistas >= ninixsBox)
-            {
-                deporteConMasNinixs.AppendLine($"El deporte con más socixs niñxs es el Futbol, con {ninixsFutbolistas} socixs.");
-            }
-            else if (ninixsBox >= ninixsFutbolistas && ninixsBox >= ninixsNadadorxs)
-            {
-                deporteConMasNinixs.AppendLine($"El deporte con más socixs niñxs es el Boxeo, con {ninixsBox} socixs.");
-            }
-            else
-            {
-                deporteConMasNinixs.AppendLine("No hay socixs niñxs.");
-            }
+            totalNinixs = ninixsBox + ninixsFutbolistas + ninixsNadadorxs;
+            ninixsBox = ninixsBox * totalNinixs / 100;
+            ninixsFutbolistas = ninixsFutbolistas * totalNinixs / 100;
+            ninixsNadadorxs = ninixsNadadorxs * totalNinixs / 100; 
 
-            MessageBox.Show(deporteConMasNinixs.ToString(), "Deporte con más niñxs", MessageBoxButtons.OK);
+            deporteConMasNinixs.AppendLine($"El porcentaje de socixs niñxs en Natación es de %{ninixsNadadorxs}.");
+            deporteConMasNinixs.AppendLine($"El porcentaje de socixs niñxs en Boxeo es de %{ninixsBox}");
+            deporteConMasNinixs.AppendLine($"El porcentaje de socixs niñxs en Futbol es de %{ninixsBox}");
+
+
+            MessageBox.Show(deporteConMasNinixs.ToString(), "Porcentaje de ninixs según deporte", MessageBoxButtons.OK);
         }
 
         private void btnSalir_Click(object sender, EventArgs e)

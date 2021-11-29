@@ -29,21 +29,21 @@ namespace FrmClub
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnGeneroMasMedallas = new System.Windows.Forms.Button();
+            this.btnMedallasSegunGenero = new System.Windows.Forms.Button();
             this.btnSocixsCompetitivos = new System.Windows.Forms.Button();
             this.btnDeporteNinixs = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // btnGeneroMasMedallas
+            // btnMedallasSegunGenero
             // 
-            this.btnGeneroMasMedallas.Location = new System.Drawing.Point(12, 12);
-            this.btnGeneroMasMedallas.Name = "btnGeneroMasMedallas";
-            this.btnGeneroMasMedallas.Size = new System.Drawing.Size(305, 58);
-            this.btnGeneroMasMedallas.TabIndex = 0;
-            this.btnGeneroMasMedallas.Text = "Género con más medallas";
-            this.btnGeneroMasMedallas.UseVisualStyleBackColor = true;
-            this.btnGeneroMasMedallas.Click += new System.EventHandler(this.btnGeneroMasMedallas_Click);
+            this.btnMedallasSegunGenero.Location = new System.Drawing.Point(12, 12);
+            this.btnMedallasSegunGenero.Name = "btnMedallasSegunGenero";
+            this.btnMedallasSegunGenero.Size = new System.Drawing.Size(305, 58);
+            this.btnMedallasSegunGenero.TabIndex = 0;
+            this.btnMedallasSegunGenero.Text = "Porcentaje de medallas según género";
+            this.btnMedallasSegunGenero.UseVisualStyleBackColor = true;
+            this.btnMedallasSegunGenero.Click += new System.EventHandler(this.btnMedallasSegunGenero_Click);
             // 
             // btnSocixsCompetitivos
             // 
@@ -51,7 +51,7 @@ namespace FrmClub
             this.btnSocixsCompetitivos.Name = "btnSocixsCompetitivos";
             this.btnSocixsCompetitivos.Size = new System.Drawing.Size(305, 58);
             this.btnSocixsCompetitivos.TabIndex = 1;
-            this.btnSocixsCompetitivos.Text = "Deporte con más socixs de competencia";
+            this.btnSocixsCompetitivos.Text = "Porcentaje de Socixs competitivos según deporte";
             this.btnSocixsCompetitivos.UseVisualStyleBackColor = true;
             this.btnSocixsCompetitivos.Click += new System.EventHandler(this.btnSocixsCompetitivos_Click);
             // 
@@ -61,7 +61,7 @@ namespace FrmClub
             this.btnDeporteNinixs.Name = "btnDeporteNinixs";
             this.btnDeporteNinixs.Size = new System.Drawing.Size(305, 58);
             this.btnDeporteNinixs.TabIndex = 2;
-            this.btnDeporteNinixs.Text = "Deporte con más niñxs";
+            this.btnDeporteNinixs.Text = "Porcentaje de niñxs según deporte";
             this.btnDeporteNinixs.UseVisualStyleBackColor = true;
             this.btnDeporteNinixs.Click += new System.EventHandler(this.btnDeporteNinixs_Click);
             // 
@@ -83,7 +83,7 @@ namespace FrmClub
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnDeporteNinixs);
             this.Controls.Add(this.btnSocixsCompetitivos);
-            this.Controls.Add(this.btnGeneroMasMedallas);
+            this.Controls.Add(this.btnMedallasSegunGenero);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmInformes";
@@ -94,7 +94,7 @@ namespace FrmClub
 
         #endregion
 
-        private System.Windows.Forms.Button btnGeneroMasMedallas;
+        private System.Windows.Forms.Button btnMedallasSegunGenero;
         private System.Windows.Forms.Button btnSocixsCompetitivos;
         private System.Windows.Forms.Button btnDeporteNinixs;
         private System.Windows.Forms.Button btnSalir;
