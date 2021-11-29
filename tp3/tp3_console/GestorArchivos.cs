@@ -37,12 +37,13 @@ namespace Entidades
         public void Guardar(string archivo, T objeto)
         {
             string rutaCompleta = GenerarRutaCompleta + archivo;
+            StreamWriter streamWriter = new StreamWriter(rutaCompleta, true);
 
 
             try
             {
                 string json = JsonSerializer.Serialize<T>(objeto);
-                File.WriteAllText(rutaCompleta, json);
+                streamWriter.WriteLine();
             }
             catch (Exception ex)
             {

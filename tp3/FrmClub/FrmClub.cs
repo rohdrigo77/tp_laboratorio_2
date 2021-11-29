@@ -12,6 +12,7 @@ using Excepciones;
 
 namespace FrmClub
 {
+    public delegate string ObtenerClub();
     public partial class FrmClub : Form
     {        
         private FrmCargarSocix cargarSocix;
@@ -19,7 +20,7 @@ namespace FrmClub
         private FrmListDatos mostrarDatos;
         private FrmInformes informes;
         private Club miClub;
-        private GestorDeArchivos<Socix> gda;
+        private GestorDeArchivos <List<Socix>> gda;
         private List<Socix> listaSocixs;
 
         public FrmClub()
@@ -27,7 +28,6 @@ namespace FrmClub
             InitializeComponent();
             miClub = new Club("Club del Peluca");
             listaSocixs = new List<Socix>();
-
         }
 
         public Club MiClub
@@ -75,34 +75,25 @@ namespace FrmClub
         private void FrmClub_Load(object sender, EventArgs e)
         {
             this.Text = miClub.RazonSocial;
-            this.gda = new GestorDeArchivos<Socix>();
-            AgregarSocixAClub agregarSocix = AgregarSocix;
+            this.gda = new GestorDeArchivos <List<Socix>>();
+            
 
             try
             {
-                if (gda.ExisteArchivo($"{this.miClub.RazonSocial}.json"))
-                {
-                    (new GestorDeArchivos<List<Socix>>()).Leer($"{this.miClub.RazonSocial}.json", out this.listaSocixs);
-
-                }
+               if(gda.ExisteArchivo($"{miClub.RazonSocial}.json"))
+               {
+                    gda.Leer($"{miClub.RazonSocial}.json", out listaSocixs);
+               }
             }
-            catch (ErrorArchivosException)
+            catch (ErrorArchivosException ex)
             {
-                MessageBox.Show("Archivo no encontrado o inválido.", "Error al intentar abrir el archivo", MessageBoxButtons.OK);
+                MessageBox.Show($"{ex.Message}", "Error al intentar abrir el archivo", MessageBoxButtons.OK);
             }
         }
 
-        private void AgregarSocix(Socix socio)
+        private void FrmClub_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try
-            {
-                this.miClub += socio;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
+            new GestorDeArchivos<List<Socix>>().Guardar($"{this.miClub.RazonSocial}.json", listaSocixs);
         }
     }
 }

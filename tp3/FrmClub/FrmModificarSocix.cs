@@ -17,7 +17,10 @@ namespace FrmClub
     {
         List<TextBox> cajasDeTexto = new List<TextBox>();
         List<ComboBox> comboCajas = new List<ComboBox>();
-        List<CheckBox> cajasCheck = new List<CheckBox>();
+        List<CheckBox> cajasCheck = new List<CheckBox>();      
+        FrmListDatos frmListDatos = new FrmListDatos("Select * from Socixs");
+        Socix socix;
+        
 
         public FrmModificarSocix()
         {
@@ -33,57 +36,71 @@ namespace FrmClub
             camposModificados.AppendLine("Campos modificados:");
             camposModificados.AppendLine(" ");
 
-            
 
-            for  (int i=0;i<cajasCheck.Count;i++)
+            try 
             {
-                if(cajasCheck[i].CheckState == CheckState.Checked)
+                for (int i = 0; i < cajasCheck.Count; i++)
+                {
+                    if (cajasCheck[i].CheckState == CheckState.Checked)
+                    {
+
+                        stringValue.AppendLine($"{cajasCheck[i].Text} = ");
+
+                        foreach (TextBox cajita in cajasDeTexto)
+                        {
+                            bool contains = cajita.Name.IndexOf($"txt{char.ToUpper(cajasCheck[i].Text[0])}", StringComparison.OrdinalIgnoreCase) == 0;
+
+                            if (contains)
+                            {
+                                txtValue = cajita.Text;
+                                stringValue.Append($"{txtValue}");
+                                break;
+                            }
+                        }
+
+                        foreach (ComboBox cajita in comboCajas)
+                        {
+                            bool contains = cajita.Name.IndexOf($"cmb{char.ToUpper(cajasCheck[i].Text[0])}", StringComparison.OrdinalIgnoreCase) == 0;
+
+                            if (contains)
+                            {
+                                txtValue = cajita.Text;
+                                break;
+                            }
+                        }
+
+                        camposModificados.AppendLine($"{cajasCheck[i].Text}: {txtValue}");
+
+                        if (!(i == cajasCheck.Count - 1))
+                        {
+                            camposModificados.Append(",");
+                        }
+
+                    }
+                }
+
+                camposModificados.AppendLine("");
+                camposModificados.AppendLine("¿Guardar Cambios?");
+
+                if (MessageBox.Show($"{camposModificados}", "Socix Modificado", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
 
-                    stringValue.AppendLine($"{cajasCheck[i].Text} = ");
+                    (new GestorBaseDeDatos()).ActualizarSocix(socix, int.Parse(txtDNI.Text));
+                    Task tarea = Task.Run(() => { this.frmListDatos.ActualizarDatagridDni(int.Parse(txtDNI.Text)); });
 
-                    foreach (TextBox cajita in cajasDeTexto)
+                    if (tarea != null)
                     {
-                        bool contains = cajita.Name.IndexOf($"txt{char.ToUpper(cajasCheck[i].Text[0])}", StringComparison.OrdinalIgnoreCase) >= 0;
-                        
-                        if (contains)
-                        {
-                            txtValue = cajita.Text;
-                            stringValue.Append($"{txtValue}");
-                            break;
-                        }
-                    }
-
-                    foreach (ComboBox cajita in comboCajas)
-                    {
-                        bool contains = cajita.Name.IndexOf($"cmb{char.ToUpper(cajasCheck[i].Text[0])}", StringComparison.OrdinalIgnoreCase) >= 0;
-
-                        if (contains)
-                        {
-                            txtValue = cajita.Text;
-                            break;
-                        }
-                    }                   
-
-                    camposModificados.AppendLine($"{cajasCheck[i].Text}:{txtValue}");
-
-                    if (!(i==cajasCheck.Count-1))
-                    {
-                        camposModificados.Append(",");
+                        this.ActualizarEventDni(int.Parse(txtDNI.Text));
+                        MessageBox.Show("Socix modificadx exitosamente.", "Socix Modificado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                 }
             }
-
-            camposModificados.AppendLine("");
-            camposModificados.AppendLine("¿Guardar Cambios?");
-
-            if(MessageBox.Show($"{camposModificados}","Socix Modificado",MessageBoxButtons.YesNo) == DialogResult.Yes)
+            catch (Exception ex)
             {
-
-                (new GestorBaseDeDatos($"UPDATE Socixs SET {camposModificados} WHERE dni = {txtDNI.Text}")).EjecutarNonQuery();
-                    
+                MessageBox.Show(ex.Message, "Error al guardar cambios", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
 
         }
 
@@ -214,13 +231,13 @@ namespace FrmClub
 
         private void chkTipoPileta_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkTipoPileta.CheckState == CheckState.Checked)
+            if (chkPileta.CheckState == CheckState.Checked)
             {
-                cmbTipoPileta.Enabled = true;
+                cmbPileta.Enabled = true;
             }
             else
             {
-                cmbTipoPileta.Enabled = false;
+                cmbPileta.Enabled = false;
             }
         }
 
@@ -238,13 +255,13 @@ namespace FrmClub
 
         private void chkCategoriaPeso_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkCategoriaPeso.CheckState == CheckState.Checked)
+            if (chkPeso.CheckState == CheckState.Checked)
             {
-                cmbCategoriaPeso.Enabled = true;
+                cmbPeso.Enabled = true;
             }
             else
             {
-                cmbCategoriaPeso.Enabled = false;
+                cmbPeso.Enabled = false;
             }
         }
 
@@ -263,9 +280,9 @@ namespace FrmClub
             comboCajas.Add(cmbCategoria);
             comboCajas.Add(cmbValorCuota);
             comboCajas.Add(cmbTipoSocix);
-            comboCajas.Add(cmbTipoPileta);
+            comboCajas.Add(cmbPileta);
             comboCajas.Add(cmbEstiloPreferido);
-            comboCajas.Add(cmbCategoriaPeso);
+            comboCajas.Add(cmbPeso);
 
             cajasCheck.Add(chkNombre);
             cajasCheck.Add(chkApellido);
@@ -278,9 +295,9 @@ namespace FrmClub
             cajasCheck.Add(chkCategoria);
             cajasCheck.Add(chkValorCuota);
             cajasCheck.Add(chkTipoSocix);
-            cajasCheck.Add(chkTipoPileta);
+            cajasCheck.Add(chkPileta);
             cajasCheck.Add(chkEstilo);
-            cajasCheck.Add(chkCategoriaPeso);
+            cajasCheck.Add(chkPeso);
 
             foreach (TextBox cajita in cajasDeTexto)
             {
@@ -294,16 +311,19 @@ namespace FrmClub
 
             cmbGenero.DataSource = Enum.GetValues(typeof(EGenero));
             cmbValorCuota.DataSource = Enum.GetValues(typeof(ECuota));
-            cmbCategoria.DataSource = Enum.GetValues(typeof(EGenero));
-            cmbTipoSocix.DataSource = Enum.GetValues(typeof(EGenero));
-            cmbTipoPileta.DataSource = Enum.GetValues(typeof(EGenero));
-            cmbEstiloPreferido.DataSource = Enum.GetValues(typeof(EGenero));
-            cmbCategoriaPeso.DataSource = Enum.GetValues(typeof(EGenero));
+            cmbCategoria.DataSource = Enum.GetValues(typeof(ECategoria));
+            cmbTipoSocix.DataSource = Enum.GetValues(typeof(ETipoSocix));
+            cmbPileta.DataSource = Enum.GetValues(typeof(EPileta));
+            cmbEstiloPreferido.DataSource = Enum.GetValues(typeof(EEstilos));
+            cmbPeso.DataSource = Enum.GetValues(typeof(EPeso));
 
+            frmListDatos.actualizarDG += this.ActualizarEvent;
+            frmListDatos.actualizarDGDni += this.ActualizarEventDni;
+            Task.Run(() => frmListDatos.ShowDialog());
             
-            Task.Run(() => new FrmListDatos("Select * from Socixs").ShowDialog());
-
         }
+
+
 
         private void chkTipoSocix_CheckedChanged(object sender, EventArgs e)
         {
@@ -317,5 +337,56 @@ namespace FrmClub
             }
         }
 
+        private void btnDni_Click(object sender, EventArgs e)
+        {
+            GestorBaseDeDatos gbd = new GestorBaseDeDatos();
+
+            if (int.TryParse(this.txtDNI.Text, out int dni))
+            {
+
+                    socix = gbd.ObtenerSocix(dni);
+                    Task tarea = Task.Run(() => { this.frmListDatos.ActualizarDatagridDni(dni); }) ;
+                    
+                    if (tarea != null)
+                    {
+                        this.ActualizarEventDni(dni);
+                    }
+
+            }
+            else
+            {
+                MessageBox.Show("Dni inválido o inexistente.", "Error al ingresar DNI", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ActualizarEvent()
+        {
+            if (frmListDatos.DataGridView.InvokeRequired)
+            {
+                ActualizarDataGrid del = new ActualizarDataGrid(this.ActualizarEvent);
+                this.frmListDatos.DataGridView.Invoke(del);
+            }
+            else
+            {
+                frmListDatos.Gestor = new GestorBaseDeDatos();
+                frmListDatos.DataGridView.DataSource = frmListDatos.Gestor.LeerDesdeBD();
+               
+            }
+        }
+        
+        private void ActualizarEventDni(int dni)
+        {
+            if (frmListDatos.DataGridView.InvokeRequired)
+            {
+                ActualizarDataGridConDni del = new ActualizarDataGridConDni(this.ActualizarEventDni);
+                object[] args = new object[] { dni };
+                this.frmListDatos.DataGridView.Invoke(del, args);
+            }
+            else
+            {
+                frmListDatos.Gestor = new GestorBaseDeDatos($"SELECT * from Socixs WHERE dni = {dni}");
+                frmListDatos.DataGridView.DataSource = frmListDatos.Gestor.LeerDesdeBD();
+            }
+        }
     }
 }

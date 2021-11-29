@@ -29,8 +29,8 @@ namespace Entidades
 
             try
             {
-                base.Mostrar();
-                sb.AppendLine($"Pileta en la que nada: {this.Pileta}");
+                sb.AppendLine($"{base.Mostrar()}");
+                sb.AppendLine($"Pileta en la que nada: {this.TipoPileta}");
                 sb.AppendLine($"Estilo preferido de nado: {this.EstiloPreferido}");
             }
             catch (Exception)
@@ -41,7 +41,7 @@ namespace Entidades
             return sb.ToString();
         }
 
-        public EPileta Pileta
+        public EPileta TipoPileta
         {
             set
             {
@@ -53,8 +53,12 @@ namespace Entidades
             }
         }
 
-        public override EEstilos EstiloPreferido
+        public EEstilos EstiloPreferido
         {
+            set
+            {
+                this.estiloPreferido = value;
+            }
             get
             {
                 return this.estiloPreferido;

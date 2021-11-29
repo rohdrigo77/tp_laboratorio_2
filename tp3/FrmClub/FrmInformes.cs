@@ -13,7 +13,7 @@ namespace FrmClub
 {
     public partial class FrmInformes : Form
     {
-        List<Socix> listaSocixs;
+        List<Socix> listaSocixs = new List<Socix>();
         public FrmInformes(List<Socix> lista)
         {
             InitializeComponent();
@@ -165,5 +165,7 @@ namespace FrmClub
         {
             this.Dispose();
         }
+
+
     }
 }

@@ -26,7 +26,7 @@ namespace Entidades
             
         }
 
-        public override int PartidosJugados
+        public int PartidosJugados
         {
             set
             {
@@ -38,7 +38,7 @@ namespace Entidades
             }
         }
 
-        public override ECategoria Categoria
+        public ECategoria Categoria
         {
             set
             {
@@ -50,7 +50,7 @@ namespace Entidades
             }
         }
 
-        public override int Posicion
+        public int Posicion
         {
             set
             {
@@ -103,7 +103,7 @@ namespace Entidades
         {
             StringBuilder sb = new StringBuilder();
 
-            base.Mostrar();
+            sb.AppendLine($"{base.Mostrar()}");
             sb.AppendLine($"Categoría: {this.Categoria}");
             sb.AppendLine($"Posición de juego: {this.Posicion}");
             sb.AppendLine($"Cantidad de partidos jugados: {this.PartidosJugados}");

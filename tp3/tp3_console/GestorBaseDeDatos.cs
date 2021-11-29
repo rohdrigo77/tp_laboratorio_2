@@ -12,10 +12,6 @@ using System.Threading;
 namespace Entidades
 {
 
-    public delegate void Refrescador(DataTable tabla);
-    public delegate void Notificador(string excepciones);
-
-
     public class GestorBaseDeDatos
     {
 
@@ -24,7 +20,7 @@ namespace Entidades
 
         public GestorBaseDeDatos()
         {
-            this.sqlConexion = @"Server=localhost\SQLEXPRESS;Database=TP3-CLUB;Trusted_Connection=True";
+            this.sqlConexion = @"Server=localhost\SQLEXPRESS;Database=TP3CLUB;Trusted_Connection=True";
         }
 
         public GestorBaseDeDatos(string comando)
@@ -82,7 +78,7 @@ namespace Entidades
             {
                 try
                 {
-                    string consulta = "INSERT INTO Socixs (dni,nombre,apellido,genero,edad,valorCuota,tipoSocix,medallas,categoria,posicion,partidosJugados,tipoPileta,estiloPreferido,categoriaPeso,cantidadPeleas,fechaAptaFisica,fechaDeAsociacion) VALUES (@dni,@nombre,@apellido,@genero,@edad,@valorCuota,@tipoSocix,@medallas,@categoria,@posicion,@partidosJugados,@tipoPileta,@estiloPreferido,@categoriaPeso,@cantidadPeleas,@fechaAptaFisica,@fechaDeAsociacion)";
+                    string consulta = "INSERT INTO Socixs (dni,nombre,apellido,genero,edad,valorCuota,tipoSocix,medallas,categoria,posicion,partidosJugados,pileta,estiloPreferido,peso,cantidadPeleas,aptaFisica,asociacion) VALUES (@dni,@nombre,@apellido,@genero,@edad,@valorCuota,@tipoSocix,@medallas,@categoria,@posicion,@partidosJugados,@pileta,@estiloPreferido,@peso,@cantidadPeleas,@aptaFisica,@asociacion)";
 
                     SqlCommand sqlCommand = new SqlCommand(consulta, sqlConnection);
 
@@ -94,19 +90,19 @@ namespace Entidades
                     sqlCommand.Parameters.AddWithValue("valorCuota", socio.ValorCuota.ToString());
                     sqlCommand.Parameters.AddWithValue("tipoSocix", socio.TipoSocix.ToString());
                     sqlCommand.Parameters.AddWithValue("medallas", socio.CantidadMedallas);
-                    sqlCommand.Parameters.AddWithValue("fechaAptaFisica", socio.FechaAptaFisica);
-                    sqlCommand.Parameters.AddWithValue("fechaDeAsociacion", socio.FechaDeAsociacion);
+                    sqlCommand.Parameters.AddWithValue("aptaFisica", socio.FechaAptaFisica);
+                    sqlCommand.Parameters.AddWithValue("asociacion", socio.FechaDeAsociacion);
 
 
                     if (socio is Futbolista)
                     {
 
-                        sqlCommand.Parameters.AddWithValue("categoria", socio.Categoria.ToString());
-                        sqlCommand.Parameters.AddWithValue("posicion", socio.Posicion);
-                        sqlCommand.Parameters.AddWithValue("partidosJugados", socio.PartidosJugados);
-                        sqlCommand.Parameters.AddWithValue("tipoPileta", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("categoria", ((Futbolista)socio).Categoria.ToString());
+                        sqlCommand.Parameters.AddWithValue("posicion", ((Futbolista)socio).Posicion);
+                        sqlCommand.Parameters.AddWithValue("partidosJugados", ((Futbolista)socio).PartidosJugados);
+                        sqlCommand.Parameters.AddWithValue("pileta", "No corresponde");
                         sqlCommand.Parameters.AddWithValue("estiloPreferido", "No corresponde");
-                        sqlCommand.Parameters.AddWithValue("categoriaPeso", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("peso", "No corresponde");
                         sqlCommand.Parameters.AddWithValue("cantidadPeleas", 0);
 
 
@@ -116,19 +112,19 @@ namespace Entidades
                         sqlCommand.Parameters.AddWithValue("categoria", 0);
                         sqlCommand.Parameters.AddWithValue("posicion", 0);
                         sqlCommand.Parameters.AddWithValue("partidosJugados", 0);
-                        sqlCommand.Parameters.AddWithValue("tipoPileta", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("pileta", "No corresponde");
                         sqlCommand.Parameters.AddWithValue("estiloPreferido", "No corresponde");
-                        sqlCommand.Parameters.AddWithValue("categoriaPeso", socio.CategoriaPeso.ToString());
-                        sqlCommand.Parameters.AddWithValue("cantidadPeleas", socio.CantidadPeleas);
+                        sqlCommand.Parameters.AddWithValue("peso", ((Pugilista)socio).CategoriaPeso.ToString());
+                        sqlCommand.Parameters.AddWithValue("cantidadPeleas", ((Pugilista)socio).CantidadPeleas);
                     }
                     else
                     {
                         sqlCommand.Parameters.AddWithValue("categoria", 0);
                         sqlCommand.Parameters.AddWithValue("posicion", 0);
                         sqlCommand.Parameters.AddWithValue("partidosJugados", 0);
-                        sqlCommand.Parameters.AddWithValue("tipoPileta", socio.TipoPileta.ToString());
-                        sqlCommand.Parameters.AddWithValue("estiloPreferido", socio.EstiloPreferido.ToString());
-                        sqlCommand.Parameters.AddWithValue("categoriaPeso", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("pileta", ((Nadador)socio).TipoPileta.ToString());
+                        sqlCommand.Parameters.AddWithValue("estiloPreferido", ((Nadador)socio).EstiloPreferido.ToString());
+                        sqlCommand.Parameters.AddWithValue("peso", "No corresponde");
                         sqlCommand.Parameters.AddWithValue("cantidadPeleas", 0);
                     }
 
@@ -144,7 +140,7 @@ namespace Entidades
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Excepcion Capturada en GuardarSocix",ex);
+                    throw new Exception("Excepcion Capturada en GuardarSocix", ex);
                 }
 
             }
@@ -161,7 +157,7 @@ namespace Entidades
                 try
                 {
 
-                    string consulta = "SELECT dni FROM TP3-CLUB WHERE dni = @dni";
+                    string consulta = "SELECT dni FROM Socixs WHERE dni = @dni";
                     SqlCommand sqlCommand = new SqlCommand(consulta, sqlConnection);
                     sqlCommand.Parameters.AddWithValue("dni", dni);
 
@@ -249,10 +245,172 @@ namespace Entidades
                     sqlCommand.ExecuteNonQuery();
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    throw ex;
                 }
+            }
+        }
+
+        public Socix ObtenerSocix(int dni)
+        {
+            Socix socix = null;
+
+            using (SqlConnection sqlConnection = new SqlConnection(this.sqlConexion))
+            {
+                try
+                {
+                    string consulta = "SELECT * FROM Socixs WHERE dni = @dni";
+
+                    SqlCommand sqlCommand = new SqlCommand(consulta, sqlConnection);
+
+                    sqlCommand.Parameters.AddWithValue("dni", dni);
+
+
+                    if (sqlConnection.State != System.Data.ConnectionState.Open)
+                    {
+                        sqlConnection.Open();
+                    }
+
+                    SqlDataReader data = sqlCommand.ExecuteReader();
+
+                    while (data.Read())
+                    {
+                        if (data.GetString(6).IndexOf("Natacion", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            socix = new Nadador();
+                            ((Nadador)socix).TipoPileta = Enum.Parse<EPileta>(data.GetString(12));
+                            ((Nadador)socix).EstiloPreferido = Enum.Parse<EEstilos>(data.GetString(13));
+                        }
+                        else if (data.GetString(6).IndexOf("Futbol", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            socix = new Futbolista();
+                            ((Futbolista)socix).Categoria = Enum.Parse<ECategoria>(data.GetString(9));
+                            ((Futbolista)socix).Posicion = data.GetInt32(10);
+                            ((Futbolista)socix).PartidosJugados = data.GetInt32(11);
+                        }
+                        else
+                        {
+                            socix = new Pugilista();
+                            ((Pugilista)socix).CategoriaPeso = Enum.Parse<EPeso>(data.GetString(14));
+                            ((Pugilista)socix).CantidadPeleas = data.GetInt32(15);
+                        }
+
+                        socix.Nombre = data.GetString(2);
+                        socix.Apellido = data.GetString(3);
+                        socix.Genero = Enum.Parse<EGenero>(data.GetString(4));
+                        socix.Edad = data.GetInt32(5);
+                        socix.ValorCuota = Enum.Parse<ECuota>(data.GetString(6));
+                        socix.TipoSocix = Enum.Parse<ETipoSocix>(data.GetString(7));
+                        socix.CantidadMedallas = data.GetInt32(8);
+                        socix.FechaAptaFisica = data.GetString(16);
+                        socix.FechaDeAsociacion = data.GetString(17);
+
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Excepcion Capturada en ObtenerSocix", ex);
+                }
+
+            }
+
+            return socix;
+
+        }
+
+        public void ActualizarSocix(Socix socio, int dni)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(this.sqlConexion))
+            {
+                try
+                {
+                    string consulta = "UPDATE Socixs SET nombre = @nombre, apellido = @apellido, genero = @genero, edad = @edad, valorCuota = @valorCuota, tipoSocix = @tipoSocix, medallas = @medallas, categoria = @categoria, posicion = @posicion, partidosJugados = @partidosJugados, pileta = @pileta , estiloPreferido = @estiloPreferido, peso = @peso, cantidadPeleas = @cantidadPeleas, aptaFisica = @aptaFisica, asociacion = @asociacion WHERE dni = @dni";
+
+                    SqlCommand sqlCommand = new SqlCommand(consulta, sqlConnection);
+                    sqlCommand.Parameters.AddWithValue("dni", dni);
+                    sqlCommand.Parameters.AddWithValue("nombre", socio.Nombre);
+                    sqlCommand.Parameters.AddWithValue("apellido", socio.Apellido);
+                    sqlCommand.Parameters.AddWithValue("genero", socio.Genero.ToString());
+                    sqlCommand.Parameters.AddWithValue("edad", socio.Edad);
+                    sqlCommand.Parameters.AddWithValue("valorCuota", socio.ValorCuota.ToString());
+                    sqlCommand.Parameters.AddWithValue("tipoSocix", socio.TipoSocix.ToString());
+                    sqlCommand.Parameters.AddWithValue("medallas", socio.CantidadMedallas);
+                    sqlCommand.Parameters.AddWithValue("aptaFisica", socio.FechaAptaFisica);
+                    sqlCommand.Parameters.AddWithValue("asociacion", socio.FechaDeAsociacion);
+
+
+                    if (socio is Futbolista)
+                    {
+
+                        sqlCommand.Parameters.AddWithValue("categoria", ((Futbolista)socio).Categoria.ToString());
+                        sqlCommand.Parameters.AddWithValue("posicion", ((Futbolista)socio).Posicion);
+                        sqlCommand.Parameters.AddWithValue("partidosJugados", ((Futbolista)socio).PartidosJugados);
+                        sqlCommand.Parameters.AddWithValue("tipoPileta", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("estiloPreferido", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("peso", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("cantidadPeleas", 0);
+
+
+                    }
+                    else if (socio is Pugilista)
+                    {
+                        sqlCommand.Parameters.AddWithValue("categoria", 0);
+                        sqlCommand.Parameters.AddWithValue("posicion", 0);
+                        sqlCommand.Parameters.AddWithValue("partidosJugados", 0);
+                        sqlCommand.Parameters.AddWithValue("pileta", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("estiloPreferido", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("peso", ((Pugilista)socio).CategoriaPeso.ToString());
+                        sqlCommand.Parameters.AddWithValue("cantidadPeleas", ((Pugilista)socio).CantidadPeleas);
+                    }
+                    else
+                    {
+                        sqlCommand.Parameters.AddWithValue("categoria", 0);
+                        sqlCommand.Parameters.AddWithValue("posicion", 0);
+                        sqlCommand.Parameters.AddWithValue("partidosJugados", 0);
+                        sqlCommand.Parameters.AddWithValue("pileta", ((Nadador)socio).TipoPileta.ToString());
+                        sqlCommand.Parameters.AddWithValue("estiloPreferido", ((Nadador)socio).EstiloPreferido.ToString());
+                        sqlCommand.Parameters.AddWithValue("peso", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("cantidadPeleas", 0);
+                    }
+
+
+
+                    if (sqlConnection.State != System.Data.ConnectionState.Open)
+                    {
+                        sqlConnection.Open();
+                    }
+
+                    sqlCommand.ExecuteNonQuery();
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Excepcion Capturada en ActualizarSocix: {ex.Message}", ex);
+                }
+
+            }
+        }
+
+        public void BorrarDNI(int dni)
+        {
+
+            using (SqlConnection sqlConnectionDel = new SqlConnection(this.sqlConexion))
+            {
+                this.sqlComando = "Delete dni FROM Socixs WHERE dni = @dni";
+
+                SqlCommand sqlCommandDelete = new SqlCommand(sqlComando, sqlConnectionDel);
+                sqlCommandDelete.Parameters.AddWithValue("dni", dni);
+
+
+                if (sqlConnectionDel.State != System.Data.ConnectionState.Open)
+                {
+                    sqlConnectionDel.Open();
+                }
+
+                sqlCommandDelete.ExecuteNonQuery();
             }
         }
     }

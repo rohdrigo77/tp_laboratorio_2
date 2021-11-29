@@ -158,7 +158,7 @@ namespace Entidades
                 return this.cantidadMedallas;
             }
         }
-
+        /*
         public virtual int Posicion { set; get; }
         public virtual int PartidosJugados { set;  get; }
         public virtual ECategoria Categoria { set; get; }
@@ -166,12 +166,12 @@ namespace Entidades
         public virtual EEstilos EstiloPreferido { set; get; }
         public virtual EPeso CategoriaPeso { set;  get; }
         public virtual int CantidadPeleas { set;  get; }
-
+        */
         public ETipoSocix TipoSocix
         {
             set
             {
-                this.TipoSocix = value;
+                this.tipoSocix = value;
             }
             get
             {
@@ -230,16 +230,6 @@ namespace Entidades
         }
 
 
-
-        public static bool operator == (Socix s1, Socix s2)
-        {
-            return s1.Equals(s2) && (new GestorBaseDeDatos().DniExistente(s1.DNI));
-        }
-
-        public static bool operator !=(Socix s1, Socix s2)
-        {
-            return !(s1 == s2);
-        }
 
     }
 }

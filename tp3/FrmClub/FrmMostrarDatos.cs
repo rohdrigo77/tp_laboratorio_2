@@ -13,75 +13,128 @@ using Entidades;
 
 namespace FrmClub
 {
+    public delegate void ActualizarDataGrid();
+    public delegate void ActualizarDataGridConDni(int dni);
+
     public partial class FrmListDatos : Form
     {
         private string consulta;
         private GestorBaseDeDatos gestor;
+        public event ActualizarDataGrid actualizarDG;
+        public event ActualizarDataGridConDni actualizarDGDni;
+
         public FrmListDatos(string consulta)
         {
             InitializeComponent();
             this.consulta = consulta;
         }
 
+        public DataGridView DataGridView
+        {
+            get
+            {
+                return this.dataGridView1;
+            }
+        }
+
+        public GestorBaseDeDatos Gestor
+        {
+            set
+            {
+                this.gestor = value;
+            }
+            get
+            {
+                return this.gestor;
+            }
+        }
+
+
         private void FrmListDatos_Load(object sender, EventArgs e)
         {
-            gestor = new GestorBaseDeDatos();
-            gestor.SqlComando = this.consulta;
+            gestor = new GestorBaseDeDatos(this.consulta);
+            
+            try
+            {
+                this.dataGridView1.DataSource = gestor.LeerDesdeBD();
+         
 
-            this.dataGridView1.DataSource = gestor.LeerDesdeBD();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error al leer desde Base de Datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void listNadadoresBtn_Click(object sender, EventArgs e)
         {
-            gestor = new GestorBaseDeDatos();
-            this.consulta = "Select * from Socixs where tipoPileta != NULL";
-            gestor.SqlComando = this.consulta;
+            gestor = new GestorBaseDeDatos("Select * from Socixs where valorCuota = *Natacion");
+        
+            try
+            {
+                this.dataGridView1.DataSource = null;
+                this.dataGridView1.DataSource = gestor.LeerDesdeBD();
 
-            this.dataGridView1.Columns[7].Visible = false;
-            this.dataGridView1.Columns[8].Visible = false;
-            this.dataGridView1.Columns[9].Visible = false;
-            this.dataGridView1.Columns[10].Visible = true;
-            this.dataGridView1.Columns[11].Visible = true;
-            this.dataGridView1.Columns[12].Visible = false;
-            this.dataGridView1.Columns[13].Visible = false;
-            this.dataGridView1.DataSource = gestor.LeerDesdeBD();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error al leer desde Base de Datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void lstFutbolistasBtn_Click(object sender, EventArgs e)
         {
-            gestor = new GestorBaseDeDatos();
-            this.consulta = "Select * from Socixs where posicion != NULL";
-            gestor.SqlComando = this.consulta;
+            gestor = new GestorBaseDeDatos("Select * from Socixs where valorCuota = *Futbol");
+        
+            try
+            {
+                this.dataGridView1.DataSource = null;
+                this.dataGridView1.DataSource = gestor.LeerDesdeBD();
 
-            this.dataGridView1.Columns[7].Visible = true;
-            this.dataGridView1.Columns[8].Visible = true;
-            this.dataGridView1.Columns[9].Visible = true;
-            this.dataGridView1.Columns[10].Visible = false;
-            this.dataGridView1.Columns[11].Visible = false;
-            this.dataGridView1.Columns[12].Visible = false;
-            this.dataGridView1.Columns[13].Visible = false;
-            this.dataGridView1.DataSource = gestor.LeerDesdeBD();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error al leer desde Base de Datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnPugilistas_Click(object sender, EventArgs e)
         {
-            gestor = new GestorBaseDeDatos();
-            this.consulta = "Select * from Socixs where categoriaPeso != NULL";
-            gestor.SqlComando = this.consulta;
+            gestor = new GestorBaseDeDatos("Select * from Socixs where valorCuota = *Boxeo");
 
-            this.dataGridView1.Columns[7].Visible = false;
-            this.dataGridView1.Columns[8].Visible = false;
-            this.dataGridView1.Columns[9].Visible = false;
-            this.dataGridView1.Columns[10].Visible = false;
-            this.dataGridView1.Columns[11].Visible = false;
-            this.dataGridView1.Columns[12].Visible = true;
-            this.dataGridView1.Columns[13].Visible = true;
-            this.dataGridView1.DataSource = gestor.LeerDesdeBD();
+            try
+            {
+                this.dataGridView1.DataSource = null;
+                this.dataGridView1.DataSource = gestor.LeerDesdeBD();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error al leer desde Base de Datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Dispose();
+        }   
+
+        public void ActualizarDatagrid()
+        {
+            if(this.actualizarDG != null)
+            {
+                this.actualizarDG.Invoke();
+            }
+           
         }
+
+        public void ActualizarDatagridDni(int dni)
+        {
+            if (this.actualizarDGDni != null)
+            {
+                this.actualizarDGDni.Invoke(dni);
+            }
+        }
+
     }
 }

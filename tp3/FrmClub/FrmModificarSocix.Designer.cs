@@ -50,18 +50,19 @@ namespace FrmClub
             this.chkCategoria = new System.Windows.Forms.CheckBox();
             this.chkPosicion = new System.Windows.Forms.CheckBox();
             this.chkPartidosJugados = new System.Windows.Forms.CheckBox();
-            this.chkTipoPileta = new System.Windows.Forms.CheckBox();
+            this.chkPileta = new System.Windows.Forms.CheckBox();
             this.chkEstilo = new System.Windows.Forms.CheckBox();
-            this.chkCategoriaPeso = new System.Windows.Forms.CheckBox();
+            this.chkPeso = new System.Windows.Forms.CheckBox();
             this.chkCantidadPeleas = new System.Windows.Forms.CheckBox();
             this.cmbValorCuota = new System.Windows.Forms.ComboBox();
             this.cmbCategoria = new System.Windows.Forms.ComboBox();
-            this.cmbTipoPileta = new System.Windows.Forms.ComboBox();
+            this.cmbPileta = new System.Windows.Forms.ComboBox();
             this.cmbEstiloPreferido = new System.Windows.Forms.ComboBox();
-            this.cmbCategoriaPeso = new System.Windows.Forms.ComboBox();
+            this.cmbPeso = new System.Windows.Forms.ComboBox();
             this.cmbGenero = new System.Windows.Forms.ComboBox();
             this.chkTipoSocix = new System.Windows.Forms.CheckBox();
             this.cmbTipoSocix = new System.Windows.Forms.ComboBox();
+            this.btnDni = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblCartel
@@ -75,9 +76,9 @@ namespace FrmClub
             // 
             // txtDNI
             // 
-            this.txtDNI.Location = new System.Drawing.Point(22, 43);
+            this.txtDNI.Location = new System.Drawing.Point(12, 43);
             this.txtDNI.Name = "txtDNI";
-            this.txtDNI.Size = new System.Drawing.Size(155, 23);
+            this.txtDNI.Size = new System.Drawing.Size(139, 23);
             this.txtDNI.TabIndex = 2;
             // 
             // lblDatosSocix
@@ -260,16 +261,16 @@ namespace FrmClub
             this.chkPartidosJugados.UseVisualStyleBackColor = true;
             this.chkPartidosJugados.CheckedChanged += new System.EventHandler(this.chkPartidosJugados_CheckedChanged);
             // 
-            // chkTipoPileta
+            // chkPileta
             // 
-            this.chkTipoPileta.AutoSize = true;
-            this.chkTipoPileta.Location = new System.Drawing.Point(22, 411);
-            this.chkTipoPileta.Name = "chkTipoPileta";
-            this.chkTipoPileta.Size = new System.Drawing.Size(76, 19);
-            this.chkTipoPileta.TabIndex = 29;
-            this.chkTipoPileta.Text = "tipoPileta";
-            this.chkTipoPileta.UseVisualStyleBackColor = true;
-            this.chkTipoPileta.CheckedChanged += new System.EventHandler(this.chkTipoPileta_CheckedChanged);
+            this.chkPileta.AutoSize = true;
+            this.chkPileta.Location = new System.Drawing.Point(22, 411);
+            this.chkPileta.Name = "chkPileta";
+            this.chkPileta.Size = new System.Drawing.Size(55, 19);
+            this.chkPileta.TabIndex = 29;
+            this.chkPileta.Text = "pileta";
+            this.chkPileta.UseVisualStyleBackColor = true;
+            this.chkPileta.CheckedChanged += new System.EventHandler(this.chkTipoPileta_CheckedChanged);
             // 
             // chkEstilo
             // 
@@ -282,16 +283,16 @@ namespace FrmClub
             this.chkEstilo.UseVisualStyleBackColor = true;
             this.chkEstilo.CheckedChanged += new System.EventHandler(this.chkEstilo_CheckedChanged);
             // 
-            // chkCategoriaPeso
+            // chkPeso
             // 
-            this.chkCategoriaPeso.AutoSize = true;
-            this.chkCategoriaPeso.Location = new System.Drawing.Point(22, 469);
-            this.chkCategoriaPeso.Name = "chkCategoriaPeso";
-            this.chkCategoriaPeso.Size = new System.Drawing.Size(100, 19);
-            this.chkCategoriaPeso.TabIndex = 31;
-            this.chkCategoriaPeso.Text = "categoriaPeso";
-            this.chkCategoriaPeso.UseVisualStyleBackColor = true;
-            this.chkCategoriaPeso.CheckedChanged += new System.EventHandler(this.chkCategoriaPeso_CheckedChanged);
+            this.chkPeso.AutoSize = true;
+            this.chkPeso.Location = new System.Drawing.Point(22, 469);
+            this.chkPeso.Name = "chkPeso";
+            this.chkPeso.Size = new System.Drawing.Size(51, 19);
+            this.chkPeso.TabIndex = 31;
+            this.chkPeso.Text = "peso";
+            this.chkPeso.UseVisualStyleBackColor = true;
+            this.chkPeso.CheckedChanged += new System.EventHandler(this.chkCategoriaPeso_CheckedChanged);
             // 
             // chkCantidadPeleas
             // 
@@ -320,13 +321,13 @@ namespace FrmClub
             this.cmbCategoria.Size = new System.Drawing.Size(156, 23);
             this.cmbCategoria.TabIndex = 34;
             // 
-            // cmbTipoPileta
+            // cmbPileta
             // 
-            this.cmbTipoPileta.FormattingEnabled = true;
-            this.cmbTipoPileta.Location = new System.Drawing.Point(163, 407);
-            this.cmbTipoPileta.Name = "cmbTipoPileta";
-            this.cmbTipoPileta.Size = new System.Drawing.Size(157, 23);
-            this.cmbTipoPileta.TabIndex = 35;
+            this.cmbPileta.FormattingEnabled = true;
+            this.cmbPileta.Location = new System.Drawing.Point(163, 407);
+            this.cmbPileta.Name = "cmbPileta";
+            this.cmbPileta.Size = new System.Drawing.Size(157, 23);
+            this.cmbPileta.TabIndex = 35;
             // 
             // cmbEstiloPreferido
             // 
@@ -336,13 +337,13 @@ namespace FrmClub
             this.cmbEstiloPreferido.Size = new System.Drawing.Size(157, 23);
             this.cmbEstiloPreferido.TabIndex = 36;
             // 
-            // cmbCategoriaPeso
+            // cmbPeso
             // 
-            this.cmbCategoriaPeso.FormattingEnabled = true;
-            this.cmbCategoriaPeso.Location = new System.Drawing.Point(163, 466);
-            this.cmbCategoriaPeso.Name = "cmbCategoriaPeso";
-            this.cmbCategoriaPeso.Size = new System.Drawing.Size(157, 23);
-            this.cmbCategoriaPeso.TabIndex = 37;
+            this.cmbPeso.FormattingEnabled = true;
+            this.cmbPeso.Location = new System.Drawing.Point(163, 466);
+            this.cmbPeso.Name = "cmbPeso";
+            this.cmbPeso.Size = new System.Drawing.Size(157, 23);
+            this.cmbPeso.TabIndex = 37;
             // 
             // cmbGenero
             // 
@@ -371,23 +372,34 @@ namespace FrmClub
             this.cmbTipoSocix.Size = new System.Drawing.Size(156, 23);
             this.cmbTipoSocix.TabIndex = 40;
             // 
+            // btnDni
+            // 
+            this.btnDni.Location = new System.Drawing.Point(163, 43);
+            this.btnDni.Name = "btnDni";
+            this.btnDni.Size = new System.Drawing.Size(156, 23);
+            this.btnDni.TabIndex = 41;
+            this.btnDni.Text = "Verificar";
+            this.btnDni.UseVisualStyleBackColor = true;
+            this.btnDni.Click += new System.EventHandler(this.btnDni_Click);
+            // 
             // FrmModificarSocix
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(331, 593);
+            this.Controls.Add(this.btnDni);
             this.Controls.Add(this.cmbTipoSocix);
             this.Controls.Add(this.chkTipoSocix);
             this.Controls.Add(this.cmbGenero);
-            this.Controls.Add(this.cmbCategoriaPeso);
+            this.Controls.Add(this.cmbPeso);
             this.Controls.Add(this.cmbEstiloPreferido);
-            this.Controls.Add(this.cmbTipoPileta);
+            this.Controls.Add(this.cmbPileta);
             this.Controls.Add(this.cmbCategoria);
             this.Controls.Add(this.cmbValorCuota);
             this.Controls.Add(this.chkCantidadPeleas);
-            this.Controls.Add(this.chkCategoriaPeso);
+            this.Controls.Add(this.chkPeso);
             this.Controls.Add(this.chkEstilo);
-            this.Controls.Add(this.chkTipoPileta);
+            this.Controls.Add(this.chkPileta);
             this.Controls.Add(this.chkPartidosJugados);
             this.Controls.Add(this.chkPosicion);
             this.Controls.Add(this.chkCategoria);
@@ -412,7 +424,6 @@ namespace FrmClub
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmModificarSocix";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmModificarSocix";
             this.Load += new System.EventHandler(this.FrmModificarSocix_Load);
             this.ResumeLayout(false);
@@ -442,17 +453,18 @@ namespace FrmClub
         private System.Windows.Forms.CheckBox chkCategoria;
         private System.Windows.Forms.CheckBox chkPosicion;
         private System.Windows.Forms.CheckBox chkPartidosJugados;
-        private System.Windows.Forms.CheckBox chkTipoPileta;
+        private System.Windows.Forms.CheckBox chkPileta;
         private System.Windows.Forms.CheckBox chkEstilo;
-        private System.Windows.Forms.CheckBox chkCategoriaPeso;
+        private System.Windows.Forms.CheckBox chkPeso;
         private System.Windows.Forms.CheckBox chkCantidadPeleas;
         private System.Windows.Forms.ComboBox cmbValorCuota;
         private System.Windows.Forms.ComboBox cmbCategoria;
-        private System.Windows.Forms.ComboBox cmbTipoPileta;
+        private System.Windows.Forms.ComboBox cmbPileta;
         private System.Windows.Forms.ComboBox cmbEstiloPreferido;
-        private System.Windows.Forms.ComboBox cmbCategoriaPeso;
+        private System.Windows.Forms.ComboBox cmbPeso;
         private System.Windows.Forms.ComboBox cmbGenero;
         private System.Windows.Forms.CheckBox chkTipoSocix;
         private System.Windows.Forms.ComboBox cmbTipoSocix;
+        private System.Windows.Forms.Button btnDni;
     }
 }

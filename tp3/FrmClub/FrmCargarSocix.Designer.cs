@@ -227,7 +227,6 @@ namespace FrmClub
             this.cmbPeso.Name = "cmbPeso";
             this.cmbPeso.Size = new System.Drawing.Size(98, 23);
             this.cmbPeso.TabIndex = 30;
-            this.cmbPeso.SelectedIndexChanged += new System.EventHandler(this.cmbPeso_SelectedIndexChanged);
             // 
             // cmbEstiloNado
             // 
@@ -236,7 +235,6 @@ namespace FrmClub
             this.cmbEstiloNado.Name = "cmbEstiloNado";
             this.cmbEstiloNado.Size = new System.Drawing.Size(98, 23);
             this.cmbEstiloNado.TabIndex = 31;
-            this.cmbEstiloNado.SelectedIndexChanged += new System.EventHandler(this.cmbEstiloNado_SelectedIndexChanged);
             // 
             // cmbPileta
             // 
@@ -245,7 +243,6 @@ namespace FrmClub
             this.cmbPileta.Name = "cmbPileta";
             this.cmbPileta.Size = new System.Drawing.Size(98, 23);
             this.cmbPileta.TabIndex = 32;
-            this.cmbPileta.SelectedIndexChanged += new System.EventHandler(this.cmbPileta_SelectedIndexChanged);
             // 
             // cmbGenero
             // 
@@ -254,7 +251,6 @@ namespace FrmClub
             this.cmbGenero.Name = "cmbGenero";
             this.cmbGenero.Size = new System.Drawing.Size(100, 23);
             this.cmbGenero.TabIndex = 33;
-            this.cmbGenero.SelectedIndexChanged += new System.EventHandler(this.cmbGenero_SelectedIndexChanged);
             // 
             // lblTipoSocix
             // 
@@ -273,7 +269,6 @@ namespace FrmClub
             this.cmbTipoSocix.Name = "cmbTipoSocix";
             this.cmbTipoSocix.Size = new System.Drawing.Size(100, 23);
             this.cmbTipoSocix.TabIndex = 35;
-            this.cmbTipoSocix.SelectedIndexChanged += new System.EventHandler(this.cmbTipoSocix_SelectedIndexChanged);
             // 
             // FrmCargarSocix
             // 

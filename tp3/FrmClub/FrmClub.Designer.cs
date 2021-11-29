@@ -99,6 +99,7 @@ namespace FrmClub
             this.MinimizeBox = false;
             this.Name = "FrmClub";
             this.Text = "Club Social Los Puentes";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmClub_FormClosing);
             this.Load += new System.EventHandler(this.FrmClub_Load);
             this.ResumeLayout(false);
 

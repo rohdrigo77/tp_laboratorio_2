@@ -23,7 +23,7 @@ namespace Entidades
             this.cantidadPeleas = cantidadPeleas;
         }
 
-        public override EPeso CategoriaPeso
+        public EPeso CategoriaPeso
         {
             set
             {
@@ -35,8 +35,12 @@ namespace Entidades
             }
         }
 
-        public override int CantidadPeleas
+        public int CantidadPeleas
         {
+            set
+            {
+                this.cantidadPeleas = value;
+            }
             get
             {
                 return this.cantidadPeleas;
@@ -69,7 +73,7 @@ namespace Entidades
         {
             StringBuilder sb = new StringBuilder();
 
-            base.Mostrar();
+            sb.AppendLine($"{base.Mostrar()}");
             sb.AppendLine($"Categoría en peso: {this.CategoriaPeso}");
             sb.AppendLine($"Cantidad de peleas: {this.CantidadPeleas}");
 

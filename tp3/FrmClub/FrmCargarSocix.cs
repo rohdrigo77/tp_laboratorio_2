@@ -14,19 +14,13 @@ namespace FrmClub
 {
     public partial class FrmCargarSocix : Form
     {
-        EGenero generoSeleccionado;
-        EPileta piletaSeleccionada;
-        ETipoSocix tipoSocixSeleccionado;
-        EEstilos estiloNadoSeleccionado;
-        EPeso pesoSeleccionado;
         Socix socix;
         List<Socix> listaSocix;
 
         public FrmCargarSocix(List<Socix> lista)
         {
             InitializeComponent();
-            listaSocix = lista;
-        
+            listaSocix = lista;  
         }
 
         private void btnGuardarSocix_Click(object sender, EventArgs e)
@@ -64,14 +58,14 @@ namespace FrmClub
                             socix.DNI = int.Parse(txtDNI.Text);
                             socix.Nombre = txtNombre.Text;
                             socix.Apellido = txtApellido.Text;
-                            socix.Genero = generoSeleccionado;
+                            socix.Genero = (EGenero)cmbGenero.SelectedItem;
                             socix.Edad = int.Parse(txtEdad.Text);
-                            socix.TipoSocix = tipoSocixSeleccionado;
+                            socix.TipoSocix = (ETipoSocix)cmbTipoSocix.SelectedItem;
                             socix.CantidadMedallas = 0;
-                            socix.Posicion = int.Parse(txtPosicion.Text);
+                            ((Futbolista)socix).Posicion = int.Parse(txtPosicion.Text);
                             socix.FechaAptaFisica = DateTime.Today.ToString();
                             socix.FechaDeAsociacion = socix.FechaAptaFisica;
-                            socix.PartidosJugados = 0;
+                            ((Futbolista)socix).PartidosJugados = 0;
 
                             if (socix.Edad <= 12)
                             {
@@ -84,27 +78,27 @@ namespace FrmClub
 
                             if (socix.Edad >= 16 && socix.Edad <= 18)
                             {
-                                socix.Categoria = ECategoria.Juvenil;
+                                ((Futbolista)socix).Categoria = ECategoria.Juvenil;
                             }
                             else if (socix.Edad == 14 || socix.Edad == 15)
                             {
-                                socix.Categoria = ECategoria.Cadete;
+                                ((Futbolista)socix).Categoria = ECategoria.Cadete;
                             }
                             else if (socix.Edad == 12 || socix.Edad == 13)
                             {
-                                socix.Categoria = ECategoria.Infantil;
+                                ((Futbolista)socix).Categoria = ECategoria.Infantil;
                             }
                             else if (socix.Edad == 10 || socix.Edad == 11)
                             {
-                                socix.Categoria = ECategoria.Alevin;
+                                ((Futbolista)socix).Categoria = ECategoria.Alevin;
                             }
                             else if (socix.Edad == 8 || socix.Edad == 9)
                             {
-                                socix.Categoria = ECategoria.Benjamin;
+                                ((Futbolista)socix).Categoria = ECategoria.Benjamin;
                             }
                             else if (socix.Edad >= 5 && socix.Edad <= 7)
                             {
-                                socix.Categoria = ECategoria.PreBenjamin;
+                                ((Futbolista)socix).Categoria = ECategoria.PreBenjamin;
                             }
                             else if (socix.TipoSocix == ETipoSocix.Competitivo && (socix.Edad < 5 || socix.Edad > 18))
                             {
@@ -112,7 +106,7 @@ namespace FrmClub
                             }
                             else
                             {
-                                socix.Categoria = ECategoria.Amateur;
+                                ((Futbolista)socix).Categoria = ECategoria.Amateur;
                             }
                             //socix = new Futbolista(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, tipoSocixSeleccionado, 0, 0, int.Parse(txtPosicion.Text), DateTime.Today.ToString(), DateTime.Today.ToString());
                             break;
@@ -123,9 +117,9 @@ namespace FrmClub
                             socix.DNI = int.Parse(txtDNI.Text);
                             socix.Nombre = txtNombre.Text;
                             socix.Apellido = txtApellido.Text;
-                            socix.Genero = generoSeleccionado;
+                            socix.Genero = (EGenero)cmbGenero.SelectedItem;
                             socix.Edad = int.Parse(txtEdad.Text);
-                            socix.TipoSocix = tipoSocixSeleccionado;
+                            socix.TipoSocix = (ETipoSocix)cmbTipoSocix.SelectedItem;
                             socix.CantidadMedallas = 0;
                             socix.FechaAptaFisica = DateTime.Today.ToString();
                             socix.FechaDeAsociacion = socix.FechaAptaFisica;
@@ -139,8 +133,8 @@ namespace FrmClub
                                 socix.ValorCuota = ECuota.AdultxsBoxeo;
                             }
 
-                            socix.CategoriaPeso = pesoSeleccionado;
-                            socix.CantidadPeleas = 0;
+                            ((Pugilista)socix).CategoriaPeso = (EPeso)cmbPeso.SelectedItem;
+                            ((Pugilista)socix).CantidadPeleas = 0;
 
 
                             //socix = new Pugilista(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, 0, pesoSeleccionado, tipoSocixSeleccionado, 0, DateTime.Today.ToString(), DateTime.Today.ToString());
@@ -151,14 +145,15 @@ namespace FrmClub
                             socix.DNI = int.Parse(txtDNI.Text);
                             socix.Nombre = txtNombre.Text;
                             socix.Apellido = txtApellido.Text;
-                            socix.Genero = generoSeleccionado;
+                            socix.Genero = (EGenero)cmbGenero.SelectedItem;
                             socix.Edad = int.Parse(txtEdad.Text);
-                            socix.TipoSocix = tipoSocixSeleccionado;
+                            socix.TipoSocix = (ETipoSocix)cmbTipoSocix.SelectedItem;
                             socix.CantidadMedallas = 0;
                             socix.FechaAptaFisica = DateTime.Today.ToString();
                             socix.FechaDeAsociacion = socix.FechaAptaFisica;
-                            socix.TipoPileta = piletaSeleccionada;
-                            socix.EstiloPreferido = estiloNadoSeleccionado;
+                           ((Nadador) socix).TipoPileta = (EPileta)cmbPileta.SelectedItem;
+                            ((Nadador)socix).EstiloPreferido = (EEstilos)cmbEstiloNado.SelectedIndex;
+                           
 
                             if (socix.Edad <= 12)
                             {
@@ -173,10 +168,11 @@ namespace FrmClub
 
                     }
 
-                    if ((MessageBox.Show($"¿Desea guardar el socio ingresado? \n \n {socix}", "Nuevx Socix", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                    if (MessageBox.Show($"¿Desea guardar el socio ingresado? \n \n {socix}", "Nuevx Socix", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         new GestorBaseDeDatos().Guardar(socix);
                         listaSocix.Add(socix);
+                        MessageBox.Show($"Socix ingresadx correctamente \n \n {socix}", "Socix Agregadx", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                
@@ -266,104 +262,6 @@ namespace FrmClub
             this.cmbPeso.DataSource = Enum.GetValues(typeof(EPeso));
             this.cmbTipoSocix.DataSource = Enum.GetValues(typeof(ETipoSocix));
             
-        }
-
-        private void cmbGenero_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch(cmbGenero.SelectedIndex)
-            {
-                case 1:
-                    this.generoSeleccionado = EGenero.Masculino;
-                    break;
-                case 2:
-                    this.generoSeleccionado = EGenero.Femenino;
-                    break;
-                default:
-                    this.generoSeleccionado = EGenero.NoBinario;
-                    break;
-
-            }
-        }
-
-        private void cmbTipoSocix_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cmbTipoSocix.SelectedIndex)
-            {
-                case 1:
-                    this.tipoSocixSeleccionado= ETipoSocix.Recreativo;
-                    break;
-                default:
-                    this.tipoSocixSeleccionado = ETipoSocix.Competitivo;
-                    break;
-
-            }
-        }
-
-        private void cmbPileta_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cmbPileta.SelectedIndex)
-            {
-                case 1:
-                    this.piletaSeleccionada = EPileta.Niños;
-                    break;
-                case 2:
-                    this.piletaSeleccionada = EPileta.Semiolimpica;
-                    break;
-                default:
-                    this.piletaSeleccionada = EPileta.Olimpica;
-                    break;
-
-            }
-        }
-
-        private void cmbEstiloNado_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cmbEstiloNado.SelectedIndex)
-            {
-                case 1:
-                    this.estiloNadoSeleccionado = EEstilos.Crol;
-                    break;
-                case 2:
-                    this.estiloNadoSeleccionado = EEstilos.Espalda;
-                    break;
-                case 3:
-                    this.estiloNadoSeleccionado = EEstilos.Pecho;
-                    break;
-                default:
-                    this.estiloNadoSeleccionado = EEstilos.Mariposa;
-                    break;
-            }
-        }
-
-        private void cmbPeso_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cmbPeso.SelectedIndex)
-            {
-                case 1:
-                    this.pesoSeleccionado = EPeso.Mosca;
-                    break;
-                case 2:
-                    this.pesoSeleccionado = EPeso.Pluma;
-                    break;
-                case 3:
-                    this.pesoSeleccionado = EPeso.Ligero;
-                    break;
-                case 4:
-                    this.pesoSeleccionado = EPeso.Wélter;
-                    break;
-                case 5:
-                    this.pesoSeleccionado = EPeso.Medio;
-                    break;
-                case 6:
-                    this.pesoSeleccionado = EPeso.Semipesado;
-                    break;
-                case 7:
-                    this.pesoSeleccionado = EPeso.Pesado;
-                    break;
-                default:
-                    this.pesoSeleccionado = EPeso.Superpesado;
-                    break;
-            }
         }
 
         private void FrmCargarSocix_FormClosing(object sender, FormClosingEventArgs e)
