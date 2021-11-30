@@ -37,13 +37,13 @@ namespace Entidades
         public void Guardar(string archivo, T objeto)
         {
             string rutaCompleta = GenerarRutaCompleta + archivo;
-            StreamWriter streamWriter = new StreamWriter(rutaCompleta, true);
-
 
             try
             {
-                string json = JsonSerializer.Serialize<T>(objeto);
-                streamWriter.WriteLine();
+                JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions { Converters = { new JsonStringEnumConverter() } };
+                jsonSerializerOptions.WriteIndented = true;
+                string json = JsonSerializer.Serialize<T>(objeto, jsonSerializerOptions);
+                File.WriteAllText(rutaCompleta, json);
             }
             catch (Exception ex)
             {
@@ -59,7 +59,11 @@ namespace Entidades
             try
             {
                 string json = File.ReadAllText(rutaCompleta);
-                objeto = JsonSerializer.Deserialize<T>(json);
+                JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions { Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) } };
+                jsonSerializerOptions.WriteIndented = true;
+
+                objeto = JsonSerializer.Deserialize<T>(json,jsonSerializerOptions);              
+                
             }
             catch (Exception ex)
             {

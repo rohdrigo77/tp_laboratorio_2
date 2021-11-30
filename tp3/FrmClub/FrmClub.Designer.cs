@@ -34,6 +34,7 @@ namespace FrmClub
             this.listSocixsBtn = new System.Windows.Forms.Button();
             this.informesBtn = new System.Windows.Forms.Button();
             this.modificarSocixBtn = new System.Windows.Forms.Button();
+            this.btnCargarListaArchivo = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button4
@@ -85,11 +86,22 @@ namespace FrmClub
             this.modificarSocixBtn.UseVisualStyleBackColor = true;
             this.modificarSocixBtn.Click += new System.EventHandler(this.modificarSocixBtn_Click);
             // 
+            // btnCargarListaArchivo
+            // 
+            this.btnCargarListaArchivo.Location = new System.Drawing.Point(12, 328);
+            this.btnCargarListaArchivo.Name = "btnCargarListaArchivo";
+            this.btnCargarListaArchivo.Size = new System.Drawing.Size(264, 72);
+            this.btnCargarListaArchivo.TabIndex = 11;
+            this.btnCargarListaArchivo.Text = "Cargar lista de socixs desde archivo";
+            this.btnCargarListaArchivo.UseVisualStyleBackColor = true;
+            this.btnCargarListaArchivo.Click += new System.EventHandler(this.btnCargarListaArchivo_Click);
+            // 
             // FrmClub
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(288, 336);
+            this.ClientSize = new System.Drawing.Size(288, 415);
+            this.Controls.Add(this.btnCargarListaArchivo);
             this.Controls.Add(this.modificarSocixBtn);
             this.Controls.Add(this.informesBtn);
             this.Controls.Add(this.listSocixsBtn);
@@ -111,6 +123,7 @@ namespace FrmClub
         private System.Windows.Forms.Button listSocixsBtn;
         private System.Windows.Forms.Button informesBtn;
         private System.Windows.Forms.Button modificarSocixBtn;
+        private System.Windows.Forms.Button btnCargarListaArchivo;
     }
 }
 

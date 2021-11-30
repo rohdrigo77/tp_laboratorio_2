@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Excepciones;
+using System.Text.Json;
 
 namespace Entidades
 {
@@ -20,11 +21,16 @@ namespace Entidades
         private int cantidadMedallas;
         private string fechaDeAsociacion;
         private string fechaAptaFisica;
+        private bool socixNuevx;
 
+        [JsonConstructor]
         public Socix()
         {
+            this.socixNuevx = true;
         }
-        public Socix(int dni, string nombre, string apellido, EGenero genero, int edad, ECuota valorCuota, ETipoSocix tipoSocix, int cantidadMedallas, string fechaAptaFisica, string fechaAsociacion)
+
+
+        /*public Socix(int dni, string nombre, string apellido, EGenero genero, int edad, ECuota valorCuota, ETipoSocix tipoSocix, int cantidadMedallas, string fechaAptaFisica, string fechaAsociacion)
         {
             this.dni = dni;
             this.nombre = nombre;
@@ -35,22 +41,40 @@ namespace Entidades
             this.tipoSocix = tipoSocix;
             this.cantidadMedallas = cantidadMedallas;
             this.fechaAptaFisica = fechaAptaFisica;
-            this.fechaDeAsociacion = fechaAsociacion;   
+            this.fechaDeAsociacion = fechaAsociacion;
             
+        }*/
+
+        public bool SocixNuevx
+        {
+            set
+            {
+                this.socixNuevx = value;
+            }
+            get
+            {
+                return this.socixNuevx;
+            }
+
         }
 
         public int DNI
         {
             set
             {
-                if (!(new GestorBaseDeDatos().DniExistente(value)) && value <= 99999999)
+                if (value <= 99999999)
                 {
-                    this.dni = value;
+                    if(!new GestorBaseDeDatos().DniExistente(value) || this.socixNuevx == false)
+                    {
+                        this.dni = value;
+                    }
+                    else
+                    {           
+                         throw new DniInvalidoException("El DNI ingresado ya existe o es invalido. Ingrese otro diferente.");                      
+                    }
+                                  
                 }
-                else
-                {
-                    throw new DniInvalidoException("El DNI ingresado ya existe o es invalido. Ingrese otro diferente.");
-                }
+
 
             }
             get

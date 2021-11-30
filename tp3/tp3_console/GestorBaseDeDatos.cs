@@ -15,16 +15,16 @@ namespace Entidades
     public class GestorBaseDeDatos
     {
 
-        private string sqlConexion;
+        private SqlConnection sqlConexion;
         private string sqlComando;
 
         public GestorBaseDeDatos()
         {
-            this.sqlConexion = @"Server=localhost\SQLEXPRESS;Database=TP3CLUB;Trusted_Connection=True";
+            this.sqlConexion =  new SqlConnection(@"Server=localhost\SQLEXPRESS;Database=TP3CLUB;Trusted_Connection=True");
         }
 
         public GestorBaseDeDatos(string comando)
-        : this()
+        :this() 
         {
             this.sqlComando = comando;
         }
@@ -33,11 +33,11 @@ namespace Entidades
         {
             DataTable dataTable = new DataTable();
 
-            using (SqlConnection sqlConnection = new SqlConnection(this.sqlConexion))
+            using (this.sqlConexion)
             {
                 try
                 {
-                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(new SqlCommand(this.sqlComando, sqlConnection));
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(new SqlCommand(this.sqlComando, sqlConexion));
                     sqlDataAdapter.SelectCommand.CommandTimeout = 0;
                     sqlDataAdapter.Fill(dataTable);
                 }
@@ -51,11 +51,11 @@ namespace Entidades
 
         }
 
-        public string SqlConexion
+        public SqlConnection SqlConexion
         {
             get
             {
-                return this.SqlConexion;
+                return this.sqlConexion;
             }
         }
 
@@ -74,13 +74,13 @@ namespace Entidades
 
         public void Guardar(Socix socio)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(this.sqlConexion))
+            using (this.sqlConexion)
             {
                 try
                 {
                     string consulta = "INSERT INTO Socixs (dni,nombre,apellido,genero,edad,valorCuota,tipoSocix,medallas,categoria,posicion,partidosJugados,pileta,estiloPreferido,peso,cantidadPeleas,aptaFisica,asociacion) VALUES (@dni,@nombre,@apellido,@genero,@edad,@valorCuota,@tipoSocix,@medallas,@categoria,@posicion,@partidosJugados,@pileta,@estiloPreferido,@peso,@cantidadPeleas,@aptaFisica,@asociacion)";
 
-                    SqlCommand sqlCommand = new SqlCommand(consulta, sqlConnection);
+                    SqlCommand sqlCommand = new SqlCommand(consulta, this.sqlConexion);
 
                     sqlCommand.Parameters.AddWithValue("dni", socio.DNI);
                     sqlCommand.Parameters.AddWithValue("nombre", socio.Nombre);
@@ -130,9 +130,9 @@ namespace Entidades
 
 
 
-                    if (sqlConnection.State != System.Data.ConnectionState.Open)
+                    if (this.sqlConexion.State != System.Data.ConnectionState.Open)
                     {
-                        sqlConnection.Open();
+                        this.sqlConexion.Open();
                     }
 
                     sqlCommand.ExecuteNonQuery();
@@ -152,18 +152,18 @@ namespace Entidades
 
             bool respuesta = false;
 
-            using (SqlConnection sqlConnection = new SqlConnection(this.sqlConexion))
+            using (this.sqlConexion)
             {
                 try
                 {
 
                     string consulta = "SELECT dni FROM Socixs WHERE dni = @dni";
-                    SqlCommand sqlCommand = new SqlCommand(consulta, sqlConnection);
+                    SqlCommand sqlCommand = new SqlCommand(consulta, this.sqlConexion);
                     sqlCommand.Parameters.AddWithValue("dni", dni);
 
-                    if (sqlConnection.State != System.Data.ConnectionState.Open)
+                    if (this.sqlConexion.State != System.Data.ConnectionState.Open)
                     {
-                        sqlConnection.Open();
+                        this.sqlConexion.Open();
                     }
 
 
@@ -185,14 +185,14 @@ namespace Entidades
 
         public void EjecutarScalar()
         {
-            using (SqlConnection sqlConnection = new SqlConnection(this.sqlConexion))
+            using (this.sqlConexion)
             {
                 try
                 {
-                    SqlCommand sqlCommand = new SqlCommand(this.sqlComando, sqlConnection);
-                    if (sqlConnection.State != System.Data.ConnectionState.Open)
+                    SqlCommand sqlCommand = new SqlCommand(this.sqlComando, this.sqlConexion);
+                    if (this.sqlConexion.State != System.Data.ConnectionState.Open)
                     {
-                        sqlConnection.Open();
+                        this.sqlConexion.Open();
                     }
 
 
@@ -208,14 +208,14 @@ namespace Entidades
 
         public void EjecutarReader()
         {
-            using (SqlConnection sqlConnection = new SqlConnection(this.sqlConexion))
+            using (this.sqlConexion)
             {
                 try
                 {
-                    SqlCommand sqlCommand = new SqlCommand(this.sqlComando, sqlConnection);
-                    if (sqlConnection.State != System.Data.ConnectionState.Open)
+                    SqlCommand sqlCommand = new SqlCommand(this.sqlComando, this.sqlConexion);
+                    if (this.sqlConexion.State != System.Data.ConnectionState.Open)
                     {
-                        sqlConnection.Open();
+                        this.sqlConexion.Open();
                     }
 
 
@@ -231,14 +231,14 @@ namespace Entidades
 
         public void EjecutarNonQuery()
         {
-            using (SqlConnection sqlConnection = new SqlConnection(this.sqlConexion))
+            using (this.sqlConexion)
             {
                 try
                 {
-                    SqlCommand sqlCommand = new SqlCommand(this.sqlComando, sqlConnection);
-                    if (sqlConnection.State != System.Data.ConnectionState.Open)
+                    SqlCommand sqlCommand = new SqlCommand(this.sqlComando, this.sqlConexion);
+                    if (this.sqlConexion.State != System.Data.ConnectionState.Open)
                     {
-                        sqlConnection.Open();
+                        this.sqlConexion.Open();
                     }
 
 
@@ -250,26 +250,21 @@ namespace Entidades
                     throw ex;
                 }
             }
-        }
+        }       
 
-        public Socix ObtenerSocix(int dni)
+        public void ObtenerSocix(SqlCommand sqlCommand, List<Socix> list)
         {
+            
             Socix socix = null;
 
-            using (SqlConnection sqlConnection = new SqlConnection(this.sqlConexion))
+            using (this.sqlConexion)
             {
                 try
                 {
-                    string consulta = "SELECT * FROM Socixs WHERE dni = @dni";
-
-                    SqlCommand sqlCommand = new SqlCommand(consulta, sqlConnection);
-
-                    sqlCommand.Parameters.AddWithValue("dni", dni);
-
-
-                    if (sqlConnection.State != System.Data.ConnectionState.Open)
+                    
+                    if (this.sqlConexion.State != System.Data.ConnectionState.Open)
                     {
-                        sqlConnection.Open();
+                        this.sqlConexion.Open();
                     }
 
                     SqlDataReader data = sqlCommand.ExecuteReader();
@@ -296,6 +291,8 @@ namespace Entidades
                             ((Pugilista)socix).CantidadPeleas = data.GetInt32(15);
                         }
 
+                        socix.SocixNuevx = false;
+                        socix.DNI = data.GetInt32(1);
                         socix.Nombre = data.GetString(2);
                         socix.Apellido = data.GetString(3);
                         socix.Genero = Enum.Parse<EGenero>(data.GetString(4));
@@ -306,6 +303,7 @@ namespace Entidades
                         socix.FechaAptaFisica = data.GetString(16);
                         socix.FechaDeAsociacion = data.GetString(17);
 
+                        list.Add(socix);
 
                     }
 
@@ -315,24 +313,22 @@ namespace Entidades
                     throw new Exception($"Excepcion Capturada en ObtenerSocix: {ex.Message}");
                 }
 
-            }
-
-            return socix;
+            }           
 
         }
 
-        public void ActualizarSocix(Socix socio, int dni)
+        public void ActualizarSocix(Socix socio)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(this.sqlConexion))
+            using (this.sqlConexion)
             {
                 try
                 {
                     string consulta = "UPDATE Socixs SET nombre = @nombre, apellido = @apellido, genero = @genero, edad = @edad, valorCuota = @valorCuota, tipoSocix = @tipoSocix, medallas = @medallas, categoria = @categoria, posicion = @posicion, partidosJugados = @partidosJugados, pileta = @pileta , estiloPreferido = @estiloPreferido, peso = @peso, cantidadPeleas = @cantidadPeleas, aptaFisica = @aptaFisica, asociacion = @asociacion WHERE dni = @dni";
 
-                    SqlCommand sqlCommand = new SqlCommand(consulta, sqlConnection);
-                    sqlCommand.Parameters.AddWithValue("dni", dni);
+                    SqlCommand sqlCommand = new SqlCommand(consulta, this.sqlConexion);
+                    sqlCommand.Parameters.AddWithValue("dni", socio.DNI);
                     sqlCommand.Parameters.AddWithValue("nombre", socio.Nombre);
-                    sqlCommand.Parameters.AddWithValue("apellido", socio.Apellido);
+                    sqlCommand.Parameters.AddWithValue("apellido", socio.Apellido);                   
                     sqlCommand.Parameters.AddWithValue("genero", socio.Genero.ToString());
                     sqlCommand.Parameters.AddWithValue("edad", socio.Edad);
                     sqlCommand.Parameters.AddWithValue("valorCuota", socio.ValorCuota.ToString());
@@ -378,9 +374,9 @@ namespace Entidades
 
 
 
-                    if (sqlConnection.State != System.Data.ConnectionState.Open)
+                    if (this.sqlConexion.State != System.Data.ConnectionState.Open)
                     {
-                        sqlConnection.Open();
+                        this.sqlConexion.Open();
                     }
 
                     sqlCommand.ExecuteNonQuery();
@@ -397,17 +393,17 @@ namespace Entidades
         public void BorrarDNI(int dni)
         {
 
-            using (SqlConnection sqlConnectionDel = new SqlConnection(this.sqlConexion))
+            using (this.sqlConexion)
             {
                 this.sqlComando = "Delete dni FROM Socixs WHERE dni = @dni";
 
-                SqlCommand sqlCommandDelete = new SqlCommand(sqlComando, sqlConnectionDel);
+                SqlCommand sqlCommandDelete = new SqlCommand(sqlComando, this.sqlConexion);
                 sqlCommandDelete.Parameters.AddWithValue("dni", dni);
 
 
-                if (sqlConnectionDel.State != System.Data.ConnectionState.Open)
+                if (this.sqlConexion.State != System.Data.ConnectionState.Open)
                 {
-                    sqlConnectionDel.Open();
+                    this.sqlConexion.Open();
                 }
 
                 sqlCommandDelete.ExecuteNonQuery();

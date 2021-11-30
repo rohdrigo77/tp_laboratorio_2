@@ -51,6 +51,7 @@ namespace FrmClub
                 
                if (camposLlenos)
                 {
+                    socix.SocixNuevx = false;
                     switch (cmbDeportes.SelectedIndex)
                     {
                         case 1:

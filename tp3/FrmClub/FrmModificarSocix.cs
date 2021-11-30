@@ -9,6 +9,7 @@ using System.Web;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Entidades;
+using System.Data.SqlClient;
 
 namespace FrmClub
 {
@@ -20,6 +21,7 @@ namespace FrmClub
         List<CheckBox> cajasCheck = new List<CheckBox>();      
         FrmListDatos frmListDatos = new FrmListDatos("Select * from Socixs");
         Socix socix;
+        List<Socix> listaSocix;
         
 
         public FrmModificarSocix()
@@ -53,6 +55,30 @@ namespace FrmClub
                             if (contains)
                             {
                                 txtValue = cajita.Text;
+                                switch (cajasCheck[i].Text)
+                                {
+                                    case "nombre":
+                                        socix.Nombre = cajita.Text;
+                                        break;
+                                    case "apellido":
+                                        socix.Apellido = cajita.Text;
+                                        break;
+                                    case "edad":
+                                        socix.Edad = int.Parse(cajita.Text);
+                                        break;
+                                    case "medallas":
+                                        socix.CantidadMedallas = int.Parse(cajita.Text);
+                                        break;
+                                    case "posicion":
+                                        ((Futbolista)socix).Posicion = int.Parse(cajita.Text);
+                                        break;
+                                    case "partidosJugados":
+                                        ((Futbolista)socix).PartidosJugados = int.Parse(cajita.Text);
+                                        break;
+                                    case "cantidadPeleas":
+                                        ((Pugilista)socix).CantidadPeleas = int.Parse(cajita.Text);
+                                        break;
+                                }
                                 stringValue.Append($"{txtValue}");
                                 break;
                             }
@@ -65,13 +91,37 @@ namespace FrmClub
                             if (contains)
                             {
                                 txtValue = cajita.Text;
+                                switch (cajasCheck[i].Text)
+                                {
+                                    case "genero":
+                                        socix.Genero = Enum.Parse<EGenero>(cajita.Text);
+                                        break;
+                                    case "valorCuota":
+                                        socix.ValorCuota = Enum.Parse<ECuota>(cajita.Text);
+                                        break;
+                                    case "tipoSocix":
+                                        socix.TipoSocix = Enum.Parse<ETipoSocix>(cajita.Text);
+                                        break;
+                                    case "categoria":
+                                        ((Futbolista)socix).Categoria = Enum.Parse<ECategoria>(cajita.Text);
+                                        break;
+                                    case "pileta":
+                                        ((Nadador)socix).TipoPileta = Enum.Parse<EPileta>(cajita.Text);
+                                        break;
+                                    case "estiloPreferido":
+                                        ((Nadador)socix).EstiloPreferido = Enum.Parse<EEstilos>(cajita.Text);
+                                        break;
+                                    case "peso":
+                                        ((Pugilista)socix).CategoriaPeso = Enum.Parse<EPeso>(cajita.Text);
+                                        break;
+                                }
                                 break;
                             }
                         }
 
-                        camposModificados.AppendLine($"{cajasCheck[i].Text}: {txtValue}");
+                        camposModificados.AppendLine($" {cajasCheck[i].Text} = {txtValue}");
 
-                        if (!(i == cajasCheck.Count - 1))
+                        if (!(i == cajasCheck.Count -1))
                         {
                             camposModificados.Append(",");
                         }
@@ -85,14 +135,14 @@ namespace FrmClub
                 if (MessageBox.Show($"{camposModificados}", "Socix Modificado", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
 
-                    (new GestorBaseDeDatos()).ActualizarSocix(socix, int.Parse(txtDNI.Text));
-                    Task tarea = Task.Run(() => { this.frmListDatos.ActualizarDatagridDni(int.Parse(txtDNI.Text)); });
+                    (new GestorBaseDeDatos()).ActualizarSocix(socix);
+                    //Task tarea = Task.Run(() => { this.frmListDatos.ActualizarDatagridDni(int.Parse(txtDNI.Text)); });
 
-                    if (tarea != null)
-                    {
+                   // if (tarea != null)
+                   // {
                         this.ActualizarEventDni(int.Parse(txtDNI.Text));
                         MessageBox.Show("Socix modificadx exitosamente.", "Socix Modificado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                   // }
 
                 }
             }
@@ -299,6 +349,9 @@ namespace FrmClub
             cajasCheck.Add(chkEstilo);
             cajasCheck.Add(chkPeso);
 
+            btnAceptar.Enabled = false;
+            listaSocix = new List<Socix>();
+
             foreach (TextBox cajita in cajasDeTexto)
             {
                 cajita.Enabled = false;
@@ -317,6 +370,7 @@ namespace FrmClub
             cmbEstiloPreferido.DataSource = Enum.GetValues(typeof(EEstilos));
             cmbPeso.DataSource = Enum.GetValues(typeof(EPeso));
 
+            
             frmListDatos.actualizarDG += this.ActualizarEvent;
             frmListDatos.actualizarDGDni += this.ActualizarEventDni;
             Task.Run(() => frmListDatos.ShowDialog());
@@ -339,18 +393,35 @@ namespace FrmClub
 
         private void btnDni_Click(object sender, EventArgs e)
         {
-            GestorBaseDeDatos gbd = new GestorBaseDeDatos();
+            GestorBaseDeDatos gbd;
 
             if (int.TryParse(this.txtDNI.Text, out int dni))
             {
+                gbd = new GestorBaseDeDatos($"SELECT * FROM Socixs WHERE dni = {dni}");
+                SqlCommand sqlCommand = new SqlCommand(gbd.SqlComando,gbd.SqlConexion);
+                gbd.ObtenerSocix(sqlCommand,listaSocix);
+                
+                if(listaSocix[0] is Futbolista)
+                {
+                    socix = new Futbolista();
+                }
+                else if (listaSocix[0] is Pugilista)
+                {
+                    socix = new Pugilista();
+                }
+                else
+                {
+                    socix = new Nadador();
+                }
 
-                    socix = gbd.ObtenerSocix(dni);
-                    Task tarea = Task.Run(() => { this.frmListDatos.ActualizarDatagridDni(dni); }) ;
+                socix = listaSocix[0];
+                Task tarea = Task.Run(() => { this.frmListDatos.ActualizarDatagridDni(dni); }) ;
                     
-                    if (tarea != null)
-                    {
-                        this.ActualizarEventDni(dni);
-                    }
+                if (tarea != null)
+                {
+                    this.ActualizarEventDni(dni);
+                    btnAceptar.Enabled = true;
+                }
 
             }
             else

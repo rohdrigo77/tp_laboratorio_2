@@ -18,13 +18,13 @@ namespace Entidades
         : base()
         {
         }
-        public Futbolista(int dni, string nombre, string apellido, EGenero genero, int edad, ECuota cuota, ETipoSocix tipoSocix, int medallas, int partidosJugados, int posicion,string fechaAsociacion, string fechaAptaFisica)
+        /*public Futbolista(int dni, string nombre, string apellido, EGenero genero, int edad, ECuota cuota, ETipoSocix tipoSocix, int medallas, int partidosJugados, int posicion,string fechaAsociacion, string fechaAptaFisica)
         :base(dni,nombre,apellido,genero,edad,cuota,tipoSocix,medallas, fechaAsociacion, fechaAptaFisica)
         {           
             this.partidosJugados = partidosJugados;
             this.posicion = posicion;
             
-        }
+        }*/
 
         public int PartidosJugados
         {

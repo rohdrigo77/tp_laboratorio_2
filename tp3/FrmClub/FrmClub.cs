@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Entidades;
 using Excepciones;
+using System.Data.SqlClient;
+
 
 namespace FrmClub
 {
@@ -20,7 +22,7 @@ namespace FrmClub
         private FrmListDatos mostrarDatos;
         private FrmInformes informes;
         private Club miClub;
-        private GestorDeArchivos <List<Socix>> gda;
+        private GestorBaseDeDatos gdb;
         private List<Socix> listaSocixs;
 
         public FrmClub()
@@ -75,29 +77,52 @@ namespace FrmClub
         private void FrmClub_Load(object sender, EventArgs e)
         {
             this.Text = miClub.RazonSocial;
-            this.gda = new GestorDeArchivos <List<Socix>>();
-            
-
+            this.gdb = new GestorBaseDeDatos("Select * from Socixs");
+          
             try
-            {
-               if(gda.ExisteArchivo($"{miClub.RazonSocial}.json"))
-               {
-                    gda.Leer($"{miClub.RazonSocial}.json", out listaSocixs);
-               }
-               else
-                {
-
+            {  
+                
+                using (gdb.SqlConexion)
+                {                
+                    SqlCommand sqlCommand = new SqlCommand(gdb.SqlComando, gdb.SqlConexion);
+                    gdb.ObtenerSocix(sqlCommand, listaSocixs);
                 }
+
             }
-            catch (ErrorArchivosException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message}", "Error al intentar abrir el archivo", MessageBoxButtons.OK);
+                MessageBox.Show($"{ex.Message}", "Error al intentar levantar los datos de la base", MessageBoxButtons.OK);
             }
         }
 
         private void FrmClub_FormClosing(object sender, FormClosingEventArgs e)
         {
-            new GestorDeArchivos<List<Socix>>().Guardar($"{this.miClub.RazonSocial}.json", listaSocixs);
+            try
+            {
+                new GestorDeArchivos<List<Socix>>().Guardar($"{this.miClub.RazonSocial}.json", listaSocixs);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}", "Error al intentar guardar el archivo", MessageBoxButtons.OK);
+
+            }
         }
+
+        private void btnCargarListaArchivo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                new GestorDeArchivos<List<Socix>>().Leer($"{this.miClub.RazonSocial}.json", out listaSocixs);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}", "Error al intentar levantar los datos del archivo", MessageBoxButtons.OK);
+
+            }
+        }
+
+
     }
 }
