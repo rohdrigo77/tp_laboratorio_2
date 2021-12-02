@@ -13,22 +13,27 @@ using Entidades;
 
 namespace FrmClub
 {
-    public delegate void ActualizarDataGrid();
-    public delegate void ActualizarDataGridConDni(int dni);
+
 
     public partial class FrmListDatos : Form
     {
         private string consulta;
         private GestorBaseDeDatos gestor;
-        public event ActualizarDataGrid actualizarDG;
-        public event ActualizarDataGridConDni actualizarDGDni;
 
+
+        /// <summary>
+        /// Constructor sin parametros
+        /// </summary>
+        /// <param name="consulta"></param>
         public FrmListDatos(string consulta)
         {
             InitializeComponent();
             this.consulta = consulta;
         }
 
+        /// <summary>
+        /// Propiedad de solo lectura para el atributo dataGridView1
+        /// </summary>
         public DataGridView DataGridView
         {
             get
@@ -37,6 +42,9 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Propiedad de lectura y escritura para el atributo gestor
+        /// </summary>
         public GestorBaseDeDatos Gestor
         {
             set
@@ -49,7 +57,11 @@ namespace FrmClub
             }
         }
 
-
+        /// <summary>
+        /// Metodo manejador que asigna el atributo gestor y dataGridView1 al cargar el formulario
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FrmListDatos_Load(object sender, EventArgs e)
         {
             gestor = new GestorBaseDeDatos(this.consulta);
@@ -66,6 +78,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que muestra solo los nadadores en el datagrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listNadadoresBtn_Click(object sender, EventArgs e)
         {
             gestor = new GestorBaseDeDatos("Select * from Socixs where valorCuota LIKE '%Natacion'");
@@ -82,6 +99,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que muestra solo los futbolistas en el datagrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lstFutbolistasBtn_Click(object sender, EventArgs e)
         {
             gestor = new GestorBaseDeDatos("Select * from Socixs where valorCuota LIKE '%Futbol'");
@@ -98,6 +120,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que muestra solo los pugilistas en el datagrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPugilistas_Click(object sender, EventArgs e)
         {
             gestor = new GestorBaseDeDatos("Select * from Socixs where valorCuota LIKE '%Boxeo'");
@@ -114,25 +141,54 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que cierra el formulario
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Dispose();
-        }   
-
-        public void ActualizarDatagrid()
-        {
-            if(this.actualizarDG != null)
-            {
-                this.actualizarDG.Invoke();
-            }
-           
         }
 
-        public void ActualizarDatagridDni(int dni)
-        {
-            if (this.actualizarDGDni != null)
+        /// <summary>
+        /// Metodo manejador que invoca al datagrid de mostrarDatos si es necesario y lo actualiza    
+        /// </summary>
+        public void ActualizarDatagrid()
+        { 
+
+            if (this.DataGridView.InvokeRequired)
             {
-                this.actualizarDGDni.Invoke(dni);
+                ActualizarDataGrid del = new ActualizarDataGrid(ActualizarDatagrid);
+                this.DataGridView.Invoke(del);
+            }
+            else
+            {
+                this.Gestor = new GestorBaseDeDatos();
+                this.DataGridView.DataSource = this.Gestor.LeerDesdeBD();
+
+            }
+
+        }
+
+        /// <summary>
+         /// Metodo manejador que invoca al datagrid de mostrarDatos si es necesario y lo actualiza segun el dni recibido    
+        /// </summary>
+        /// <param name="dni"></param>
+
+        public void ActualizarDatagridDni(int dni)
+        {           
+            if (this.DataGridView.InvokeRequired)
+            {
+                ActualizarDataGridConDni del = new ActualizarDataGridConDni(ActualizarDatagridDni);
+                object [] args = { dni };
+                this.DataGridView.Invoke(del, args);
+            }
+            else
+            {
+                this.Gestor = new GestorBaseDeDatos($"Select * from Socixs where dni = { dni }");
+                this.DataGridView.DataSource = this.Gestor.LeerDesdeBD();
+
             }
         }
 

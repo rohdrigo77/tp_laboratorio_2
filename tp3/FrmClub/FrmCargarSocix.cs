@@ -17,12 +17,21 @@ namespace FrmClub
         Socix socix;
         List<Socix> listaSocix;
 
+        /// <summary>
+        /// Constructor Parametrizado
+        /// </summary>
+        /// <param name="lista"></param>
         public FrmCargarSocix(List<Socix> lista)
         {
             InitializeComponent();
             listaSocix = lista;  
         }
 
+        /// <summary>
+        /// Metodo manejador que verifica que los campos de los txtBox esten completados, asigna los valores validandolos, muestra un cuadro de texto con los datos asignados y solicita confirmacion para guardar el socix en la base de datos y en la lista de socixs actual
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnGuardarSocix_Click(object sender, EventArgs e)
         {
             try
@@ -51,11 +60,11 @@ namespace FrmClub
                 
                if (camposLlenos)
                 {
-                    socix.SocixNuevx = false;
+                    
                     switch (cmbDeportes.SelectedIndex)
                     {
                         case 1:
-                            socix = new Futbolista();
+                            socix = new Futbolista();                           
                             socix.DNI = int.Parse(txtDNI.Text);
                             socix.Nombre = txtNombre.Text;
                             socix.Apellido = txtApellido.Text;
@@ -109,11 +118,10 @@ namespace FrmClub
                             {
                                 ((Futbolista)socix).Categoria = ECategoria.Amateur;
                             }
-                            //socix = new Futbolista(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, tipoSocixSeleccionado, 0, 0, int.Parse(txtPosicion.Text), DateTime.Today.ToString(), DateTime.Today.ToString());
                             break;
 
                         case 2:
-
+                            
                             socix = new Pugilista();
                             socix.DNI = int.Parse(txtDNI.Text);
                             socix.Nombre = txtNombre.Text;
@@ -136,13 +144,10 @@ namespace FrmClub
 
                             ((Pugilista)socix).CategoriaPeso = (EPeso)cmbPeso.SelectedItem;
                             ((Pugilista)socix).CantidadPeleas = 0;
-
-
-                            //socix = new Pugilista(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, 0, pesoSeleccionado, tipoSocixSeleccionado, 0, DateTime.Today.ToString(), DateTime.Today.ToString());
                             break;
 
                         default:
-                            socix = new Nadador();
+                            socix = new Nadador();                            
                             socix.DNI = int.Parse(txtDNI.Text);
                             socix.Nombre = txtNombre.Text;
                             socix.Apellido = txtApellido.Text;
@@ -164,10 +169,11 @@ namespace FrmClub
                             {
                                 socix.ValorCuota = ECuota.AdultxsNatacion;
                             }
-                            // socix = new Nadador(int.Parse(txtDNI.Text), txtNombre.Text, txtApellido.Text, generoSeleccionado, int.Parse(txtEdad.Text), cuota, tipoSocixSeleccionado, 0, piletaSeleccionada, estiloNadoSeleccionado, DateTime.Today.ToString(), DateTime.Today.ToString());
                             break;
 
                     }
+
+                    socix.SocixNuevx = false;
 
                     if (MessageBox.Show($"¿Desea guardar el socio ingresado? \n \n {socix}", "Nuevx Socix", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
@@ -175,10 +181,7 @@ namespace FrmClub
                         listaSocix.Add(socix);
                         MessageBox.Show($"Socix ingresadx correctamente \n \n {socix}", "Socix Agregadx", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                }
-               
-                
-                       
+                }                         
 
             }
             catch (MenorQueCeroException ex)
@@ -207,11 +210,21 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que cierra el formulario
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Dispose();
         }
 
+        /// <summary>
+        /// Metodo manejador que habilita y deshabilita lbls, cmb y textbox segun el deporte seleccionado en cmbDeportes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmbDeportes_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblDni.Enabled = true;
@@ -254,6 +267,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo que carga los cmb segun los enumerados
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FrmCargarSocix_Load(object sender, EventArgs e)
         {
             this.cmbGenero.DataSource = Enum.GetValues(typeof(EGenero));
@@ -264,6 +282,12 @@ namespace FrmClub
             this.cmbTipoSocix.DataSource = Enum.GetValues(typeof(ETipoSocix));
             
         }
+
+        /// <summary>
+        /// Metodo manejador que consulta si se quiere agregar un socio mas antes de cerrar el formulario
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void FrmCargarSocix_FormClosing(object sender, FormClosingEventArgs e)
         {

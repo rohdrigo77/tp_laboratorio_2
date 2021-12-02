@@ -9,4 +9,3 @@ C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\Excepciones.csproj.
 C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\Excepciones.dll
 C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\ref\Excepciones.dll
 C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\Excepciones.pdb
-C:\Users\btz_p\source\repos\tp3\Excepciones\obj\Debug\net5.0\Excepciones.csproj.AssemblyReference.cache

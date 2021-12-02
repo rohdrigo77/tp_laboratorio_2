@@ -18,17 +18,28 @@ namespace Entidades
         private SqlConnection sqlConexion;
         private string sqlComando;
 
+        /// <summary>
+        /// Constructor publico de GestorBaseDeDatos
+        /// </summary>
         public GestorBaseDeDatos()
         {
             this.sqlConexion =  new SqlConnection(@"Server=localhost\SQLEXPRESS;Database=TP3CLUB;Trusted_Connection=True");
         }
 
+        /// <summary>
+        ///  Constructor publico de GestorBaseDeDatos parametrizado que recibe un string para asignar el atributo "comando".
+        /// </summary>
+        /// <param name="comando"></param>
         public GestorBaseDeDatos(string comando)
         :this() 
         {
             this.sqlComando = comando;
         }
 
+        /// <summary>
+        /// Puebla un datatable y lo retorna segun el comando y conexion del GestorBaseDeDatos
+        /// </summary>
+        /// <returns></returns>
         public DataTable LeerDesdeBD()
         {
             DataTable dataTable = new DataTable();
@@ -51,14 +62,24 @@ namespace Entidades
 
         }
 
+        /// <summary>
+        /// Propiedad publica de lectura y escritura para el atributo sqlConexion
+        /// </summary>
         public SqlConnection SqlConexion
         {
+            set
+            {
+                this.sqlConexion = value;
+            }
             get
             {
                 return this.sqlConexion;
             }
         }
 
+        /// <summary>
+        /// Propiedad publica de escritura y lectura para el atributo sqlComando
+        /// </summary>
         public string SqlComando
         {
             get
@@ -71,7 +92,10 @@ namespace Entidades
             }
         }
 
-
+        /// <summary>
+        /// Metodo para guardar socio recibido en base de datos
+        /// </summary>
+        /// <param name="socio"></param>
         public void Guardar(Socix socio)
         {
             using (this.sqlConexion)
@@ -96,7 +120,6 @@ namespace Entidades
 
                     if (socio is Futbolista)
                     {
-
                         sqlCommand.Parameters.AddWithValue("categoria", ((Futbolista)socio).Categoria.ToString());
                         sqlCommand.Parameters.AddWithValue("posicion", ((Futbolista)socio).Posicion);
                         sqlCommand.Parameters.AddWithValue("partidosJugados", ((Futbolista)socio).PartidosJugados);
@@ -104,8 +127,6 @@ namespace Entidades
                         sqlCommand.Parameters.AddWithValue("estiloPreferido", "No corresponde");
                         sqlCommand.Parameters.AddWithValue("peso", "No corresponde");
                         sqlCommand.Parameters.AddWithValue("cantidadPeleas", 0);
-
-
                     }
                     else if (socio is Pugilista)
                     {
@@ -128,10 +149,9 @@ namespace Entidades
                         sqlCommand.Parameters.AddWithValue("cantidadPeleas", 0);
                     }
 
-
-
                     if (this.sqlConexion.State != System.Data.ConnectionState.Open)
                     {
+                        this.SqlConexion.ConnectionString = @"Server = localhost\SQLEXPRESS; Database = TP3CLUB; Trusted_Connection = True";
                         this.sqlConexion.Open();
                     }
 
@@ -140,13 +160,18 @@ namespace Entidades
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Excepcion Capturada en GuardarSocix", ex);
+                    throw new Exception($"Excepcion Capturada en GuardarSocix: {ex.Message}", ex);
                 }
 
             }
 
         }
 
+        /// <summary>
+        /// Metodo para validar si el dni recibido existe en la base de datos
+        /// </summary>
+        /// <param name="dni"></param>
+        /// <returns></returns>
         public bool DniExistente(int dni)
         {
 
@@ -174,15 +199,18 @@ namespace Entidades
 
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    throw ex;
                 }
             }
 
             return respuesta;
         }
 
+        /// <summary>
+        /// Metodo para ejecutar el comando escalar en sqlComando con la conexion en sqlConexion
+        /// </summary>
         public void EjecutarScalar()
         {
             using (this.sqlConexion)
@@ -206,6 +234,9 @@ namespace Entidades
             }
         }
 
+        /// <summary>
+        /// Metodo para ejecutar el comando reader en sqlComando con la conexion en sqlConexion
+        /// </summary>
         public void EjecutarReader()
         {
             using (this.sqlConexion)
@@ -229,6 +260,9 @@ namespace Entidades
             }
         }
 
+        /// <summary>
+        /// Metodo para ejecutar el comando nonquery en sqlComando con la conexion en sqlConexion
+        /// </summary>
         public void EjecutarNonQuery()
         {
             using (this.sqlConexion)
@@ -250,7 +284,13 @@ namespace Entidades
                     throw ex;
                 }
             }
-        }       
+        } 
+        
+        /// <summary>
+        /// Metodo publico para obtener una lista de socios segun el comando recibido y asignarla a la lista recibida
+        /// </summary>
+        /// <param name="sqlCommand"></param>
+        /// <param name="list"></param>
 
         public void ObtenerSocix(SqlCommand sqlCommand, List<Socix> list)
         {
@@ -317,6 +357,10 @@ namespace Entidades
 
         }
 
+        /// <summary>
+        /// Metodo para actualizar el socix recibido existente en la base con sus atributos
+        /// </summary>
+        /// <param name="socio"></param>
         public void ActualizarSocix(Socix socio)
         {
             using (this.sqlConexion)
@@ -344,7 +388,7 @@ namespace Entidades
                         sqlCommand.Parameters.AddWithValue("categoria", ((Futbolista)socio).Categoria.ToString());
                         sqlCommand.Parameters.AddWithValue("posicion", ((Futbolista)socio).Posicion);
                         sqlCommand.Parameters.AddWithValue("partidosJugados", ((Futbolista)socio).PartidosJugados);
-                        sqlCommand.Parameters.AddWithValue("tipoPileta", "No corresponde");
+                        sqlCommand.Parameters.AddWithValue("pileta", "No corresponde");
                         sqlCommand.Parameters.AddWithValue("estiloPreferido", "No corresponde");
                         sqlCommand.Parameters.AddWithValue("peso", "No corresponde");
                         sqlCommand.Parameters.AddWithValue("cantidadPeleas", 0);
@@ -390,6 +434,10 @@ namespace Entidades
             }
         }
 
+        /// <summary>
+        /// Metodo para borrar dni de un socix donde el dni sea el recibido
+        /// </summary>
+        /// <param name="dni"></param>
         public void BorrarDNI(int dni)
         {
 

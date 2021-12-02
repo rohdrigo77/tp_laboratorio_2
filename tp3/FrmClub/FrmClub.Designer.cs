@@ -35,6 +35,7 @@ namespace FrmClub
             this.informesBtn = new System.Windows.Forms.Button();
             this.modificarSocixBtn = new System.Windows.Forms.Button();
             this.btnCargarListaArchivo = new System.Windows.Forms.Button();
+            this.btnGuardarListaArchivo = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button4
@@ -96,11 +97,22 @@ namespace FrmClub
             this.btnCargarListaArchivo.UseVisualStyleBackColor = true;
             this.btnCargarListaArchivo.Click += new System.EventHandler(this.btnCargarListaArchivo_Click);
             // 
+            // btnGuardarListaArchivo
+            // 
+            this.btnGuardarListaArchivo.Location = new System.Drawing.Point(13, 407);
+            this.btnGuardarListaArchivo.Name = "btnGuardarListaArchivo";
+            this.btnGuardarListaArchivo.Size = new System.Drawing.Size(263, 72);
+            this.btnGuardarListaArchivo.TabIndex = 12;
+            this.btnGuardarListaArchivo.Text = "Guardar lista de socixs a archivo";
+            this.btnGuardarListaArchivo.UseVisualStyleBackColor = true;
+            this.btnGuardarListaArchivo.Click += new System.EventHandler(this.btnGuardarListaArchivo_Click);
+            // 
             // FrmClub
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(288, 415);
+            this.ClientSize = new System.Drawing.Size(288, 491);
+            this.Controls.Add(this.btnGuardarListaArchivo);
             this.Controls.Add(this.btnCargarListaArchivo);
             this.Controls.Add(this.modificarSocixBtn);
             this.Controls.Add(this.informesBtn);
@@ -124,6 +136,7 @@ namespace FrmClub
         private System.Windows.Forms.Button informesBtn;
         private System.Windows.Forms.Button modificarSocixBtn;
         private System.Windows.Forms.Button btnCargarListaArchivo;
+        private System.Windows.Forms.Button btnGuardarListaArchivo;
     }
 }
 

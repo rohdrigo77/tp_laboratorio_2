@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public enum EGenero
     {
         Masculino,
@@ -14,6 +17,9 @@ namespace Entidades
 
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public enum EDeporteSocix
     {
         Nadador,
@@ -21,12 +27,18 @@ namespace Entidades
         Boxeador,
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public enum ETipoSocix
     {
         Recreativo,
         Competitivo,
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public enum ECategoria
     {
         PreBenjamin,
@@ -38,6 +50,9 @@ namespace Entidades
         Amateur,
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public enum EEstilos
     {
         Crol,
@@ -46,6 +61,9 @@ namespace Entidades
         Mariposa,
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public enum EPileta
     {
         Niños,
@@ -53,6 +71,9 @@ namespace Entidades
         Olimpica,
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public enum EPeso
     {
        Mosca,
@@ -65,6 +86,9 @@ namespace Entidades
        Superpesado,
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public enum ECuota
     {
         NinixsNatacion,

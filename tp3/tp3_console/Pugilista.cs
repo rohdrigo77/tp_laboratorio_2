@@ -3,26 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Entidades
 {
+    [XmlInclude(typeof(Pugilista))]
     public class Pugilista : Socix
     {
         private EPeso categoriaPeso;
         private int cantidadPeleas;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Pugilista()
         : base()
         {
         }
 
-        /*public Pugilista(int dni, string nombre, string apellido, EGenero genero, int edad, ECuota valorCuota, int cantMedallas, EPeso categoria, ETipoSocix tipoSocix, int cantidadPeleas, string fechaAsociacion, string fechaAptaFisica)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dni"></param>
+        /// <param name="nombre"></param>
+        /// <param name="apellido"></param>
+        /// <param name="genero"></param>
+        /// <param name="edad"></param>
+        /// <param name="valorCuota"></param>
+        /// <param name="cantMedallas"></param>
+        /// <param name="categoria"></param>
+        /// <param name="tipoSocix"></param>
+        /// <param name="cantidadPeleas"></param>
+        /// <param name="fechaAsociacion"></param>
+        /// <param name="fechaAptaFisica"></param>
+        public Pugilista(int dni, string nombre, string apellido, EGenero genero, int edad, ECuota valorCuota, int cantMedallas, EPeso categoria, ETipoSocix tipoSocix, int cantidadPeleas, string fechaAsociacion, string fechaAptaFisica)
         : base(dni, nombre, apellido, genero, edad, valorCuota,tipoSocix,cantMedallas,fechaAptaFisica,fechaAsociacion)
         {
             this.categoriaPeso = categoria;
             this.cantidadPeleas = cantidadPeleas;
-        }*/
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public EPeso CategoriaPeso
         {
             set
@@ -35,6 +59,9 @@ namespace Entidades
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int CantidadPeleas
         {
             set
@@ -47,6 +74,9 @@ namespace Entidades
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public override ECuota ValorCuota
         {
             set
@@ -69,6 +99,11 @@ namespace Entidades
             }
 
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         protected override string Mostrar()
         {
             StringBuilder sb = new StringBuilder();

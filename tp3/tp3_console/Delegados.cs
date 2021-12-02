@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    public delegate void AgregarSocixAClub(Socix socix);
-    public delegate string Printear();
+    public delegate void ActualizarDataGrid();
+    public delegate void ActualizarDataGridConDni(int dni);
 
 }

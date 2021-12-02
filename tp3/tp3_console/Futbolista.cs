@@ -4,28 +4,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Excepciones;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Entidades
 {
+    [XmlInclude(typeof(Futbolista))]
     public class Futbolista : Socix
     {
 
         private int partidosJugados;
         private ECategoria categoria;
         private int posicion;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public Futbolista()
         : base()
         {
         }
-        /*public Futbolista(int dni, string nombre, string apellido, EGenero genero, int edad, ECuota cuota, ETipoSocix tipoSocix, int medallas, int partidosJugados, int posicion,string fechaAsociacion, string fechaAptaFisica)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dni"></param>
+        /// <param name="nombre"></param>
+        /// <param name="apellido"></param>
+        /// <param name="genero"></param>
+        /// <param name="edad"></param>
+        /// <param name="cuota"></param>
+        /// <param name="tipoSocix"></param>
+        /// <param name="medallas"></param>
+        /// <param name="partidosJugados"></param>
+        /// <param name="posicion"></param>
+        /// <param name="fechaAsociacion"></param>
+        /// <param name="fechaAptaFisica"></param>
+        public Futbolista(int dni, string nombre, string apellido, EGenero genero, int edad, ECuota cuota, ETipoSocix tipoSocix, int medallas, int partidosJugados, int posicion,string fechaAsociacion, string fechaAptaFisica)
         :base(dni,nombre,apellido,genero,edad,cuota,tipoSocix,medallas, fechaAsociacion, fechaAptaFisica)
         {           
             this.partidosJugados = partidosJugados;
-            this.posicion = posicion;
-            
-        }*/
+            this.posicion = posicion;     
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int PartidosJugados
         {
             set
@@ -38,6 +61,9 @@ namespace Entidades
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ECategoria Categoria
         {
             set
@@ -50,6 +76,9 @@ namespace Entidades
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int Posicion
         {
             set
@@ -76,6 +105,9 @@ namespace Entidades
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public override ECuota ValorCuota
         {
             set
@@ -99,6 +131,10 @@ namespace Entidades
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         protected override string Mostrar()
         {
             StringBuilder sb = new StringBuilder();

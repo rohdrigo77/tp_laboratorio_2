@@ -20,15 +20,26 @@ namespace FrmClub
         List<ComboBox> comboCajas = new List<ComboBox>();
         List<CheckBox> cajasCheck = new List<CheckBox>();      
         FrmListDatos frmListDatos = new FrmListDatos("Select * from Socixs");
+        public event ActualizarDataGrid actualizarDG;
+        public event ActualizarDataGridConDni actualizarDGDni;
         Socix socix;
         List<Socix> listaSocix;
-        
+        Task tarea;
 
+        /// <summary>
+        /// Constructor sin parametros
+        /// </summary>
         public FrmModificarSocix()
         {
             InitializeComponent();
+           
         }
 
+        /// <summary>
+        /// Metodo manejador que verifica que los campos de los txtBox esten completados, asigna los valores validandolos, muestra un cuadro de texto con los datos modificados y solicita confirmacion para guardar el socix modificado en la base de datos y en la lista de socixs actual
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             StringBuilder camposModificados = new StringBuilder();
@@ -50,7 +61,8 @@ namespace FrmClub
 
                         foreach (TextBox cajita in cajasDeTexto)
                         {
-                            bool contains = cajita.Name.IndexOf($"txt{char.ToUpper(cajasCheck[i].Text[0])}", StringComparison.OrdinalIgnoreCase) == 0;
+                            string resto = cajasCheck[i].Text.Remove(0, 1);
+                            bool contains = cajita.Name.IndexOf($"txt{char.ToUpper(cajasCheck[i].Text[0])}{resto}", StringComparison.OrdinalIgnoreCase) == 0;
 
                             if (contains)
                             {
@@ -86,7 +98,8 @@ namespace FrmClub
 
                         foreach (ComboBox cajita in comboCajas)
                         {
-                            bool contains = cajita.Name.IndexOf($"cmb{char.ToUpper(cajasCheck[i].Text[0])}", StringComparison.OrdinalIgnoreCase) == 0;
+                            string resto = cajasCheck[i].Text.Remove(0, 1);
+                            bool contains = cajita.Name.IndexOf($"cmb{char.ToUpper(cajasCheck[i].Text[0])}{resto}", StringComparison.OrdinalIgnoreCase) == 0;
 
                             if (contains)
                             {
@@ -136,13 +149,11 @@ namespace FrmClub
                 {
 
                     (new GestorBaseDeDatos()).ActualizarSocix(socix);
-                    //Task tarea = Task.Run(() => { this.frmListDatos.ActualizarDatagridDni(int.Parse(txtDNI.Text)); });
 
-                   // if (tarea != null)
-                   // {
-                        this.ActualizarEventDni(int.Parse(txtDNI.Text));
-                        MessageBox.Show("Socix modificadx exitosamente.", "Socix Modificado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                   // }
+                    Task tareaDos = Task.Run(() => this.ActualizarEventDni(int.Parse(txtDNI.Text)));
+                    
+                    MessageBox.Show("Socix modificadx exitosamente.", "Socix Modificado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        
 
                 }
             }
@@ -154,10 +165,21 @@ namespace FrmClub
 
         }
 
+        /// <summary>
+        /// Metodo manejador que cierra el formulario
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Dispose();
         }
+
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void chkCantidadPeleas_CheckedChanged(object sender, EventArgs e)
         {
@@ -171,6 +193,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkNombre_CheckedChanged(object sender, EventArgs e)
         {
             if (chkNombre.CheckState == CheckState.Checked)
@@ -183,6 +210,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkApellido_CheckedChanged(object sender, EventArgs e)
         {
             if (chkApellido.CheckState == CheckState.Checked)
@@ -195,6 +227,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkGenero_CheckedChanged(object sender, EventArgs e)
         {
             if (chkGenero.CheckState == CheckState.Checked)
@@ -207,6 +244,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkEdad_CheckedChanged(object sender, EventArgs e)
         {
             if (chkEdad.CheckState == CheckState.Checked)
@@ -219,6 +261,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkValorCuota_CheckedChanged(object sender, EventArgs e)
         {
             if (chkValorCuota.CheckState == CheckState.Checked)
@@ -230,6 +277,12 @@ namespace FrmClub
                 cmbValorCuota.Enabled = false;
             }
         }
+
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void chkMedallas_CheckedChanged(object sender, EventArgs e)
         {
@@ -243,6 +296,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkCategoria_CheckedChanged(object sender, EventArgs e)
         {
             if (chkCategoria.CheckState == CheckState.Checked)
@@ -255,6 +313,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkPosicion_CheckedChanged(object sender, EventArgs e)
         {
             if (chkPosicion.CheckState == CheckState.Checked)
@@ -267,6 +330,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkPartidosJugados_CheckedChanged(object sender, EventArgs e)
         {
             if (chkPartidosJugados.CheckState == CheckState.Checked)
@@ -279,6 +347,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkTipoPileta_CheckedChanged(object sender, EventArgs e)
         {
             if (chkPileta.CheckState == CheckState.Checked)
@@ -290,6 +363,12 @@ namespace FrmClub
                 cmbPileta.Enabled = false;
             }
         }
+
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void chkEstilo_CheckedChanged(object sender, EventArgs e)
         {
@@ -303,6 +382,11 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkCategoriaPeso_CheckedChanged(object sender, EventArgs e)
         {
             if (chkPeso.CheckState == CheckState.Checked)
@@ -314,6 +398,12 @@ namespace FrmClub
                 cmbPeso.Enabled = false;
             }
         }
+
+        /// <summary>
+        /// Metodo manejador que puebla los cmb con enumerados, agrega a las listas de boxes sus diferentes tipos existentes, agrega manejadores a los eventos, instancia el atributo listaSocix y lanza el formulario de mostrardatos en un hilo paralelo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void FrmModificarSocix_Load(object sender, EventArgs e)
         {
@@ -371,14 +461,18 @@ namespace FrmClub
             cmbPeso.DataSource = Enum.GetValues(typeof(EPeso));
 
             
-            frmListDatos.actualizarDG += this.ActualizarEvent;
-            frmListDatos.actualizarDGDni += this.ActualizarEventDni;
-            Task.Run(() => frmListDatos.ShowDialog());
+            this.actualizarDG += frmListDatos.ActualizarDatagrid;
+            this.actualizarDGDni += frmListDatos.ActualizarDatagridDni;
+            tarea = new Task(() => frmListDatos.ShowDialog());
+            tarea.Start();
             
         }
 
-
-
+        /// <summary>
+        /// Metodo manejador que habilita o deshabilita el txtBox correspondiente a su campo segun el estado del chkBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkTipoSocix_CheckedChanged(object sender, EventArgs e)
         {
             if (chkTipoSocix.CheckState == CheckState.Checked)
@@ -391,73 +485,86 @@ namespace FrmClub
             }
         }
 
+        /// <summary>
+        /// Metodo manejador que verifica que el dni ingresado en el txtbox exista y actualiza la base de datos en consecuencia, mostrando los datos actuales del socix correspondiente al dni
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         private void btnDni_Click(object sender, EventArgs e)
         {
             GestorBaseDeDatos gbd;
 
-            if (int.TryParse(this.txtDNI.Text, out int dni))
+            try
             {
-                gbd = new GestorBaseDeDatos($"SELECT * FROM Socixs WHERE dni = {dni}");
-                SqlCommand sqlCommand = new SqlCommand(gbd.SqlComando,gbd.SqlConexion);
-                gbd.ObtenerSocix(sqlCommand,listaSocix);
-                
-                if(listaSocix[0] is Futbolista)
+                if (int.TryParse(this.txtDNI.Text, out int dni))
                 {
-                    socix = new Futbolista();
-                }
-                else if (listaSocix[0] is Pugilista)
-                {
-                    socix = new Pugilista();
+                    gbd = new GestorBaseDeDatos($"SELECT * FROM Socixs WHERE dni = {dni}");
+                    SqlCommand sqlCommand = new SqlCommand(gbd.SqlComando, gbd.SqlConexion);
+                    gbd.ObtenerSocix(sqlCommand, listaSocix);
+
+                    if (listaSocix[0] is Futbolista)
+                    {
+                        socix = new Futbolista();
+                    }
+                    else if (listaSocix[0] is Pugilista)
+                    {
+                        socix = new Pugilista();
+                    }
+                    else
+                    {
+                        socix = new Nadador();
+                    }
+
+                    socix = listaSocix[0];
+
+                    if (tarea != null)
+                    {
+                        Task tareaDos = Task.Run(() => this.ActualizarEventDni(dni));
+                        btnAceptar.Enabled = true;
+                    }
+
                 }
                 else
                 {
-                    socix = new Nadador();
+                    MessageBox.Show("Dni inválido o inexistente.", "Error al ingresar DNI", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-                socix = listaSocix[0];
-                Task tarea = Task.Run(() => { this.frmListDatos.ActualizarDatagridDni(dni); }) ;
-                    
-                if (tarea != null)
-                {
-                    this.ActualizarEventDni(dni);
-                    btnAceptar.Enabled = true;
-                }
-
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Dni inválido o inexistente.", "Error al ingresar DNI", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"{ex.Message}.", "Error al ingresar DNI", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
+
+
         }
 
+        /// <summary>
+        /// Metodo manejador que llama al evento actualizarDG
+        /// </summary>
         private void ActualizarEvent()
         {
-            if (frmListDatos.DataGridView.InvokeRequired)
+            if (this.actualizarDG != null)
             {
-                ActualizarDataGrid del = new ActualizarDataGrid(this.ActualizarEvent);
-                this.frmListDatos.DataGridView.Invoke(del);
+                this.actualizarDG.Invoke();
             }
-            else
-            {
-                frmListDatos.Gestor = new GestorBaseDeDatos();
-                frmListDatos.DataGridView.DataSource = frmListDatos.Gestor.LeerDesdeBD();
-               
-            }
+
         }
-        
+
+        /// <summary>
+        /// Metodo manejador que llama al evento actualizarDGDNI 
+        /// </summary>
+        /// <param name="dni"></param>
         private void ActualizarEventDni(int dni)
         {
-            if (frmListDatos.DataGridView.InvokeRequired)
+
+            if (this.actualizarDGDni != null)
             {
-                ActualizarDataGridConDni del = new ActualizarDataGridConDni(this.ActualizarEventDni);
-                object[] args = new object[] { dni };
-                this.frmListDatos.DataGridView.Invoke(del, args);
+                this.actualizarDGDni.Invoke(dni);
             }
-            else
-            {
-                frmListDatos.Gestor = new GestorBaseDeDatos($"SELECT * from Socixs WHERE dni = {dni}");
-                frmListDatos.DataGridView.DataSource = frmListDatos.Gestor.LeerDesdeBD();
-            }
+            
         }
+
+
     }
 }
