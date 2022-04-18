@@ -12,21 +12,20 @@ using Entidades;
 
 namespace MiCalculadora
 {
-/// <summary>
-/// 
-/// </summary>
+
     public partial class FormCalculadora : Form
     {
         /// <summary>
-        /// 
+        /// Constructor FormCalculadora
         /// </summary>
         public FormCalculadora()
         {
             InitializeComponent();
             CargarOperadoresEnComboBox();
         }
+
         /// <summary>
-        /// 
+        /// Metodo de carga para FormCalculadora que limpia la pantalla
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -34,8 +33,9 @@ namespace MiCalculadora
         {
             Limpiar();
         }
+
         /// <summary>
-        /// 
+        /// Metodo para cerrar el formulario al hacer clic en su boton correspondiente
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -43,8 +43,9 @@ namespace MiCalculadora
         {
             this.Close();
         }
+
         /// <summary>
-        /// 
+        /// Metodo para convertir numero decimal en binario
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -59,7 +60,7 @@ namespace MiCalculadora
 
         }
         /// <summary>
-        /// 
+        /// Metodo para Realizar operaciones
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -70,19 +71,22 @@ namespace MiCalculadora
                 
                 if (String.Compare(cmbOperador.SelectedValue.ToString(), "/") == 0 && (Convert.ToDouble(txtNumero2.Text) == 0))
                 {
-                    MessageBox.Show("No se puede dividir por 0!","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);  
+                    MessageBox.Show("No se puede dividir por 0!","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    this.lblResultado.Text = double.MinValue.ToString();
                 }
                 else
                 {
                     this.lblResultado.Text = Operar(txtNumero1.Text, txtNumero2.Text, (cmbOperador.SelectedValue).ToString()).ToString();
-                    CargarResultado();
+                    
                 }
+
+                CargarResultado();
             }
      
            
         }
         /// <summary>
-        /// 
+        /// Metodo para manejar el evento del boton "limpiar" al hacerle clic
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -92,7 +96,7 @@ namespace MiCalculadora
            
         }
         /// <summary>
-        /// 
+        /// Metodo para convertir de Binario a Decimal
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -108,7 +112,7 @@ namespace MiCalculadora
             }      
         }
         /// <summary>
-        /// 
+        /// Metodo para limpiar pantalla
         /// </summary>
         public void Limpiar()
         {
@@ -120,7 +124,7 @@ namespace MiCalculadora
 
         }
         /// <summary>
-        /// 
+        /// Metodo estatico que realiza una operación matemática indicada
         /// </summary>
         /// <param name="numero1"></param>
         /// <param name="numero2"></param>
@@ -131,7 +135,7 @@ namespace MiCalculadora
            return Calculadora.Operar(new Operando(numero1), new Operando(numero2), operador[0]);
         }
         /// <summary>
-        /// 
+        /// Metodo para cargar distintos operadores en combobox
         /// </summary>
         private void CargarOperadoresEnComboBox()
         {
@@ -152,7 +156,7 @@ namespace MiCalculadora
 
         }
         /// <summary>
-        /// 
+        /// Metodo para cargar resultado en la lista
         /// </summary>
         public void CargarResultado()
         {
@@ -173,7 +177,7 @@ namespace MiCalculadora
             lstOperaciones.Items.Add(sb);
         }
         /// <summary>
-        /// 
+        /// Metodo para cargar conversion en la lista
         /// </summary>
         /// <param name="temp"></param>
         public void CargarConversion(string temp)
@@ -185,7 +189,7 @@ namespace MiCalculadora
             lstOperaciones.Items.Add(sb);
         }
         /// <summary>
-        /// 
+        /// Metodo para solicitar confirmación antes de cerrar el formulario
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
