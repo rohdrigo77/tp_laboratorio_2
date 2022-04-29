@@ -19,10 +19,7 @@ C:\Users\btz_p\source\repos\MiCalculadora\obj\Debug\net5.0-windows\MiCalculadora
 C:\Users\btz_p\source\repos\MiCalculadora\obj\Debug\net5.0-windows\ref\MiCalculadora.dll
 C:\Users\btz_p\source\repos\MiCalculadora\obj\Debug\net5.0-windows\MiCalculadora.pdb
 C:\Users\btz_p\source\repos\MiCalculadora\obj\Debug\net5.0-windows\MiCalculadora.genruntimeconfig.cache
-C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\bin\Debug\net5.0-windows\MiCalculadora.exe
 C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\bin\Debug\net5.0-windows\MiCalculadora.deps.json
-C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\bin\Debug\net5.0-windows\MiCalculadora.runtimeconfig.json
-C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\bin\Debug\net5.0-windows\MiCalculadora.runtimeconfig.dev.json
 C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\bin\Debug\net5.0-windows\MiCalculadora.dll
 C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\bin\Debug\net5.0-windows\ref\MiCalculadora.dll
 C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\bin\Debug\net5.0-windows\MiCalculadora.pdb
@@ -39,4 +36,7 @@ C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\obj\Debug\net5.0-win
 C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\obj\Debug\net5.0-windows\MiCalculadora.dll
 C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\obj\Debug\net5.0-windows\ref\MiCalculadora.dll
 C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\obj\Debug\net5.0-windows\MiCalculadora.pdb
+C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\bin\Debug\net5.0-windows\MiCalculadora.exe
+C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\bin\Debug\net5.0-windows\MiCalculadora.runtimeconfig.json
+C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\bin\Debug\net5.0-windows\MiCalculadora.runtimeconfig.dev.json
 C:\Users\btz_p\Documents\tp_laboratorio_2\TP1\MiCalculadora\obj\Debug\net5.0-windows\MiCalculadora.genruntimeconfig.cache
