@@ -6,24 +6,28 @@ namespace Entidades
     /// <summary>
     /// No podrá tener clases heredadas.
     /// </summary>
-    public sealed class Taller
+    public static sealed class Taller
     {
-        List<Vehiculo> vehiculos;
-        int espacioDisponible;
+        static List<Vehiculo> vehiculos;
+        static int espacioDisponible;
         public enum ETipo
         {
             Ciclomotor, Sedan, SUV, Todos
         }
 
         #region "Constructores"
-        private Taller()
+        static Taller()
         {
-            this.vehiculos = new List<Vehiculo>();
+            Taller.vehiculos = new List<Vehiculo>();
         }
-        public Taller(int espacioDisponible)
-            : this()
+        public static int EspacioDisponible         
         {
-            this.espacioDisponible = espacioDisponible;
+            get
+            {
+                return Taller.espacioDisponible;
+            }
+            set { Taller.espacioDisponible = value; }
+            
         }
         #endregion
 
@@ -34,9 +38,9 @@ namespace Entidades
         /// Muestro el estacionamiento y TODOS los vehículos
         /// </summary>
         /// <returns></returns>
-        public string ToString()
+        public static string ToString()
         {
-            return this.Listar(this, ETipo.Todos);
+            return Taller.Listar(ETipo.Todos);
         }
         #endregion
 
@@ -49,16 +53,15 @@ namespace Entidades
         /// <param name="taller">Elemento a exponer</param>
         /// <param name="ETipo">Tipos de ítems de la lista a mostrar</param>
         /// <returns></returns>
-        public string Listar(Taller taller, ETipo tipo)
+        public static string Listar( ETipo tipo)
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendFormat("Tenemos {0} lugares ocupados de un total de {1} disponibles", taller.vehiculos.Count, taller.espacioDisponible);
+            sb.AppendFormat("Tenemos {0} lugares ocupados de un total de {1} disponibles", Taller.vehiculos.Count, Taller.espacioDisponible);
             sb.AppendLine("");
 
-            foreach (Vehiculo v in taller.vehiculos)
+            foreach (Vehiculo v in Taller.vehiculos)
             {
-  
                 
                 if (v is Suv && tipo == ETipo.SUV)
                 {
@@ -102,13 +105,13 @@ namespace Entidades
         /// <param name="taller">Objeto donde se agregará el elemento</param>
         /// <param name="vehiculo">Objeto a agregar</param>
         /// <returns></returns>
-        public static Taller operator +(Taller taller, Vehiculo vehiculo)
+        public static void AgregarVehiculo(Vehiculo vehiculo)
         {
             bool vehiculoYaEnLista = false;
 
-            if (taller.vehiculos.Count < taller.espacioDisponible)
+            if (Taller.vehiculos.Count < Taller.espacioDisponible)
             { 
-                foreach (Vehiculo v in taller.vehiculos)
+                foreach (Vehiculo v in Taller.vehiculos)
                 {
                     if (v == vehiculo)
                     {
@@ -119,12 +122,10 @@ namespace Entidades
 
                 if (!vehiculoYaEnLista)
                 {
-                    taller.vehiculos.Add(vehiculo);
+                    Taller.vehiculos.Add(vehiculo);
                 }
             }
-            
-            
-            return taller;
+                                 
         }
         /// <summary>
         /// Quitará un elemento de la lista
@@ -132,18 +133,17 @@ namespace Entidades
         /// <param name="taller">Objeto donde se quitará el elemento</param>
         /// <param name="vehiculo">Objeto a quitar</param>
         /// <returns></returns>
-        public static Taller operator - (Taller taller, Vehiculo vehiculo)
+        public static void QuitarVehiculo (Vehiculo vehiculo)
         {
-            foreach ( Vehiculo v in taller.vehiculos)
+            foreach ( Vehiculo v in Taller.vehiculos)
             {
                 if (v == vehiculo)
                 {
-                    taller.vehiculos.Remove(vehiculo);
+                    Taller.vehiculos.Remove(vehiculo);
                     break;
                 }
             }         
            
-            return taller;
         }
         #endregion
     }

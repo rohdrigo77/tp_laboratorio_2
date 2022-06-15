@@ -1,5 +1,9 @@
 ﻿using Entidades;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace TP_02_2018
 {
@@ -43,7 +47,7 @@ namespace TP_02_2018
 
             // Quito 2 items y muestro
             taller -= c1;
-            taller -= c2;
+            taller -= new Ciclomotor(Vehiculo.EMarca.Honda, "ASD913", ConsoleColor.Red);
 
             Console.WriteLine(taller.ToString());
             Console.WriteLine("<-----------PRESIONE UNA TECLA PARA CONTINUAR----------->");

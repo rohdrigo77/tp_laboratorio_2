@@ -17,3 +17,9 @@ C:\Users\btz_p\Downloads\TP-02-Cascara.r2\TP-02\Entidades\obj\Debug\Entidades.dl
 C:\Users\btz_p\Downloads\TP-02-Cascara.r2\TP-02\Entidades\obj\Debug\Entidades.pdb
 C:\Users\btz_p\Downloads\TP-02-Cascara.r2\TP-02\Entidades\bin\Debug\Entidades.dll
 C:\Users\btz_p\Downloads\TP-02-Cascara.r2\TP-02\Entidades\bin\Debug\Entidades.pdb
+C:\Users\btz_p\Documents\tp_laboratorio_2\TP2\Entidades\bin\Debug\Entidades.dll
+C:\Users\btz_p\Documents\tp_laboratorio_2\TP2\Entidades\bin\Debug\Entidades.pdb
+C:\Users\btz_p\Documents\tp_laboratorio_2\TP2\Entidades\obj\Debug\Entidades.csproj.AssemblyReference.cache
+C:\Users\btz_p\Documents\tp_laboratorio_2\TP2\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
+C:\Users\btz_p\Documents\tp_laboratorio_2\TP2\Entidades\obj\Debug\Entidades.dll
+C:\Users\btz_p\Documents\tp_laboratorio_2\TP2\Entidades\obj\Debug\Entidades.pdb
