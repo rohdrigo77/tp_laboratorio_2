@@ -36,6 +36,7 @@ namespace FrmClub
             this.modificarSocixBtn = new System.Windows.Forms.Button();
             this.btnCargarListaArchivo = new System.Windows.Forms.Button();
             this.btnGuardarListaArchivo = new System.Windows.Forms.Button();
+            this.btnCargarValorCuota = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button4
@@ -105,7 +106,7 @@ namespace FrmClub
             this.btnCargarListaArchivo.BackColor = System.Drawing.Color.Yellow;
             this.btnCargarListaArchivo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCargarListaArchivo.ForeColor = System.Drawing.Color.Red;
-            this.btnCargarListaArchivo.Location = new System.Drawing.Point(12, 328);
+            this.btnCargarListaArchivo.Location = new System.Drawing.Point(12, 407);
             this.btnCargarListaArchivo.Name = "btnCargarListaArchivo";
             this.btnCargarListaArchivo.Size = new System.Drawing.Size(264, 72);
             this.btnCargarListaArchivo.TabIndex = 11;
@@ -118,7 +119,7 @@ namespace FrmClub
             this.btnGuardarListaArchivo.BackColor = System.Drawing.Color.Yellow;
             this.btnGuardarListaArchivo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnGuardarListaArchivo.ForeColor = System.Drawing.Color.Red;
-            this.btnGuardarListaArchivo.Location = new System.Drawing.Point(13, 407);
+            this.btnGuardarListaArchivo.Location = new System.Drawing.Point(13, 485);
             this.btnGuardarListaArchivo.Name = "btnGuardarListaArchivo";
             this.btnGuardarListaArchivo.Size = new System.Drawing.Size(263, 72);
             this.btnGuardarListaArchivo.TabIndex = 12;
@@ -126,12 +127,26 @@ namespace FrmClub
             this.btnGuardarListaArchivo.UseVisualStyleBackColor = false;
             this.btnGuardarListaArchivo.Click += new System.EventHandler(this.btnGuardarListaArchivo_Click);
             // 
+            // btnCargarValorCuota
+            // 
+            this.btnCargarValorCuota.BackColor = System.Drawing.Color.Yellow;
+            this.btnCargarValorCuota.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCargarValorCuota.ForeColor = System.Drawing.Color.Red;
+            this.btnCargarValorCuota.Location = new System.Drawing.Point(12, 328);
+            this.btnCargarValorCuota.Name = "btnCargarValorCuota";
+            this.btnCargarValorCuota.Size = new System.Drawing.Size(264, 73);
+            this.btnCargarValorCuota.TabIndex = 13;
+            this.btnCargarValorCuota.Text = "Cambiar Valor de Cuotas";
+            this.btnCargarValorCuota.UseVisualStyleBackColor = false;
+            this.btnCargarValorCuota.Click += new System.EventHandler(this.btnCargarValorCuota_Click);
+            // 
             // FrmClub
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Cyan;
-            this.ClientSize = new System.Drawing.Size(288, 491);
+            this.ClientSize = new System.Drawing.Size(288, 565);
+            this.Controls.Add(this.btnCargarValorCuota);
             this.Controls.Add(this.btnGuardarListaArchivo);
             this.Controls.Add(this.btnCargarListaArchivo);
             this.Controls.Add(this.modificarSocixBtn);
@@ -158,6 +173,7 @@ namespace FrmClub
         private System.Windows.Forms.Button modificarSocixBtn;
         private System.Windows.Forms.Button btnCargarListaArchivo;
         private System.Windows.Forms.Button btnGuardarListaArchivo;
+        private System.Windows.Forms.Button btnCargarValorCuota;
     }
 }
 

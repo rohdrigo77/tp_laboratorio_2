@@ -476,11 +476,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\btz_p\\source\\repos\\tp3\\Entidades\\Entidades.csproj",
+      "projectUniqueName": "C:\\Users\\btz_p\\Documents\\tp_laboratorio_2\\TP4\\Entidades\\Entidades.csproj",
       "projectName": "Entidades",
-      "projectPath": "C:\\Users\\btz_p\\source\\repos\\tp3\\Entidades\\Entidades.csproj",
+      "projectPath": "C:\\Users\\btz_p\\Documents\\tp_laboratorio_2\\TP4\\Entidades\\Entidades.csproj",
       "packagesPath": "C:\\Users\\btz_p\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\btz_p\\source\\repos\\tp3\\Entidades\\obj\\",
+      "outputPath": "C:\\Users\\btz_p\\Documents\\tp_laboratorio_2\\TP4\\Entidades\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -501,8 +501,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\btz_p\\source\\repos\\tp3\\Excepciones\\Excepciones.csproj": {
-              "projectPath": "C:\\Users\\btz_p\\source\\repos\\tp3\\Excepciones\\Excepciones.csproj"
+            "C:\\Users\\btz_p\\Documents\\tp_laboratorio_2\\TP4\\Excepciones\\Excepciones.csproj": {
+              "projectPath": "C:\\Users\\btz_p\\Documents\\tp_laboratorio_2\\TP4\\Excepciones\\Excepciones.csproj"
             }
           }
         }

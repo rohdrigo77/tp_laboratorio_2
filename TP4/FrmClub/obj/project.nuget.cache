@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "630niCy1B9xBZeoDkLZsYePOX8UZhgabflA61qXwLX/w/P6UL8eCQjxHLJY14529RnM/kLXuHgHSCBieU3ogoQ==",
+  "dgSpecHash": "oktskajGd4rewaBnMQ7bU2nqiOg4YVWCZxUdhUYo4mMuzgIXVtNmNLWyP/fGNz4U+cna9K+W994LaeMcRxL/gA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\btz_p\\source\\repos\\tp3\\FrmClub\\FrmClub.csproj",
+  "projectFilePath": "C:\\Users\\btz_p\\Documents\\tp_laboratorio_2\\TP4\\FrmClub\\FrmClub.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\btz_p\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\btz_p\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",

@@ -12,6 +12,25 @@ namespace Entidades
     {
         private List<Socix> listaDeSocixs;
         protected string razonSocial;
+        static float valorCuotaNinixsNatacion;
+        static float valorCuotaAdultxsNatacion;
+        static float valorCuotaNinixsFutbol;
+        static float valorCuotaAdultxsFutbol;
+        static float valorCuotaNinixsBoxeo;
+        static float valorCuotaAdultxsBoxeo;
+
+        /// <summary>
+        /// Constructor estatico
+        /// </summary>
+        static Club()
+        {
+            valorCuotaNinixsNatacion = 2500;
+            valorCuotaAdultxsNatacion = 3500;
+            valorCuotaNinixsFutbol = 2000;
+            valorCuotaAdultxsFutbol = 2500;
+            valorCuotaNinixsBoxeo = 1500;
+            valorCuotaAdultxsBoxeo = 2000;
+        }
 
         /// <summary>
         /// Constructor sin parametros
@@ -19,6 +38,126 @@ namespace Entidades
         public Club()
         {
             this.listaDeSocixs = new List<Socix>();
+        }
+
+        public static float ValorCuotaNinixsNatacion       
+        {
+            set
+            {                
+                if (value > 0)
+                {
+                    valorCuotaNinixsNatacion = value;
+
+                }
+                else
+                {
+                    throw new MenorQueCeroException("Ingrese un número mayor a cero");
+                }
+            }
+            get
+            {
+                return valorCuotaNinixsNatacion;
+            }
+        }
+
+        public static float ValorCuotaAdultxsNatacion
+        {
+            set
+            {
+                if (value > 0)
+                {
+                    valorCuotaAdultxsNatacion = value;
+
+                }
+                else
+                {
+                    throw new MenorQueCeroException("Ingrese un número mayor a cero");
+                }
+            }
+            get
+            {
+                return valorCuotaAdultxsNatacion;
+            }
+        }
+
+        public static float ValorCuotaNinixsFutbol
+        {
+            set
+            {
+                if (value > 0)
+                {
+                    valorCuotaNinixsFutbol = value;
+
+                }
+                else
+                {
+                    throw new MenorQueCeroException("Ingrese un número mayor a cero");
+                }
+            }
+            get
+            {
+                return valorCuotaNinixsFutbol;
+            }
+        }
+
+        public static float ValorCuotaAdultxsFutbol
+        {
+            set
+            {
+                if (value > 0)
+                {
+                    valorCuotaAdultxsFutbol = value;
+
+                }
+                else
+                {
+                    throw new MenorQueCeroException("Ingrese un número mayor a cero");
+                }
+            }
+            get
+            {
+                return valorCuotaAdultxsFutbol;
+            }
+        }
+
+        public static float ValorCuotaNinixsBoxeo
+        {
+            set
+            {
+                if (value > 0)
+                {
+                    valorCuotaNinixsBoxeo = value;
+
+                }
+                else
+                {
+                    throw new MenorQueCeroException("Ingrese un número mayor a cero");
+                }
+            }
+            get
+            {
+                return valorCuotaNinixsBoxeo;
+            }
+        }
+
+        public static float ValorCuotaAdultxsBoxeo
+        {
+            set
+            {
+                if (value > 0)
+                {
+                    valorCuotaAdultxsBoxeo = value;
+
+                }
+                else
+                {
+                    throw new MenorQueCeroException("Ingrese un número mayor a cero");
+                }
+            }
+            get
+            {
+                return valorCuotaAdultxsBoxeo;
+            }
         }
 
         /// <summary>

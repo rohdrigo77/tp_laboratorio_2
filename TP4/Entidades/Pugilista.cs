@@ -18,7 +18,6 @@ namespace Entidades
         /// 
         /// </summary>
         public Pugilista()
-        : base()
         {
         }
 

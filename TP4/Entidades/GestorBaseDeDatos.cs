@@ -23,7 +23,7 @@ namespace Entidades
         /// </summary>
         public GestorBaseDeDatos()
         {
-            this.sqlConexion =  new SqlConnection(@"Server=localhost\SQLEXPRESS;Database=TP3CLUB;Trusted_Connection=True");
+            this.sqlConexion =  new SqlConnection(@"Server=localhost\SQLEXPRESS;Database=TP4-CLUB;Trusted_Connection=True");
         }
 
         /// <summary>
@@ -103,6 +103,7 @@ namespace Entidades
                 try
                 {
                     string consulta = "INSERT INTO Socixs (dni,nombre,apellido,genero,edad,valorCuota,tipoSocix,medallas,categoria,posicion,partidosJugados,pileta,estiloPreferido,peso,cantidadPeleas,aptaFisica,asociacion) VALUES (@dni,@nombre,@apellido,@genero,@edad,@valorCuota,@tipoSocix,@medallas,@categoria,@posicion,@partidosJugados,@pileta,@estiloPreferido,@peso,@cantidadPeleas,@aptaFisica,@asociacion)";
+                    float valorCuota = 0;
 
                     SqlCommand sqlCommand = new SqlCommand(consulta, this.sqlConexion);
 
@@ -111,7 +112,30 @@ namespace Entidades
                     sqlCommand.Parameters.AddWithValue("apellido", socio.Apellido);
                     sqlCommand.Parameters.AddWithValue("genero", socio.Genero.ToString());
                     sqlCommand.Parameters.AddWithValue("edad", socio.Edad);
-                    sqlCommand.Parameters.AddWithValue("valorCuota", socio.ValorCuota.ToString());
+
+                    switch(socio.ValorCuota)
+                    {
+                       
+                        case ECuota.AdultxsNatacion:
+                            valorCuota = Club.ValorCuotaAdultxsNatacion;
+                            break;
+                        case ECuota.NinixsFutbol:
+                            valorCuota = Club.ValorCuotaNinixsFutbol;
+                            break;
+                        case ECuota.AdultxsFutbol:
+                            valorCuota = Club.ValorCuotaAdultxsFutbol;
+                            break;
+                        case ECuota.NinixsBoxeo:
+                            valorCuota = Club.ValorCuotaNinixsBoxeo;
+                            break;
+                        case ECuota.AdultxsBoxeo:
+                            valorCuota = Club.ValorCuotaAdultxsBoxeo;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    sqlCommand.Parameters.AddWithValue("valorCuota",valorCuota);
                     sqlCommand.Parameters.AddWithValue("tipoSocix", socio.TipoSocix.ToString());
                     sqlCommand.Parameters.AddWithValue("medallas", socio.CantidadMedallas);
                     sqlCommand.Parameters.AddWithValue("aptaFisica", socio.FechaAptaFisica);
@@ -151,7 +175,7 @@ namespace Entidades
 
                     if (this.sqlConexion.State != System.Data.ConnectionState.Open)
                     {
-                        this.SqlConexion.ConnectionString = @"Server = localhost\SQLEXPRESS; Database = TP3CLUB; Trusted_Connection = True";
+                        this.SqlConexion.ConnectionString = @"Server = localhost\SQLEXPRESS; Database = TP4-CLUB; Trusted_Connection = True";
                         this.sqlConexion.Open();
                     }
 
@@ -180,8 +204,8 @@ namespace Entidades
             using (this.sqlConexion)
             {
                
-                    string consulta = "SELECT dni FROM Socixs WHERE dni = @dni";
-                    SqlCommand sqlCommand = new SqlCommand(consulta, this.sqlConexion);
+                    this.SqlComando = "SELECT * FROM Socixs WHERE dni = @dni";
+                    SqlCommand sqlCommand = new SqlCommand(this.SqlComando, this.sqlConexion);
                     sqlCommand.Parameters.AddWithValue("dni", dni);
 
                     if (this.sqlConexion.State != System.Data.ConnectionState.Open)
@@ -190,7 +214,7 @@ namespace Entidades
                     }
 
 
-                    if (this.EjecutarScalar() != null)
+                    if (sqlCommand.ExecuteScalar() != null)
                     {
                         respuesta = true;
                     }
@@ -203,6 +227,7 @@ namespace Entidades
         /// <summary>
         /// Metodo para ejecutar el comando escalar en sqlComando con la conexion en sqlConexion
         /// </summary>
+         /*
         public object EjecutarScalar()
         {
 
@@ -217,19 +242,19 @@ namespace Entidades
                 }
 
 
-                scalar = sqlCommand.ExecuteScalar();
+                scalar = ;
             }
             
 
             return scalar;
             
             
-        }
+        }*/
 
         /// <summary>
         /// Metodo para ejecutar el comando reader en sqlComando con la conexion en sqlConexion
         /// </summary>
-        public SqlDataReader EjecutarReader()
+       /* public SqlDataReader EjecutarReader()
         {
             SqlDataReader sqlDataReader = null;
 
@@ -247,12 +272,12 @@ namespace Entidades
             
 
             return sqlDataReader;
-        }
+        }*/
 
         /// <summary>
         /// Metodo para ejecutar el comando nonquery en sqlComando con la conexion en sqlConexion
         /// </summary>
-        public void EjecutarNonQuery()
+        /*public void EjecutarNonQuery()
         {
             using (this.sqlConexion)
             {
@@ -273,7 +298,7 @@ namespace Entidades
                     throw ex;
                 }
             }
-        } 
+        } */
         
         /// <summary>
         /// Metodo publico para obtener una lista de socios segun el comando recibido y asignarla a la lista recibida
@@ -295,7 +320,7 @@ namespace Entidades
                     this.sqlConexion.Open();
                 }
 
-                data = this.EjecutarReader();
+                data = sqlCommand.ExecuteReader();
 
                 if (data != null)
                 {

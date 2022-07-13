@@ -21,6 +21,7 @@ namespace FrmClub
         private FrmModificarSocix modificarSocix;
         private FrmListDatos mostrarDatos;
         private FrmInformes informes;
+        private FrmModificarValorCuota modificarValor;
         private Club miClub;
         private GestorBaseDeDatos gdb;
         private List<Socix> listaSocixs;
@@ -201,6 +202,12 @@ namespace FrmClub
             }
            
             
+        }
+
+        private void btnCargarValorCuota_Click(object sender, EventArgs e)
+        {
+            this.modificarValor = new FrmModificarValorCuota();
+            modificarValor.ShowDialog();
         }
     }
 }

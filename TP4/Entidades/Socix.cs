@@ -28,7 +28,7 @@ namespace Entidades
         private int cantidadMedallas;
         private string fechaDeAsociacion;
         private string fechaAptaFisica;
-        private bool socixNuevx;
+        private bool socixNuevx ;
    
 
 
@@ -38,7 +38,7 @@ namespace Entidades
         /// </summary>
         public Socix()
         {
-            
+            this.socixNuevx = true;
         }
 
         /// <summary>
@@ -95,13 +95,23 @@ namespace Entidades
             {
                 if (value <= 99999999)
                 {
-                    if(!(new GestorBaseDeDatos().DniExistente(value)) || this.socixNuevx == false)
+                    if(new GestorBaseDeDatos().DniExistente(value) == false)
                     {
+
                         this.dni = value;
+
                     }
                     else
-                    {           
-                         throw new DniInvalidoException("El DNI ingresado ya existe o es invalido. Ingrese otro diferente.");                      
+                    {
+                        if (this.socixNuevx == false)
+                        {
+                            this.dni = value;
+                        }
+                        else
+                        {
+                            throw new DniInvalidoException("El DNI ingresado ya existe o es invalido. Ingrese otro diferente.");
+                        }
+
                     }
                                   
                 }
